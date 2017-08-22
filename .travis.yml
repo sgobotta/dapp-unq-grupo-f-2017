@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+  - "node"
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+      - google-chrome-beta
+
+before_install:
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - npm i -g npm@3.10.10
+
+install:
+  - npm install -g @angular/cli
+  - (cd backend && npm install)
+  - (cd frontend && npm install)
+  - (cd frontend && ng build -prod --output-path=../backend/client)
+
+script: (cd frontend && ng test --single-run)
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: 3613c17b-bebe-418f-b100-6336addfb4de
+  skip_cleanup: true
+  app: group-f-morfi-ya-node
