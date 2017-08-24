@@ -1,5 +1,6 @@
 {
   "scripts": {
+  	"install": "cd ./backend && npm install && cd ../frontend && npm install",
     "start": "node backend/index.js"
   }
 }
