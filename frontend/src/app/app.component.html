@@ -1,8 +1,16 @@
-<!--The content below is only a placeholder and can be replaced.-->
 
-<div class="container">
+<div>
+  <md-toolbar color="primary">
+    <span><md-icon>restaurant</md-icon></span>
 
-  <h1>Morfi Ya!</h1>
-  <hr>
+    <span>Morfi Ya!</span>
+
+    <button md-icon-button [md-menu-trigger-for]="menu">
+      <md-icon>more_vert</md-icon>
+    </button>
+  </md-toolbar>
+  <md-menu x-position="before" #menu="mdMenu">
+    <button md-menu-item>Ver mapa</button>
+  </md-menu>
 
 </div>
