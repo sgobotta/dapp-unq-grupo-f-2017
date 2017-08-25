@@ -1,24 +1,24 @@
-var express = require('express');
+var express = require("express");
 var app = express();
-var path = require('path');
-var bodyParser = require('body-parser');
+var path = require("path");
+var bodyParser = require("body-parser");
 var router = express.Router();
-var routes = require('./routes');
-var cors = require('cors');
-var expressValidator = require('express-validator');
-var expressWinston = require('express-winston');
-var winston = require('winston');
+var routes = require("./routes");
+var cors = require("cors");
+var expressValidator = require("express-validator");
+var expressWinston = require("express-winston");
+var winston = require("winston");
 var cfg = require("config");
 
 var port = process.env.PORT || 3008;
 
 // View Engine
-app.set('views', path.join(__dirname, 'client'));
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
+app.set("views", path.join(__dirname, "client"));
+app.set("view engine", "ejs");
+app.engine("html", require("ejs").renderFile);
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, "client")));
 
 // Body Parser Middleware
 app.use(bodyParser.json());
@@ -27,7 +27,7 @@ app.use(cors());
 app.use(expressValidator())
 
 // Set Base Route
-app.use('/api', router);
+app.use("/api", router);
 
 // Middlware for Requests
 router.use(function (req, res, next) {
@@ -36,8 +36,8 @@ router.use(function (req, res, next) {
 });
 
 // Base Routing Url
-router.get('/', function(req, res, next){
-	res.render('index.html');
+router.get("/", function(req, res, next){
+	res.render("index.html");
 });
 
 //Define route handlers
@@ -54,8 +54,8 @@ function start() {
   app.use(expressWinston.errorLogger({
     transports: [
       new winston.transports.File({
-          level: 'error',
-          filename: __dirname + '/' + cfg.get("COMMON.log.logsDirectory") + '/' + cfg.get("COMMON.log.fileName"),
+          level: "error",
+          filename: __dirname + "/" + cfg.get("COMMON.log.logsDirectory") + "/" + cfg.get("COMMON.log.fileName"),
           handleExceptions: true,
           json: true,
           maxsize: 5242880, //5MB
@@ -71,7 +71,7 @@ function start() {
 }));
 
 	app.listen(port, function() {
-		console.log('Server started on port ' + port);
+		console.log("Server started on port " + port);
 	})
 }
 
