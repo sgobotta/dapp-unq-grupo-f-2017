@@ -10,7 +10,10 @@
     </button>
   </md-toolbar>
   <md-menu x-position="before" #menu="mdMenu">
-    <button md-menu-item>Ver mapa</button>
+    <a md-menu-item class="button" routerLink="/maps" routerLinkActive="active">Maps</a>
   </md-menu>
 
 </div>
+
+
+<router-outlet></router-outlet>
