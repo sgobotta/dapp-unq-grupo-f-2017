@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "client")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
-app.use(expressValidator())
+app.use(expressValidator());
 
 // Set Base Route
 app.use("/api", router);
