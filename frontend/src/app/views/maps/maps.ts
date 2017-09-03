@@ -16,7 +16,7 @@ export class Maps {
 
   map = {
     zoom: 13
-  }
+  };
 
   radioTarget = {
     latitude: this.latitude,
@@ -28,27 +28,27 @@ export class Maps {
     clickable: false
   }
 
-  markers: marker[] = []
+  markers: marker[] = [];
 
   clickedMarker(label: string, index: number) {
-    console.log(`clicked the marker: ${label || index}`)
+    console.log(`clicked the marker: ${label || index}`);
   }
 
   onMapClicked($event) {
-    var coordinates = $event.coords;
+    let coordinates = $event.coords;
 
     // The list is empty so that only one marker can be added (can be modified)
     this.markers = [];
     this.markers.push({
       lat: coordinates.lat,
       lng: coordinates.lng,
-      label: 'Destination',
+      label: "Destination",
       draggable: true
     });
   }
 
   markerDragEnd(m: marker, $event: MouseEvent) {
-    console.log('dragEnd', m, $event);
+    console.log("dragEnd", m, $event);
   }
 
 }
