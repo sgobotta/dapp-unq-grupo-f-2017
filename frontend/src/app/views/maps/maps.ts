@@ -18,6 +18,7 @@ export class Maps implements OnInit {
   public radioTarget;
   public markers: Array<marker>;
   public searchControl: FormControl;
+  public distanceBetweenPoints: Distance;
 
   @ViewChild("search")
   public searchElementRef: ElementRef;
@@ -27,6 +28,9 @@ export class Maps implements OnInit {
     private ngZone: NgZone
   ) {}
 
+  /**
+   * Ng Initialization method
+   */
   ngOnInit() {
 
     this.title = "Maps";
@@ -55,10 +59,17 @@ export class Maps implements OnInit {
     // Markers
     this.markers = [];
 
+    // Default Distance between points
+    this.distanceBetweenPoints = {
+      value: 0,
+      measure: "meters"
+    }
+
     this.searchControl = new FormControl();
 
     this.setCurrentPosition();
 
+    // Loads the google maps API to retrieve the current position
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
@@ -78,11 +89,15 @@ export class Maps implements OnInit {
           let latitude = place.geometry.location.lat();
           let longitude = place.geometry.location.lng();
           this.setSelectedPosition(latitude, longitude);
+          this.getDistanceTo(latitude, longitude);
         });
       });
     });
-
   }
+
+/**
+ * Map Interaction Functions
+ */
 
   setMarkerAt(latitude: number, longitude: number) {
     this.markers = [];
@@ -91,7 +106,9 @@ export class Maps implements OnInit {
       lng: longitude,
       label: "You are here"
     });
+    this.getDistanceTo(latitude, longitude);
   }
+
 
   clickedMarker(label: string, index: number) {
     console.log(`clicked the marker: ${label || index}`);
@@ -118,10 +135,53 @@ export class Maps implements OnInit {
     }
   }
 
+  /**
+   * Focus the map center to the given position
+   */
   private setSelectedPosition(latitude: number, longitude: number) {
     this.latitude = latitude;
     this.longitude = longitude;
     this.setMarkerAt(latitude, longitude);
+  }
+
+/**
+ * Class Functions
+ */
+
+ /**
+  * @param {number} latitude
+  * @param {number} longitude
+  */
+  getDistanceTo(latitude, longitude){
+    this.mapsAPILoader.load().then(() => {
+      let pointA = new google.maps.LatLng(this.radioTarget.latitude, this.radioTarget.longitude);
+      let pointB = new google.maps.LatLng(latitude, longitude);
+      let distance = google.maps.geometry.spherical.computeDistanceBetween(pointA, pointB);
+      this.distanceBetweenPoints = this.parseDistanceTo("meters", distance);
+    })
+  }
+
+  /**
+   * Given a valid measure and a distance returns a Distance object
+   * @param {string} measure
+   * @param {number} distance
+   */
+  parseDistanceTo(measure, distance) {
+
+    // Pendiente de refactor
+    // Cualquier otra medida puede ser agregada acá o podemos
+    // elegir una por default y volamos ésto.
+    let distanceMeasures = {
+      meters: function(distance) {
+        let distanceBetweenPoints = {
+          value: Math.round(distance),
+          measure: "meters"
+        };
+        return distanceBetweenPoints;
+      }
+    }
+
+    return distanceMeasures[measure](distance);
   }
 
 }
@@ -131,4 +191,9 @@ interface marker {
 	lng: number;
 	label?: string;
 	draggable?: boolean;
+}
+
+interface Distance {
+  value: number;
+  measure: string;
 }
