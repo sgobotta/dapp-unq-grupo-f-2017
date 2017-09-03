@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HttpModule } from "@angular/http";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -22,11 +22,13 @@ import { AgmCoreModule } from "@agm/core";
     CommonModule,
     HttpModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     AgmCoreModule.forRoot({
-      apiKey: "AIzaSyDgWdwImS6x6HU_VymuYnEzDCaLKbH-Nks"
+      apiKey: "AIzaSyDgWdwImS6x6HU_VymuYnEzDCaLKbH-Nks",
+      libraries: ["places"]
     })
   ],
   providers: [],
