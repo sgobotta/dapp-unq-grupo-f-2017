@@ -48,7 +48,8 @@ export class Maps implements OnInit {
       fillColor: "green",
       draggable: false,
       editable: false,
-      clickable: false
+      clickable: false,
+      label: "We are here"
     }
 
     // Markers
@@ -64,27 +65,33 @@ export class Maps implements OnInit {
       });
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
-          //get the place result
 
+          // Gets the place result
           let place = autocomplete.getPlace();
 
-          //verify result
+          // Verifies result
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
 
-          //set latitude, longitude and zoom
+          // Sets current position on the map
           let latitude = place.geometry.location.lat();
           let longitude = place.geometry.location.lng();
-
           this.setSelectedPosition(latitude, longitude);
-
         });
-      })
+      });
     });
 
   }
 
+  setMarkerAt(latitude: number, longitude: number) {
+    this.markers = [];
+    this.markers.push({
+      lat: latitude,
+      lng: longitude,
+      label: "You are here"
+    });
+  }
 
   clickedMarker(label: string, index: number) {
     console.log(`clicked the marker: ${label || index}`);
@@ -92,15 +99,9 @@ export class Maps implements OnInit {
 
   onMapClicked($event) {
     let coordinates = $event.coords;
-
-    // The list is empty so that only one marker can be added (can be modified)
-    this.markers = [];
-    this.markers.push({
-      lat: coordinates.lat,
-      lng: coordinates.lng,
-      label: "Destination",
-      draggable: true
-    });
+    let latitude = coordinates.lat;
+    let longitude = coordinates.lng;
+    this.setMarkerAt(latitude, longitude);
   }
 
   markerDragEnd(m: marker, $event: MouseEvent) {
@@ -112,17 +113,15 @@ export class Maps implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
-        this.map.zoom = 12;
+        this.setMarkerAt(position.coords.latitude, position.coords.longitude);
       });
     }
   }
 
   private setSelectedPosition(latitude: number, longitude: number) {
-    let marker: marker = {
-      lat: latitude,
-      lng: longitude
-    }
-    this.markers.push(marker);
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.setMarkerAt(latitude, longitude);
   }
 
 }

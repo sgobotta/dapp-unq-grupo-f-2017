@@ -39,6 +39,17 @@
         [clickable]="radioTarget.clickable">
     </agm-circle>
 
+    <agm-marker
+        [latitude]="radioTarget.latitude"
+        [longitude]="radioTarget.longitude"
+        [label]="radioTarget.label"
+        [markerDraggable]="radioTarget.draggable">
+
+      <agm-info-window>
+        <strong>{{radioTarget.label}}</strong>
+      </agm-info-window>
+    </agm-marker>
+
   </agm-map>
 
 </div>
