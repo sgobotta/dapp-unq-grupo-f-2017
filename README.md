@@ -38,7 +38,13 @@ nvm install 6.11.1
 nvm use 6.11.1
 ```
 
-Una vez que tenemos la version de node que queremos, clonamos el repositorio y en el directorio root del repositorio tiramos el install
+Luego necesitamos instalar TypeScript
+
+```
+npm install -g typescript
+```
+
+Una vez que tenemos la version de node que queremos y typescript, clonamos el repositorio y en el directorio root del repositorio tiramos el install
 
 ```
 npm install
