@@ -19,6 +19,7 @@ export class Maps implements OnInit {
   public markers: Array<marker>;
   public searchControl: FormControl;
   public distanceBetweenPoints: Distance;
+  public estimatedTravelTime: TravelTime;
 
   @ViewChild("search")
   public searchElementRef: ElementRef;
@@ -65,6 +66,12 @@ export class Maps implements OnInit {
       measure: "meters"
     }
 
+    // Default Estimated Travel Time
+    this.estimatedTravelTime = {
+      value: 0,
+      measure: "minutes"
+    }
+
     this.searchControl = new FormControl();
 
     this.setCurrentPosition();
@@ -90,6 +97,7 @@ export class Maps implements OnInit {
           let longitude = place.geometry.location.lng();
           this.setSelectedPosition(latitude, longitude);
           this.getDistanceTo(latitude, longitude);
+          this.setTravelTimeTo(latitude, longitude);
         });
       });
     });
@@ -107,6 +115,7 @@ export class Maps implements OnInit {
       label: "You are here"
     });
     this.getDistanceTo(latitude, longitude);
+    this.setTravelTimeTo(latitude, longitude);
   }
 
 
@@ -184,6 +193,42 @@ export class Maps implements OnInit {
     return distanceMeasures[measure](distance);
   }
 
+  /**
+   * @param {number} latitude
+   * @param {number} longitude
+   */
+  setTravelTimeTo(latitude, longitude) {
+    this.mapsAPILoader.load().then( () => {
+      var directionsService = new google.maps.DirectionsService();
+      var request = {
+        origin: new google.maps.LatLng(this.radioTarget.latitude, this.radioTarget.longitude),
+        destination: new google.maps.LatLng(latitude, longitude),
+
+        // Revisar el método de viaje
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+      };
+
+      directionsService.route(request, (response, status) => {
+        if(status === "OK") {
+          // refactorizar éste resultado que se obtiene (hay demasiada información)
+          var result = response.routes[0].legs[0];
+          this.estimatedTravelTime = this.parseTravelTime("minutes", result);
+        }
+      });
+    });
+  }
+
+  /**
+   * TO-DO refactor
+   */
+  parseTravelTime(measure, travelTime) {
+    let result = {
+      value: travelTime.duration.text,
+      measure: ""
+    }
+    return result;
+  }
+
 }
 
 interface marker {
@@ -194,6 +239,11 @@ interface marker {
 }
 
 interface Distance {
+  value: number;
+  measure: string;
+}
+
+interface TravelTime {
   value: number;
   measure: string;
 }
