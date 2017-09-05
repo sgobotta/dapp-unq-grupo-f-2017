@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "test"
+    "start": "node dist/index.js",
+    "test": "test",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
