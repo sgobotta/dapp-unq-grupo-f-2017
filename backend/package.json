@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "test": "test",
-    "build": "tsc"
+    "build": "tsc",
+    "devrun": "npm run build && npm start"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +19,9 @@
     "express": "^4.15.4",
     "express-validator": "^2.19.1",
     "express-winston": "^1.2.0",
+    "inversify": "^4.3.0",
     "mongojs": "^2.4.1",
+    "reflect-metadata": "^0.1.10",
     "winston": "^2.2.0"
   },
   "devDependencies": {
