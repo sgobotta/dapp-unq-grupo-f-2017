@@ -18,9 +18,11 @@ before_install:
 
 install:
   - npm install -g @angular/cli
+  - npm install -g typescript
   - (cd backend && npm install)
   - (cd frontend && npm install)
-  - (cd frontend && ng build -prod --output-path=../backend/client)
+  - (cd backend && npm run build)
+  - (cd frontend && ng build -prod --output-path=../backend/dist/client)
 
 script: (cd frontend && ng test --single-run)
 
