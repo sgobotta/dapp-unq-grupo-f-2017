@@ -1,6 +1,6 @@
 import Currency from "./utils/currency";
 
-export class Menu {
+export default class Menu {
 
   name: string;
   description: string;
