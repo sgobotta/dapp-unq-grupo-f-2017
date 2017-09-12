@@ -20,8 +20,10 @@
     "express-validator": "^2.19.1",
     "express-winston": "^1.2.0",
     "inversify": "^4.3.0",
+    "mailgun-js": "^0.13.1",
     "mongojs": "^2.4.1",
     "node-schedule": "^1.2.4",
+    "nodemailer": "^4.1.0",
     "reflect-metadata": "^0.1.10",
     "request": "^2.81.0",
     "winston": "^2.2.0"
