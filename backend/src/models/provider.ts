@@ -2,7 +2,7 @@ import Address from "./utils/address";
 import Phone from "./utils/phone";
 import Availability from "./utils/availability";
 import MapsPolygon from "./utils/maps/maps-polygon";
-import Reputation from "./reputation";
+import {Reputation} from "./reputation";
 import {MailValidator} from './utils/mailValidator'
 
 export class Provider {
@@ -27,5 +27,9 @@ export class Provider {
     if(MailValidator.validateMail(email)){
       this.email = email;
     }
+  }
+
+  public rate(value:number) : void {
+    this.reputation.rate(value);
   }
 }
