@@ -72,10 +72,18 @@ npm run all
 #### Gestión de Proyecto
 
 * Seguimiento de tareas generales en [**Trello**][trello-url]
-* Seguimiento de tareas específicas en [**Taiga**][taiga-url]
 
 [trello-url]:https://trello.com/desarrollodeaplicaciones4
-[taiga-url]:https://tree.taiga.io/project/lemonade-dapp-unq-group-f-2017/
+
+
+#### Integración Contínua y Deploy
+
+* Enlace al repositorio de [**Integración Contínua en Travis**][travis-url]
+* Enlace al deploy de la [**aplicación en Heroku**][deploy-url]
+
+[travis-url]:https://travis-ci.org/sgobotta/dapp-unq-grupo-f-2017
+[deploy-url]:https://group-f-morfi-ya-node.herokuapp.com
+
 
 
 TO-DO
