@@ -63,14 +63,16 @@ export class Server {
     this.routes.setup(this.router, this.handlers);
   }
 
+  startJobs() {
+    this.mailingSystem.startJobs();
+  }
+
   public start(port) : void {
 
     this.setViewEngine();
     this.configureBodyParser();
     this.mountRoutes();
-
-    this.mailingSystem.startJobs();
-
+    this.startJobs();
     this.app.listen(port, (err) => {
       if(err) {
         console.log(err);
@@ -79,6 +81,10 @@ export class Server {
       }
     });
 
+  }
+
+  getApp() {
+    return this.app;
   }
 
 }
