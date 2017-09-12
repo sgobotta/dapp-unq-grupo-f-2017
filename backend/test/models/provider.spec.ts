@@ -4,7 +4,7 @@ import "mocha";
 
 describe("Provider class when it's created", () => {
   it("should not be null", () => {
-    const provider = new Provider();
+    const provider = new Provider(null, null, null, null, null, null, null, null, null, null);
     expect(provider).to.not.equal("undefined");
   });
 });
