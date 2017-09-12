@@ -5,6 +5,7 @@ import * as cors from "cors";
 import * as expressValidator from "express-validator";
 import Routes from "./routes";
 import { inject } from "inversify";
+import { MailingSystem } from "./models/system/mailing-system";
 
 export class Server {
 
@@ -13,9 +14,10 @@ export class Server {
   private router;
   private handlers;
   private routes;
+  private mailingSystem;
 
   public constructor(
-    @inject(Routes) routes:Routes
+    @inject(Routes) routes:Routes, @inject(MailingSystem) mailingSystem:MailingSystem
   ) {
 
     this.app = express();
@@ -23,6 +25,7 @@ export class Server {
     this.routes = routes;
     // Define Handlers
     this.handlers = {};
+    this.mailingSystem = mailingSystem;
   }
 
   private setViewEngine() {
@@ -66,6 +69,8 @@ export class Server {
     this.configureBodyParser();
     this.mountRoutes();
 
+    this.mailingSystem.startJobs();
+
     this.app.listen(port, (err) => {
       if(err) {
         console.log(err);
@@ -73,8 +78,9 @@ export class Server {
         console.log(`Server is listening on ${port}`);
       }
     });
+
   }
 
 }
 
-export default new Server(new Routes());
+export default new Server(new Routes(), new MailingSystem());
