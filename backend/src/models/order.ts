@@ -9,8 +9,11 @@ export class Order {
   deliveryTime: Date; // Date and time
   // We must validate that date is at least 48 hours from now
 
-  constructor(deliveryType : DeliveryType, menu : Menu, quantity : number, deliveryDate: Date) {
-
-  		
+  constructor(deliveryType : DeliveryType, menu : Menu, quantity : number, deliveryTime: Date) {
+  	this.deliveryType = deliveryType;
+  	this.menu = menu;
+  	this.quantity = quantity;
+  	this.deliveryTime = deliveryTime;
   }
+  
 }

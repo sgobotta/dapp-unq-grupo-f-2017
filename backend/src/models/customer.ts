@@ -1,5 +1,7 @@
 import Phone from "./utils/phone";
 import Address from "./utils/address";
+import request from 'request';
+import {MailValidator} from './utils/mailValidator'
 
 export class Customer {
 
@@ -11,20 +13,30 @@ export class Customer {
   address: Address;
 
   constructor(cuit:number, name:string, surname:string, email:string, phone: Phone, address: Address) {
-  	this.validateCuit(cuit);
-  	this.validateEmail(email);
+  	if(this.validateCuit(cuit)){
+  		this.cuit = cuit;
+  	}
+  	if(MailValidator.validateMail(email)){
+      this.email = email;
+    }
   	this.name = name;
   	this.surname = surname;
   	this.phone = phone;
   	this.address = address;
   }
 
-  private validateCuit() {
-  	// To Do with soa.afip.gob.ar/sr-padron/v2/persona/<cuit>
-  }
-
-  private validateEmail(email) {
-  	// RegEx from http://emailregex.com/
-	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+  private validateCuit(cuit) {
+  	// Should work, testing To-DO
+  	request('http://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, function(err, res, body){
+  		if(err){
+  			return false;
+  		}
+  		if(res){
+  			return res.success;
+  		}
+  		else {
+  			return false;
+  		}
+  	});
   }
 }

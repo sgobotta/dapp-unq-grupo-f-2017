@@ -23,6 +23,7 @@
     "mongojs": "^2.4.1",
     "node-schedule": "^1.2.4",
     "reflect-metadata": "^0.1.10",
+    "request": "^2.81.0",
     "winston": "^2.2.0"
   },
   "devDependencies": {
