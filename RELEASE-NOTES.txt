@@ -1,0 +1,15 @@
+
+---------------------------------------------------------------------
+Release 1.0.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* Prototype of a responsive screen showing the distance and time between two points, using google maps API.
+* The server fires events everyday at midnight
+* Added Mailgun as the Mailing System and Heroku resource
+
+NOTES:
+* The model lacks of a functional electronic purse for website users.
+* Testing and Coverage is still required.
+
+KNOWN ISSUES:
+* Mockito objects under Typescript aren't working as expected on call verification.
