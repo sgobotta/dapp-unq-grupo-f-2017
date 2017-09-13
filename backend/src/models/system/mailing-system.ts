@@ -1,5 +1,4 @@
 import * as schedule from "node-schedule";
-import * as nodemailer from "nodemailer";
 import * as mailgun from "mailgun-js";
 
 export class MailingSystem {
@@ -7,7 +6,7 @@ export class MailingSystem {
   constructor() {}
 
   public startJobs() {
-    schedule.scheduleJob("30 * * * * *", () => {
+    schedule.scheduleJob("* * 0 * * *", () => {
 
       this.sendEmail();
       console.log("This is a midnight log");
