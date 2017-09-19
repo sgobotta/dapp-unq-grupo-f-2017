@@ -5,6 +5,7 @@ import { HttpModule } from "@angular/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { SuiModule } from 'ng2-semantic-ui';
 
 import { RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
@@ -25,6 +26,7 @@ import { AgmCoreModule } from "@agm/core";
     ReactiveFormsModule,
     MaterialModule,
     BrowserAnimationsModule,
+    SuiModule,
     RouterModule.forRoot(appRoutes),
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyDgWdwImS6x6HU_VymuYnEzDCaLKbH-Nks",
