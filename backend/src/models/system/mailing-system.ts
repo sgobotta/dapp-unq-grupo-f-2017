@@ -15,7 +15,7 @@ export class MailingSystem {
   }
 
   public startJobs() {
-    schedule.scheduleJob("* * 0 * * *", () => {
+    schedule.scheduleJob("* 0 * * *", () => {
 
       let data = {
         from: "Morfi Ya! <midnight-schedule@morfi-ya.food.store>",
@@ -24,7 +24,7 @@ export class MailingSystem {
         text: "Testing some Mailgun awesomness!"
       };
 
-      this.sendEmail(data.from, data.to, data.subject, data.text, null);      
+      this.sendEmail(data.from, data.to, data.subject, data.text, null);
       console.log("This is a midnight log");
     });
   }
