@@ -16,7 +16,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   - npm i -g npm@3.10.10
   - npm install -g typescript
-  - npm install -g ts-node
+  - npm install ts-node mocha chai -g
 
 install:
   - npm install -g @angular/cli
