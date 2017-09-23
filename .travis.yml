@@ -26,6 +26,7 @@ install:
   - (cd frontend && ng build -prod --output-path=../backend/dist/client)
 
 script:
+  - (cd backend && npm run test)
   - (cd frontend && ng test --single-run)
 
 deploy:
