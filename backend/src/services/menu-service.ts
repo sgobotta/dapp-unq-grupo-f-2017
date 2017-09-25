@@ -1,54 +1,58 @@
+// import { IMenu } from "./interfaces";
+
+import { inject, injectable } from "inversify";
+import { MongoDBClient } from "../config/mongodb/client";
 import Menu from "./../models/menu";
-import { injectable } from "inversify";
-import { IMenu } from "./interfaces";
+import TYPES from "./../constants/types";
 
 @injectable()
 export class MenuService {
+  private mongoClient: MongoDBClient;
 
-  private menuStorage: IMenu[] = [
-    { name: 'Lorem' },
-    { name: 'Dolor' }
-  ];
-
-  public getUsers(): IMenu[] {
-    return this.menuStorage;
+  constructor(
+    @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient
+  ) {
+    this.mongoClient = mongoClient;
   }
 
-  public getMenu(id: string): IMenu {
-    let result: IMenu;
-    this.menuStorage.map(menu => {
-      if (menu.name === id) {
-        result = menu;
-      }
+  public getMenus(): Promise<Menu[]> {
+    return new Promise<Menu[]>((resolve, reject) => {
+      this.mongoClient.find("menu", {}, (error, data: Menu[]) => {
+        resolve(data);
+      });
     });
-
-    return result;
   }
 
-  public newMenu(menu: IMenu): IMenu {
-    this.menuStorage.push(menu);
-    return menu;
-  }
-
-  public updateMenu(id: string, menu: IMenu): IMenu {
-    this.menuStorage.map((entry, index) => {
-      if (entry.name === id) {
-        this.menuStorage[index] = menu;
-      }
+  public getMenu(id: string): Promise<Menu> {
+    return new Promise<Menu>((resolve, reject) => {
+      this.mongoClient.findOneById("menu", id, (error, data: Menu) => {
+        resolve(data);
+      });
     });
-
-    return menu;
   }
 
-  public deleteMenu(id: string): string {
-    let updatedMenu: IMenu[] = [];
-    this.menuStorage.map(user => {
-      if (user.name !== id) {
-        updatedMenu.push(user);
-      }
-    });
 
-    this.menuStorage = updatedMenu;
-    return id;
+  public newMenu(menu: Menu): Promise<Menu> {
+    return new Promise<Menu>((resolve, reject) => {
+      this.mongoClient.insert("menu", menu, (error, data: Menu) => {
+        resolve(data);
+      });
+    });
+  }
+
+  public updateMenu(id: string, user: Menu): Promise<Menu> {
+    return new Promise<Menu>((resolve, reject) => {
+      this.mongoClient.update("menu", id, user, (error, data: Menu) => {
+        resolve(data);
+      });
+    });
+  }
+
+  public deleteMenu(id: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.mongoClient.remove("menu", id, (error, data: any) => {
+        resolve(data);
+      });
+    });
   }
 }
