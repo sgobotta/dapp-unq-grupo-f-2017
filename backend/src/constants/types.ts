@@ -1,5 +1,6 @@
 const TYPES = {
-    MenuService: Symbol('MenuService')
+  MenuService: Symbol("MenuService"),
+  MongoDBClient: Symbol("MongoDBClient")
 };
 
 export default TYPES;
