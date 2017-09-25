@@ -1,6 +1,9 @@
-import { InversifyExpressServer } from 'inversify-express-utils';
+import { InversifyExpressServer } from "inversify-express-utils";
+import "reflect-metadata";
+import { MongoDBClient } from "./config/mongodb/client";
+import TYPES from "./constants/types"
 import * as express from "express";
-import * as morgan from 'morgan';
+import * as morgan from "morgan";
 import * as path from "path";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
@@ -78,20 +81,24 @@ export class Server {
     return this.server.build();
   }
 
+  private configureContainer(container:Container) {
+    // Middleware for Requests
+    container.bind<express.RequestHandler>("Morgan").toConstantValue(morgan("combined"));
+    container.bind<MongoDBClient>(TYPES.MongoDBClient).to(MongoDBClient);
+    container.bind<express.RequestHandler>("CustomMiddleware").toConstantValue(function customMiddleware(req: any, res: any, next: any) {
+
+      next();
+    });
+    this.mountRoutes(container);
+  }
+
   public start(port) : void {
 
     let container = new Container();
 
     this.setViewEngine(this.app);
     this.startJobs();
-
-    // Middleware for Requests
-    container.bind<express.RequestHandler>("Morgan").toConstantValue(morgan("combined"));
-    container.bind<express.RequestHandler>("CustomMiddleware").toConstantValue(function customMiddleware(req: any, res: any, next: any) {
-
-      next();
-    });
-    this.mountRoutes(container);
+    this.configureContainer(container);
 
     let app = this.buildServer(container, this.app);
 
