@@ -1,7 +1,8 @@
 import { InversifyExpressServer } from "inversify-express-utils";
 import "reflect-metadata";
-import { MongoDBClient } from "./config/mongodb/client";
 import TYPES from "./constants/types"
+import { MongoDBClient } from "./config/mongodb/client";
+import { MySQLClient } from "./config/mysql/client";
 import * as express from "express";
 import * as morgan from "morgan";
 import * as path from "path";
@@ -83,8 +84,9 @@ export class Server {
 
   private configureContainer(container:Container) {
     // Middleware for Requests
-    container.bind<express.RequestHandler>("Morgan").toConstantValue(morgan("combined"));
+    container.bind<MySQLClient>(TYPES.MySQLClient).to(MySQLClient);
     container.bind<MongoDBClient>(TYPES.MongoDBClient).to(MongoDBClient);
+    container.bind<express.RequestHandler>("Morgan").toConstantValue(morgan("combined"));
     container.bind<express.RequestHandler>("CustomMiddleware").toConstantValue(function customMiddleware(req: any, res: any, next: any) {
 
       next();
