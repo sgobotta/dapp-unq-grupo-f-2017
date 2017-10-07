@@ -1,24 +1,43 @@
 import { injectable } from "inversify";
-import * as mysql from "mysql";
+import * as mysql2 from "mysql";
+import * as mysql from "mysql2";
+import * as Sequelize from "sequelize";
 
 @injectable()
 export class MySQLClient {
 
-  public connection: mysql.IConnection;
+  private connection: mysql.IConnection;
+  private pool: mysql.IPool;
+  private sequelize;
 
   constructor() {
-    let config = {
-      host     : "localhost:3006" || process.env.JAWSDB_URL,
-      user     : "root",
-      password : "root",
-      database : "morfiya"
-    };
 
-    this.connection = mysql.createConnection(config);
-    console.log(this.connection);
+    this.connection  = mysql.createConnection({
+      host            : "localhost" || process.env.JAWSDB_URL,
+      user            : "root",
+      password        : "root",
+      database        : "morfiya"
+    });
+
+    this.sequelize = new Sequelize("morfiya", "root", "root", {
+      host: "localhost",
+      dialect: "mysql",
+      pool: { max: 5, min: 0, idle: 10000 }
+    });
+
   }
 
   public createConnection(){
+
+    this.sequelize
+      .authenticate()
+      .then( () => {
+        console.log("Connection has been established successfully.");
+      })
+      .catch( (err) => {
+        console.error("Unable to connect to the database:", err);
+      });
+
     return this.connection;
   }
 
