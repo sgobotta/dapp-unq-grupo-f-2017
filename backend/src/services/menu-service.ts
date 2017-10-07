@@ -34,15 +34,13 @@ export class MenuService {
   }
 
 
-  public newMenu(menu: Menu): Promise<Menu> {
+  public newMenu(menu: Menu) {
     return new Promise<Menu>((resolve, reject) => {
       // this.mongoClient.insert("menu", menu, (error, data: Menu) => {
       //   resolve(data);
       // });
 
       let connection = this.mySqlClient.createConnection();
-
-
 
     });
   }
