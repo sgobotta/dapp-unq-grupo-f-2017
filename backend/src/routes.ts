@@ -13,7 +13,7 @@ export default class Routes {
 
   }
 
-  public setup(container:Container) {
+  public setup(container: Container) {
 
     container.bind<interfaces.Controller>(TYPE.Controller).to(MenuController).whenTargetNamed(TAGS.MenuController);
     container.bind<MenuService>(TYPES.MenuService).to(MenuService);

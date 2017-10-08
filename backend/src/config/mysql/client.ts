@@ -27,7 +27,7 @@ export class MySQLClient {
 
   }
 
-  public createConnection(){
+  public createConnection() {
 
     this.sequelize
       .authenticate()
@@ -42,8 +42,8 @@ export class MySQLClient {
   }
 
   public connect(): void {
-    this.connection.connect(function(res, err){
-      if(err){
+    this.connection.connect(function(res, err) {
+      if(err) {
         console.log(err);
       }
       else {
@@ -53,7 +53,7 @@ export class MySQLClient {
   }
 
   public disconnect(): void {
-    this.connection.end(function(err){
+    this.connection.end(function(err) {
       if(err){
         throw err;
       }

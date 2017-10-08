@@ -1,6 +1,6 @@
 import { InversifyExpressServer } from "inversify-express-utils";
 import "reflect-metadata";
-import TYPES from "./constants/types"
+import TYPES from "./constants/types";
 import { MongoDBClient } from "./config/mongodb/client";
 import { MySQLClient } from "./config/mysql/client";
 import * as express from "express";
@@ -26,8 +26,8 @@ export class Server {
   private serviceBuilder;
 
   public constructor(
-    @inject(Routes) routes:Routes,
-    @inject(MailingSystem) mailingSystem:MailingSystem
+    @inject(Routes) routes: Routes,
+    @inject(MailingSystem) mailingSystem: MailingSystem
   ) {
 
     this.app = express();
@@ -78,11 +78,11 @@ export class Server {
 
     this.server.setConfig((server) => {
       this.configureBodyParser(this.app);
-    })
+    });
     return this.server.build();
   }
 
-  private configureContainer(container:Container) {
+  private configureContainer(container: Container) {
     // Middleware for Requests
     container.bind<MySQLClient>(TYPES.MySQLClient).to(MySQLClient);
     container.bind<MongoDBClient>(TYPES.MongoDBClient).to(MongoDBClient);

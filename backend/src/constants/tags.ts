@@ -1,5 +1,5 @@
 const TAGS = {
-    MenuController: 'MenuController'
+    MenuController: "MenuController"
 };
 
 export default TAGS;

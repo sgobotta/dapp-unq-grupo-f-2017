@@ -9,4 +9,4 @@ export interface IMenu {
 
 export const TYPES = {
   MenuService: Symbol("Menu")
-}
+};
