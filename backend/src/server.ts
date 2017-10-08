@@ -1,79 +1,110 @@
+import { InversifyExpressServer } from "inversify-express-utils";
+import "reflect-metadata";
+import TYPES from "./constants/types";
+import { MongoDBClient } from "./config/mongodb/client";
+import { MySQLClient } from "./config/mysql/client";
 import * as express from "express";
+import * as morgan from "morgan";
 import * as path from "path";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
+import * as helmet from "helmet";
 import * as expressValidator from "express-validator";
 import Routes from "./routes";
-import { inject } from "inversify";
+import { inject, Container } from "inversify";
 import { MailingSystem } from "./models/system/mailing-system";
 
 export class Server {
 
   private app;
+  private server;
   private express;
   private router;
-  private handlers;
+  private handlersContainer;
   private routes;
   private mailingSystem;
+  private serviceBuilder;
 
   public constructor(
-    @inject(Routes) routes:Routes, @inject(MailingSystem) mailingSystem:MailingSystem
+    @inject(Routes) routes: Routes,
+    @inject(MailingSystem) mailingSystem: MailingSystem
   ) {
 
     this.app = express();
     this.router = express.Router();
     this.routes = routes;
-    // Define Handlers
-    this.handlers = {};
+
     this.mailingSystem = mailingSystem;
   }
 
-  private setViewEngine() {
-    this.app.set("views", path.join(__dirname, "client"));
-    this.app.set("view engine", "ejs");
-    this.app.engine("html", require("ejs").renderFile);
+  private setViewEngine(server) {
+    server.set("views", path.join(__dirname, "client"));
+    server.set("view engine", "ejs");
+    server.engine("html", require("ejs").renderFile);
   }
 
   // Body Parser Middleware
-  private configureBodyParser() {
-    this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({extended: false}));
-    this.app.use(cors());
-    this.app.use(expressValidator());
+  private configureBodyParser(server) {
+    server.use(bodyParser.json());
+    server.use(bodyParser.urlencoded({extended: true}));
+    server.use(cors());
+    server.use(helmet());
+    server.use(expressValidator());
   }
 
-  private mountRoutes(): void {
+  private mountRoutes(serverContainer): void {
 
+    // Sets index view
     this.router.get("/", (req, res) => {
       res.render("index.html");
     });
 
-    // Set Static Folder
+    // Sets Static Folder
     this.app.use(express.static(path.join(__dirname, "client")));
 
-    // Set Base Route
+    // Sets Base Route
     this.app.use("/api", this.router);
 
-    // Middlware for Requests
-    this.router.use(function (req, res, next) {
-      // Logging can be done here
-      next();
-    });
-
-    this.routes.setup(this.router, this.handlers);
+    // Configures Webservices
+    this.routes.setup(serverContainer);
   }
 
   startJobs() {
     this.mailingSystem.startJobs();
   }
 
-  public start(port) : void {
+  private buildServer(container, server) {
+    this.server = new InversifyExpressServer(container, null, null, this.app);
 
-    this.setViewEngine();
-    this.configureBodyParser();
-    this.mountRoutes();
+    this.server.setConfig((server) => {
+      this.configureBodyParser(this.app);
+    });
+    return this.server.build();
+  }
+
+  private configureContainer(container: Container) {
+    // Middleware for Requests
+    container.bind<MySQLClient>(TYPES.MySQLClient).to(MySQLClient);
+    container.bind<MongoDBClient>(TYPES.MongoDBClient).to(MongoDBClient);
+    container.bind<express.RequestHandler>("Morgan").toConstantValue(morgan("combined"));
+    container.bind<express.RequestHandler>("CustomMiddleware").toConstantValue(function customMiddleware(req: any, res: any, next: any) {
+
+      next();
+    });
+    this.mountRoutes(container);
+  }
+
+  public start(port): void {
+
+    let container = new Container();
+
+    this.setViewEngine(this.app);
     this.startJobs();
-    this.app.listen(port, (err) => {
+    this.configureContainer(container);
+
+    let app = this.buildServer(container, this.app);
+
+    app.listen(port, (err) => {
       if(err) {
         console.log(err);
       } else {
@@ -81,10 +112,6 @@ export class Server {
       }
     });
 
-  }
-
-  getApp() {
-    return this.app;
   }
 
 }
