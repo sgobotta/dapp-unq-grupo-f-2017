@@ -11,7 +11,6 @@ export class MySQLClient {
   private sequelize;
 
   constructor() {
-
     this.connection  = mysql.createConnection({
       host            : "localhost" || process.env.JAWSDB_URL,
       user            : "root",
@@ -24,17 +23,15 @@ export class MySQLClient {
       dialect: "mysql",
       pool: { max: 5, min: 0, idle: 10000 }
     });
-
   }
 
   public createConnection() {
-
     this.sequelize
       .authenticate()
-      .then( () => {
+      .then(() => {
         console.log("Connection has been established successfully.");
       })
-      .catch( (err) => {
+      .catch((err) => {
         console.error("Unable to connect to the database:", err);
       });
 
@@ -59,7 +56,5 @@ export class MySQLClient {
       }
     });
   }
-
-
 
 }
