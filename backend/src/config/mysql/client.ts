@@ -54,7 +54,7 @@ export class MySQLClient {
 
   public disconnect(): void {
     this.connection.end(function(err) {
-      if(err){
+      if(err) {
         throw err;
       }
     });
