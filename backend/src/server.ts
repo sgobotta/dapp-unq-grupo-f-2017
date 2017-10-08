@@ -94,7 +94,7 @@ export class Server {
     this.mountRoutes(container);
   }
 
-  public start(port) : void {
+  public start(port): void {
 
     let container = new Container();
 
