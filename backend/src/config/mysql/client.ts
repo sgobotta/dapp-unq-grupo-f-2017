@@ -1,14 +1,13 @@
 import { injectable } from "inversify";
-import * as mysql2 from "mysql";
-import * as mysql from "mysql2";
-import * as Sequelize from "sequelize";
+import * as mysql from "mysql";
+import * as path from "path";
+import Menu from "./../../models/menu";
 
 @injectable()
 export class MySQLClient {
 
   private connection: mysql.IConnection;
   private pool: mysql.IPool;
-  private sequelize;
 
   constructor() {
     this.connection  = mysql.createConnection({
@@ -18,28 +17,14 @@ export class MySQLClient {
       database        : "morfiya"
     });
 
-    this.sequelize = new Sequelize("morfiya", "root", "root", {
-      host: "localhost",
-      dialect: "mysql",
-      pool: { max: 5, min: 0, idle: 10000 }
-    });
   }
 
-  public createConnection() {
-    this.sequelize
-      .authenticate()
-      .then(() => {
-        console.log("Connection has been established successfully.");
-      })
-      .catch((err) => {
-        console.error("Unable to connect to the database:", err);
-      });
-
+  public getConnection() {
     return this.connection;
   }
 
   public connect(): void {
-    this.connection.connect(function(res, err) {
+    this.connection.connect((res, err) => {
       if(err) {
         console.log(err);
       }
@@ -50,7 +35,7 @@ export class MySQLClient {
   }
 
   public disconnect(): void {
-    this.connection.end(function(err) {
+    this.connection.end((err) => {
       if(err) {
         throw err;
       }
