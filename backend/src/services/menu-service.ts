@@ -40,7 +40,14 @@ export class MenuService {
       //   resolve(data);
       // });
 
-      let connection = this.mySqlClient.createConnection();
+      let connection = this.mySqlClient.connect();
+
+      // let menu = Menu.build<Menu>({
+      //   name: "pepito",
+      //   description: "crocante"
+      // });
+      // menu.save();
+      // console.log(menu);
 
     });
   }
