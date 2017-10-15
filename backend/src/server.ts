@@ -13,7 +13,7 @@ import * as expressValidator from "express-validator";
 import Routes from "./routes";
 import { inject, Container } from "inversify";
 import { MailingSystem } from "./models/system/mailing-system";
-import MysqlDb from "./config/mysql/startup";
+import DBStartup from "./config/init";
 
 export class Server {
 
@@ -25,7 +25,7 @@ export class Server {
   private routes;
   private mailingSystem;
   private serviceBuilder;
-  private mysqlDB;
+  private DBStartup;
 
   public constructor(
     @inject(Routes) routes: Routes,
@@ -88,7 +88,7 @@ export class Server {
     // Middleware for Requests
     container.bind<MySQLClient>(TYPES.MySQLClient).to(MySQLClient);
     container.bind<MongoDBClient>(TYPES.MongoDBClient).to(MongoDBClient);
-    container.bind<MysqlDb>(TYPES.MysqlDb).to(MysqlDb);
+    container.bind<DBStartup>(TYPES.DBStartup).to(DBStartup);
     container.bind<express.RequestHandler>("Morgan").toConstantValue(morgan("combined"));
     container.bind<express.RequestHandler>("CustomMiddleware").toConstantValue(function customMiddleware(req: any, res: any, next: any) {
 
@@ -98,9 +98,9 @@ export class Server {
   }
 
   private loadDatabases(container: Container) {
-    let mysqlDB = container.get<MysqlDb>(TYPES.MysqlDb);
+    let dbStartup = container.get<DBStartup>(TYPES.DBStartup);
 
-    mysqlDB.loadDatabase()
+    dbStartup.loadDatabase()
   }
 
   public start(port): void {
