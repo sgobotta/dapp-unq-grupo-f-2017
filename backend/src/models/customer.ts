@@ -52,29 +52,46 @@ export class CustomerBuilder {
   address: Address;
 
   constructor(){
+    this.clear()
+  }
+
+  private clear(){
     this.cuit = 0
     this.name = ""
     this.surname = ""
     this.email = ""
+    this.phone = new Phone("", 0)
+    this.address = new Address()
   }
 
   public withName(name:string){
     this.name = name
+    return this
   }
 
   public withSurname(surname:string){
     this.surname = surname
+    return this
   }
 
   public withEmail(email:string){
     this.email = email
+    return this
   }
 
   public withPhone(area:string, number:number){
     this.phone = new Phone(area, number)
+    return this
   }
 
   public withAddress(address:Address){
     this.address = address
+    return this
+  }
+
+  public build(){
+    const customer = new Customer(this.cuit, this.name, this.surname, this.email, this.phone, this.address)
+    this.clear()
+    return customer
   }
 }
