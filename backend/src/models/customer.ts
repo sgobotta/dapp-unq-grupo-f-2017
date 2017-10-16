@@ -40,3 +40,41 @@ export class Customer {
   	});
   }
 }
+
+
+export class CustomerBuilder {
+
+  cuit: number;
+  name: string;
+  surname: string;
+  email: string;
+  phone: Phone;
+  address: Address;
+
+  constructor(){
+    this.cuit = 0
+    this.name = ""
+    this.surname = ""
+    this.email = ""
+  }
+
+  public withName(name:string){
+    this.name = name
+  }
+
+  public withSurname(surname:string){
+    this.surname = surname
+  }
+
+  public withEmail(email:string){
+    this.email = email
+  }
+
+  public withPhone(area:string, number:number){
+    this.phone = new Phone(area, number)
+  }
+
+  public withAddress(address:Address){
+    this.address = address
+  }
+}
