@@ -7,12 +7,11 @@ import { Request, Response } from "express";
 import TYPES from "../constants/types";
 import { Provider } from "../models/provider"
 
-
 @injectable()
 @controller("/provider")
 export class ProviderController {
 
-  constructor(@inject(TYPES.CustomerService) private providerService: ProviderService) {
+  constructor(@inject(TYPES.ProviderService) private providerService: ProviderService) {
 
   }
 
