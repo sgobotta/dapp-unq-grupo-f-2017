@@ -97,10 +97,11 @@ export class Server {
     this.mountRoutes(container);
   }
 
-  private loadDatabases(container: Container) {
+  private loadDatabases(container: Container, callback) {
     let dbStartup = container.get<DBStartup>(TYPES.DBStartup);
 
-    dbStartup.loadDatabase()
+    dbStartup.loadDatabases()
+    callback()
   }
 
   public start(port): void {
@@ -110,18 +111,20 @@ export class Server {
     this.setViewEngine(this.app);
     this.startJobs();
     this.configureContainer(container);
-    this.loadDatabases(container);
 
     let app = this.buildServer(container, this.app);
 
+    this.loadDatabases(container, () => {
 
-    app.listen(port, (err) => {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log(`Server is listening on ${port}`);
-      }
+      app.listen(port, (err) => {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(`Server is listening on ${port}`);
+        }
+      });
     });
+
 
   }
 
