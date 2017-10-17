@@ -1,36 +1,52 @@
 import { inject, injectable } from "inversify";
+import { MongoDBClient } from "../config/mongodb/client";
 import TYPES from "./../constants/types";
 import { Customer } from "../models/customer"
 
 @injectable()
 export class CustomerService {
 
-  public getCustomerByCUIT(cuit:string): Promise<Customer>{
-    return new Promise<Customer>((resolve, reject) => {
-      // To Do
-      resolve(null)
-    })
+  private mongoClient: MongoDBClient;
+  private collection: string;
+
+  constructor(
+    @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient
+  ) {
+    this.mongoClient = mongoClient;
+    this.collection = "customer";
   }
 
-  public updateCustomerByCUIT(cuit:string, json:string): Promise<Customer>{
+  public getCustomerByCUIT(cuit:string): Promise<Customer>{
     return new Promise<Customer>((resolve, reject) => {
-      // To Do
-      resolve(null)
-    })
+      this.mongoClient.findOneByProperty(this.collection, { cuit: cuit}, (error, data: Customer) => {
+        resolve(data);
+      });
+    });
+  }
+
+  public updateCustomerByCUIT(cuit:string, customer:string): Promise<Customer>{
+    return new Promise<Customer>((resolve, reject) => {
+      this.mongoClient.updateByProperty(this.collection, { cuit: cuit }, customer, (error, data: Customer) => {
+        resolve(data);
+      });
+    });
   }
 
   public deleteCustomerByCUIT(cuit:string): Promise<Customer>{
     return new Promise<Customer>((resolve, reject) => {
-      // To Do
-      resolve(null)
-    })
+      this.mongoClient.removeByProperty(this.collection, { cuit: cuit }, (error, data: any) => {
+        resolve(data);
+      });
+    });
   }
 
-  public newCustomer(json: string): Promise<Customer>{
+  public newCustomer(customer: string): Promise<Customer>{
+    // TODO: CUIT validation with model
     return new Promise<Customer>((resolve, reject) => {
-      // To Do
-      resolve(null)
-    })
+      this.mongoClient.insert(this.collection, customer, (error, data: Customer) => {
+        resolve(data);
+      });
+    });
   }
 
 }
