@@ -36,19 +36,9 @@ export class MenuService {
 
   public newMenu(menu: Menu) {
     return new Promise<Menu>((resolve, reject) => {
-      // this.mongoClient.insert("menu", menu, (error, data: Menu) => {
-      //   resolve(data);
-      // });
-
-      let connection = this.mySqlClient.connect();
-
-      // let menu = Menu.build<Menu>({
-      //   name: "pepito",
-      //   description: "crocante"
-      // });
-      // menu.save();
-      // console.log(menu);
-
+      this.mongoClient.insert("menu", menu, (error, data: Menu) => {
+        resolve(data);
+      });
     });
   }
 
