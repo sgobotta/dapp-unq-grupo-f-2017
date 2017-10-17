@@ -1,4 +1,4 @@
-const TYPES = {  
+const TYPES = {
   MySQLClient: Symbol("MySQLClient"),
   MongoDBClient: Symbol("MongoDBClient"),
   DBStartup: Symbol("DBStartup"),
