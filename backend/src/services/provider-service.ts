@@ -5,21 +5,21 @@ import { Provider } from "../models/provider"
 @injectable()
 export class ProviderService {
 
-  public getProviderByCUIT(cuit:string): Promise<Provider>{
+  public getProviderByEMail(email:string): Promise<Provider>{
     return new Promise<Provider>((resolve, reject) => {
       // To Do
       resolve(null)
     })
   }
 
-  public updateProviderByCUIT(cuit:string, json:string): Promise<Provider>{
+  public updateProviderByEMail(email:string, json:string): Promise<Provider>{
     return new Promise<Provider>((resolve, reject) => {
       // To Do
       resolve(null)
     })
   }
 
-  public deleteProviderByCUIT(cuit:string): Promise<Provider>{
+  public deleteProviderByEMail(email:string): Promise<Provider>{
     return new Promise<Provider>((resolve, reject) => {
       // To Do
       resolve(null)

@@ -16,19 +16,19 @@ export class ProviderController {
 
   }
 
-  @httpGet("/:cuit")
+  @httpGet("/:email")
   public getProvider(request: Request) : Promise<Provider> {
-    return this.providerService.getProviderByCUIT(request.params.cuit)
+    return this.providerService.getProviderByEMail(request.params.email)
   }
 
-  @httpPut("/:cuit")
+  @httpPut("/:email")
   public updateProvider(request: Request): Promise<Provider> {
-  	return this.providerService.updateProviderByCUIT(request.params.cuit, request.body)
+  	return this.providerService.updateProviderByEMail(request.params.email, request.body)
   }
 
-  @httpDelete("/:cuit")
+  @httpDelete("/:email")
   public deleteProvider(request: Request): Promise<Provider> {
-  	return this.providerService.deleteProviderByCUIT(request.params.cuit)
+  	return this.providerService.deleteProviderByEMail(request.params.email)
   }
 
   @httpPost("/")
