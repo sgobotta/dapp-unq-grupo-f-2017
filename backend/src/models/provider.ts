@@ -33,3 +33,9 @@ export class Provider {
     this.reputation.rate(value);
   }
 }
+
+export class ProviderBuilder {
+
+// To Do
+
+}
