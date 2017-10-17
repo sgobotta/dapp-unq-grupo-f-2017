@@ -5,7 +5,8 @@ export default class MapsLocation {
   latitude: number;
   longitude: number;
 
-  constructor(){
-
+  constructor(latitude:number, longitude:number){
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 }
