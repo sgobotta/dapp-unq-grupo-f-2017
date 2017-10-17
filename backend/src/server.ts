@@ -13,7 +13,7 @@ import * as expressValidator from "express-validator";
 import Routes from "./routes";
 import { inject, Container } from "inversify";
 import { MailingSystem } from "./models/system/mailing-system";
-import MysqlDb from "./config/mysql/startup";
+import DBStartup from "./config/init";
 
 export class Server {
 
@@ -25,7 +25,7 @@ export class Server {
   private routes;
   private mailingSystem;
   private serviceBuilder;
-  private mysqlDB;
+  private DBStartup;
 
   public constructor(
     @inject(Routes) routes: Routes,
@@ -88,7 +88,7 @@ export class Server {
     // Middleware for Requests
     container.bind<MySQLClient>(TYPES.MySQLClient).to(MySQLClient);
     container.bind<MongoDBClient>(TYPES.MongoDBClient).to(MongoDBClient);
-    container.bind<MysqlDb>(TYPES.MysqlDb).to(MysqlDb);
+    container.bind<DBStartup>(TYPES.DBStartup).to(DBStartup);
     container.bind<express.RequestHandler>("Morgan").toConstantValue(morgan("combined"));
     container.bind<express.RequestHandler>("CustomMiddleware").toConstantValue(function customMiddleware(req: any, res: any, next: any) {
 
@@ -97,10 +97,11 @@ export class Server {
     this.mountRoutes(container);
   }
 
-  private loadDatabases(container: Container) {
-    let mysqlDB = container.get<MysqlDb>(TYPES.MysqlDb);
+  private loadDatabases(container: Container, callback) {
+    let dbStartup = container.get<DBStartup>(TYPES.DBStartup);
 
-    mysqlDB.loadDatabase()
+    dbStartup.loadDatabases();
+    callback();
   }
 
   public start(port): void {
@@ -110,18 +111,20 @@ export class Server {
     this.setViewEngine(this.app);
     this.startJobs();
     this.configureContainer(container);
-    this.loadDatabases(container);
 
     let app = this.buildServer(container, this.app);
 
+    this.loadDatabases(container, () => {
 
-    app.listen(port, (err) => {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log(`Server is listening on ${port}`);
-      }
+      app.listen(port, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(`Server is listening on ${port}`);
+        }
+      });
     });
+
 
   }
 
