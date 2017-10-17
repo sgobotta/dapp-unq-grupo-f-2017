@@ -7,6 +7,8 @@ import { MenuController } from "./controllers/menu-controller";
 import { MenuService } from "./services/menu-service";
 import { ProviderController } from "./controllers/provider-controller";
 import { ProviderService } from "./services/provider-service";
+import { CustomerController } from "./controllers/customer-controller";
+import { CustomerService } from "./services/customer-service";
 
 @injectable()
 export default class Routes {
@@ -22,6 +24,9 @@ export default class Routes {
 
     container.bind<interfaces.Controller>(TYPE.Controller).to(ProviderController).whenTargetNamed(TAGS.ProviderController);
     container.bind<ProviderService>(TYPES.ProviderService).to(ProviderService);
+
+    container.bind<interfaces.Controller>(TYPE.Controller).to(CustomerController).whenTargetNamed(TAGS.CustomerController);
+    container.bind<CustomerService>(TYPES.CustomerService).to(CustomerService);
   }
 
 }
