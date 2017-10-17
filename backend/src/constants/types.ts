@@ -2,7 +2,7 @@ const TYPES = {
   MenuService: Symbol("MenuService"),
   MySQLClient: Symbol("MySQLClient"),
   MongoDBClient: Symbol("MongoDBClient"),
-  MysqlDb: Symbol("MysqlDb"),
+  DBStartup: Symbol("DBStartup"),
   CustomerService: Symbol("CustomerService"),
   ProviderService: Symbol("ProviderService")
 };
