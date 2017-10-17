@@ -1,7 +1,8 @@
 import Phone from "./utils/phone";
 import Address from "./utils/address";
-import request from 'request';
-import {MailValidator} from './utils/mailValidator'
+import * as request from "request";
+import { MailValidator } from "./utils/mailValidator";
+import MapsLocation from "./utils/maps/maps-location";
 
 export class Customer {
 
@@ -26,13 +27,13 @@ export class Customer {
   }
 
   private validateCuit(cuit) {
-  	// Should work, testing To-DO
+  	// Service Unavailable 10/17/2017
   	request('http://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, function(err, res, body){
   		if(err){
   			return false;
   		}
   		if(res){
-  			return res.success;
+  			return res;
   		}
   		else {
   			return false;
@@ -53,15 +54,21 @@ export class CustomerBuilder {
 
   constructor(){
     this.clear()
+    return this;
   }
 
   private clear(){
-    this.cuit = 0
-    this.name = ""
-    this.surname = ""
-    this.email = ""
-    this.phone = new Phone("", 0)
-    this.address = new Address()
+    this.cuit = 0;
+    this.name = "";
+    this.surname = "";
+    this.email = "";
+    this.phone = new Phone("", 0);
+    this.address = new Address("", 0, "", "", new MapsLocation(0,0));
+  }
+
+  public withCUIT(cuit:number){
+    this.cuit = cuit;
+    return this
   }
 
   public withName(name:string){
@@ -84,8 +91,9 @@ export class CustomerBuilder {
     return this
   }
 
-  public withAddress(address:Address){
-    this.address = address
+  public withAddress(street:string, number:number, city:string, state: string,
+  latitude:number, longitude:number){
+    this.address = new Address(street, number, city, state, new MapsLocation(latitude, longitude));
     return this
   }
 
