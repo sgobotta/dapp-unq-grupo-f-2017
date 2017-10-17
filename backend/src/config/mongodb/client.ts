@@ -42,4 +42,21 @@ export class MongoDBClient {
     });
   }
 
+  public findOneByProperty(collection: string, object: Object, result: (error, data) => void): void {
+    this.db.collection(collection).find(object).limit(1).toArray((error, find) => {
+      return result(error, find[0]);
+    });
+  }
+
+  public updateByProperty(collection: string, object: Object, model: any, result: (error, data) => void): void {
+    this.db.collection(collection).updateOne(object, { $set: model }, (error, update) => {
+      return result(error, model);
+    });
+  }
+
+  public removeByProperty(collection: string, object: Object, result: (error, data) => void): void {
+    this.db.collection(collection).deleteOne(object, (error, remove) => {
+      return result(error, remove);
+    });
+  }
 }
