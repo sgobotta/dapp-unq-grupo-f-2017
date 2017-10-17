@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Hamburguesas con fritas",
+    "description": "1 hamburguesa y porcion de papas fritas para una persona",
+    "category": ["carne", "hamburguesa"],
+    "deliveryPrice": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 20
+    },
+    "validityRange": ["Sun Oct 15 2017 02:30:10 GMT-0300 (ART)", "Sun Oct 17 2017 02:30:10 GMT-0300 (ART)"],
+    "deliveryTimeRange": "5 hours",
+    "price": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 80
+    },
+    "minQuantity": 10,
+    "minQuantityPrice": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 800
+    },
+    "maxDailySalesQuantity": 40,
+    "providerId": "MBWR0TPkpkDTCg5ty"
+  },
+  {
+    "name": "Pollo al espiedo",
+    "description": "porción para 1 persona, con papas o ensalada",
+    "category": ["pollo", "carne blanca", "ensalada", "delicious"],
+    "deliveryPrice": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 20
+    },
+    "validityRange": ["Sun Oct 15 2017 02:30:10 GMT-0300 (ART)", "Sun Oct 17 2017 02:30:10 GMT-0300 (ART)"],
+    "deliveryTimeRange": "5 hours",
+    "price": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 100
+    },
+    "minQuantity": 10,
+    "minQuantityPrice": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 1000
+    },
+    "maxDailySalesQuantity": 20,
+    "providerId": "MBWR0TPkpkDTCg5ty"
+  },
+  {
+    "name": "Milanesas de soja",
+    "description": "Poción de dos milaesas con arroz, ensalada o papas al horno",
+    "category": ["soy", "veggie"],
+    "deliveryPrice": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 20
+    },
+    "validityRange": ["Sun Oct 15 2017 02:30:10 GMT-0300 (ART)", "Sun Oct 17 2017 02:30:10 GMT-0300 (ART)"],
+    "deliveryTimeRange": "5 hours",
+    "price": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 60
+    },
+    "minQuantity": 10,
+    "minQuantityPrice": {
+      "name": "USDollars",
+      "symbol": "u$s",
+      "amount": 600
+    },
+    "maxDailySalesQuantity": 80,
+    "providerId": "MBWR0TPkpkDTCg5ty"
+  }
+]
