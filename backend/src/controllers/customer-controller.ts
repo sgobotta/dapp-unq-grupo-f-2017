@@ -23,7 +23,7 @@ export class CustomerController {
 
   @httpPut("/:cuit")
   public updateCustomer(request: Request): Promise<Customer> {
-  	return this.customerService.updateCusomerByCUIT(request.params.cuit, request.body)
+  	return this.customerService.updateCustomerByCUIT(request.params.cuit, request.body)
   }
 
   @httpDelete("/:cuit")

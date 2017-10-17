@@ -12,7 +12,7 @@ export class CustomerService {
     })
   }
 
-  public updateCusomerByCUIT(cuit:string, json:string): Promise<Customer>{
+  public updateCustomerByCUIT(cuit:string, json:string): Promise<Customer>{
     return new Promise<Customer>((resolve, reject) => {
       // To Do
       resolve(null)
