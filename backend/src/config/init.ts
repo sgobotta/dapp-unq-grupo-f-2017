@@ -31,21 +31,21 @@ export default class Startup {
 
   private getConnection(callback) {
     MongoDBConnection.getConnection((connection) => {
-      if(!connection) console.log("No databases found")
+      if (!connection) console.log("No databases found");
       callback(connection);
-    })
+    });
   }
 
   private dropCollection(collection: Collection) {
     collection.drop((err, res) => {
-      if(err) throw err;
+      if (err) throw err;
     });
   }
 
   private importCollection(collection: Collection, data) {
     this.dropCollection(collection);
-    collection.insert(data, (error, insert) => {
-      if(error) throw error;
+    collection.insert(data, (err, insert) => {
+      if (err) throw err;
     });
 
   }

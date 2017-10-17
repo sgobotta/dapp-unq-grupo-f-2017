@@ -100,8 +100,8 @@ export class Server {
   private loadDatabases(container: Container, callback) {
     let dbStartup = container.get<DBStartup>(TYPES.DBStartup);
 
-    dbStartup.loadDatabases()
-    callback()
+    dbStartup.loadDatabases();
+    callback();
   }
 
   public start(port): void {
@@ -117,7 +117,7 @@ export class Server {
     this.loadDatabases(container, () => {
 
       app.listen(port, (err) => {
-        if(err) {
+        if (err) {
           console.log(err);
         } else {
           console.log(`Server is listening on ${port}`);
