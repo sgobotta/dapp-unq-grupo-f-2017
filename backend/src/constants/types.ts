@@ -3,7 +3,8 @@ const TYPES = {
   MySQLClient: Symbol("MySQLClient"),
   MongoDBClient: Symbol("MongoDBClient"),
   MysqlDb: Symbol("MysqlDb"),
-  CustomerService: Symbol("CustomerService")
+  CustomerService: Symbol("CustomerService"),
+  ProviderService: Symbol("ProviderService")
 };
 
 export default TYPES;
