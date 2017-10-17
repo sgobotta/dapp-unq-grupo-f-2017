@@ -34,8 +34,7 @@ export class Customer {
   			return false;
   		}
   		if(res.body.success){
-        this.validateCuitInformation(res.body.data)
-  			return res;
+  			return true;
   		}
   		else {
   			return false;
