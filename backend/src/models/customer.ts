@@ -28,11 +28,13 @@ export class Customer {
 
   private validateCuit(cuit) {
   	// Service Unavailable 10/17/2017
-  	request('http://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, function(err, res, body){
+  	request('https://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, function(err, res, body){
   		if(err){
+        console.log(err)
   			return false;
   		}
-  		if(res){
+  		if(res.body.success){
+        this.validateCuitInformation(res.body.data)
   			return res;
   		}
   		else {
