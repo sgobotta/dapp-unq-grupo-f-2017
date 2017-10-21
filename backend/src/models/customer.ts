@@ -19,6 +19,8 @@ export class Customer {
   	}
   	if(MailValidator.validateMail(email)){
       this.email = email;
+    } else {
+      throw Error("ERROR ::: Provided e-mail is not valid.")
     }
   	this.name = name;
   	this.surname = surname;
@@ -27,17 +29,18 @@ export class Customer {
   }
 
   private validateCuit(cuit) {
-  	// Service Unavailable 10/17/2017
-  	request('https://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, function(err, res, body){
+  	request('https://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, (err, res, body) => {
   		if(err){
         console.log(err)
-  			return false;
+  			throw Error("ERROR ::: Connection could't be established")
   		}
-  		if(res.body.success){
-  			return true;
+      let success = JSON.parse(res.body).success
+  		if(success){
+        console.log(body)
+  			return body.estadoClave === "ACTIVO";
   		}
   		else {
-  			return false;
+  			throw Error("ERROR ::: CUIT provided seems to be invalid")
   		}
   	});
   }
