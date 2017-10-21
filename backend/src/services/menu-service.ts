@@ -35,6 +35,14 @@ export class MenuService {
     });
   }
 
+  public getMenuByName(name: string): Promise<Menu> {
+    return new Promise<Menu>((resolve, reject) => {
+      this.mongoClient.findOneByProperty(this.collection, name, (error, data: Menu) => {
+        resolve(data);
+      })
+    })
+  }
+
   public newMenu(menu: Menu) {
     return new Promise<Menu>((resolve, reject) => {
       this.mongoClient.insert(this.collection, menu, (error, data: Menu) => {
