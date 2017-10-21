@@ -18,6 +18,11 @@ export class MenuController {
     return this.menuService.getMenus();
   }
 
+  @httpPost("/:name")
+  public getMenusWithName(request: Request): Promise<Menu[]> {
+    return this.menuService.getMenusWithName(request.params.name);
+  }
+
   @httpGet("/:id")
   public getMenu(request: Request): Promise<Menu> {
     return this.menuService.getMenu(request.params.id);
