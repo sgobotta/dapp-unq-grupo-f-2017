@@ -27,6 +27,14 @@ export class MenuService {
     });
   }
 
+  public getMenusWithName(name: string): Promise<Menu[]> {
+    return new Promise<Menu[]>((resolve, reject) => {
+      this.mongoClient.findWithPattern(this.collection, { property: "name", value: name }, (error, data: Menu[]) => {
+        resolve(data);
+      })
+    })
+  }
+
   public getMenu(id: string): Promise<Menu> {
     return new Promise<Menu>((resolve, reject) => {
       this.mongoClient.findOneById(this.collection, id, (error, data: Menu) => {
