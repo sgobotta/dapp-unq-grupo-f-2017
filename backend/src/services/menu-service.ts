@@ -8,6 +8,7 @@ import TYPES from "./../constants/types";
 export class MenuService {
   private mongoClient: MongoDBClient;
   private mySqlClient: MySQLClient;
+  private collection: string;
 
   constructor(
     @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient,
@@ -15,11 +16,20 @@ export class MenuService {
   ) {
     this.mongoClient = mongoClient;
     this.mySqlClient = mySqlClient;
+    this.collection = "menu";
   }
 
   public getMenus(): Promise<Menu[]> {
     return new Promise<Menu[]>((resolve, reject) => {
-      this.mongoClient.find("menu", {}, (error, data: Menu[]) => {
+      this.mongoClient.find(this.collection, {}, (error, data: Menu[]) => {
+        resolve(data);
+      });
+    });
+  }
+
+  public getMenusWithName(name: string): Promise<Menu[]> {
+    return new Promise<Menu[]>((resolve, reject) => {
+      this.mongoClient.findWithPattern(this.collection, { property: "name", value: name }, (error, data: Menu[]) => {
         resolve(data);
       });
     });
@@ -27,16 +37,23 @@ export class MenuService {
 
   public getMenu(id: string): Promise<Menu> {
     return new Promise<Menu>((resolve, reject) => {
-      this.mongoClient.findOneById("menu", id, (error, data: Menu) => {
+      this.mongoClient.findOneById(this.collection, id, (error, data: Menu) => {
         resolve(data);
       });
     });
   }
 
+  public getMenuByName(name: string): Promise<Menu> {
+    return new Promise<Menu>((resolve, reject) => {
+      this.mongoClient.findOneByProperty(this.collection, name, (error, data: Menu) => {
+        resolve(data);
+      });
+    });
+  }
 
   public newMenu(menu: Menu) {
     return new Promise<Menu>((resolve, reject) => {
-      this.mongoClient.insert("menu", menu, (error, data: Menu) => {
+      this.mongoClient.insert(this.collection, menu, (error, data: Menu) => {
         resolve(data);
       });
     });
@@ -44,7 +61,7 @@ export class MenuService {
 
   public updateMenu(id: string, user: Menu): Promise<Menu> {
     return new Promise<Menu>((resolve, reject) => {
-      this.mongoClient.update("menu", id, user, (error, data: Menu) => {
+      this.mongoClient.update(this.collection, id, user, (error, data: Menu) => {
         resolve(data);
       });
     });
@@ -52,7 +69,7 @@ export class MenuService {
 
   public deleteMenu(id: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.mongoClient.remove("menu", id, (error, data: any) => {
+      this.mongoClient.remove(this.collection, id, (error, data: any) => {
         resolve(data);
       });
     });

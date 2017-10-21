@@ -56,10 +56,10 @@ export default class Startup {
     let menuInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "menu.json"), "utf8"));
 
     this.getConnection((connection) => {
-      let collection = connection.collection("menu", { strict: true}, (err, res) => {
+      connection.collection("menu", { strict: true}, (err, res) => {
         if (err) return;
         else {
-          this.importCollection(collection, menuInfo);
+          this.importCollection(res, menuInfo);
         }
       })
     });
