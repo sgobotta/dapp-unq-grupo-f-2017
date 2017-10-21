@@ -11,7 +11,10 @@ export class MongoDBConnection {
       return result(this.db);
     } else {
       this.connect((error, db: Db) => {
-        return result(this.db);
+        if (error) throw error;
+        else {
+          return result(this.db);
+        }
       });
     }
   }
