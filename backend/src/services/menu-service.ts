@@ -31,8 +31,8 @@ export class MenuService {
     return new Promise<Menu[]>((resolve, reject) => {
       this.mongoClient.findWithPattern(this.collection, { property: "name", value: name }, (error, data: Menu[]) => {
         resolve(data);
-      })
-    })
+      });
+    });
   }
 
   public getMenu(id: string): Promise<Menu> {
@@ -47,8 +47,8 @@ export class MenuService {
     return new Promise<Menu>((resolve, reject) => {
       this.mongoClient.findOneByProperty(this.collection, name, (error, data: Menu) => {
         resolve(data);
-      })
-    })
+      });
+    });
   }
 
   public newMenu(menu: Menu) {

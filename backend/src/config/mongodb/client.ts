@@ -20,7 +20,7 @@ export class MongoDBClient {
 
   public findWithPattern(collection: string, filter: any, result: (error, data) => void): void {
     let query = {};
-    query[filter.property] = { $regex: filter.value }
+    query[filter.property] = { $regex: filter.value };
     this.db.collection(collection).find(query).toArray((error, find) => {
       return result(error, find);
     });
