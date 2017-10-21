@@ -43,7 +43,6 @@ export class CustomerService {
 
   public newCustomer(customer: Customer): Promise<Customer>{
     return new Promise<Customer>((resolve, reject) => {
-
       let newCustomer = new CustomerBuilder()
       .withCUIT(customer.cuit)
       .withName(customer.name)
@@ -59,8 +58,5 @@ export class CustomerService {
         resolve(data);
       });
     });
-
-
   }
-
 }
