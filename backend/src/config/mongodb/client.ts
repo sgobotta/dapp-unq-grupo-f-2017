@@ -18,6 +18,14 @@ export class MongoDBClient {
     });
   }
 
+  public findWithPattern(collection: string, filter: any, result: (error, data) => void): void {
+    let query = {};
+    query[filter.property] = { $regex: filter.value }
+    this.db.collection(collection).find(query).toArray((error, find) => {
+      return result(error, find);
+    });
+  }
+
   public findOneById(collection: string, objectId: string, result: (error, data) => void): void {
     this.db.collection(collection).find({ _id: new ObjectID(objectId) }).limit(1).toArray((error, find) => {
       return result(error, find[0]);
