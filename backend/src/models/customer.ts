@@ -31,12 +31,10 @@ export class Customer {
   private validateCuit(cuit) {
   	request('https://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, (err, res, body) => {
   		if(err){
-        console.log(err)
   			throw Error("ERROR ::: Connection could't be established")
   		}
       let success = JSON.parse(res.body).success
   		if(success){
-        console.log(body)
   			return body.estadoClave === "ACTIVO";
   		}
   		else {
