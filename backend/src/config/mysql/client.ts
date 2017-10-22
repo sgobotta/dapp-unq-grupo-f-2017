@@ -2,6 +2,7 @@ import { injectable } from "inversify";
 import * as mysql from "mysql";
 import * as path from "path";
 import Menu from "./../../models/menu";
+import { connectionConfig } from "./config";
 
 @injectable()
 export class MySQLClient {
@@ -10,13 +11,12 @@ export class MySQLClient {
   private pool: mysql.IPool;
 
   constructor() {
-    this.connection  = mysql.createConnection({
-      host            : "localhost" || process.env.JAWSDB_URL,
-      user            : "root",
-      password        : "root",
-      database        : "morfiya"
-    });
-
+    if (!process.env.ON_DEPLOY) {
+      this.connection = mysql.createConnection(connectionConfig.local);
+    }
+    if (process.env.ON_DEPLOY) {
+      this.connection = mysql.createConnection(connectionConfig.deploy);
+    }
   }
 
   public getConnection() {

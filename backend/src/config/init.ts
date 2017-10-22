@@ -18,15 +18,8 @@ export default class Startup {
   }
 
   public loadDatabases() {
-
     this.loadMongoCollections();
-
-    let tablesInfo = fs.readFileSync(path.join(__dirname + "./../../config/initial_data.sql"), "utf8");
-
-    // this.mySqlClient.getConnection().query(tablesInfo, function(err,res){
-    //   if(err) throw err;
-    //   console.log(res);
-    // });
+    this.loadSqlTables();
   }
 
   private getConnection(callback) {
@@ -46,8 +39,10 @@ export default class Startup {
     this.dropCollection(collection);
     collection.insert(data, (err, insert) => {
       if (err) throw err;
+      if (insert) {
+        console.log(`MongoDB ::: Collection ${collection.collectionName} loaded succesfully.`);
+      }
     });
-
   }
 
   private loadMongoCollections() {
@@ -76,6 +71,18 @@ export default class Startup {
           this.importCollection(collection, providersInfo);
         }
       });
+    });
+  }
+
+  private loadSqlTables() {
+    // TODO: implement get assets function
+    const tablesInfo = fs.readFileSync(path.join(__dirname + "./../../private/data/initial_data.sql"), "utf8").toString();
+    const connection = this.mySqlClient.getConnection();
+    connection.query(tablesInfo, (err, res) => {
+        if (err) throw err;
+        if (res) {
+          console.log("MySql ::: Database loaded succesfully");
+        }
     });
   }
 }
