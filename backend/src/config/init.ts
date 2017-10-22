@@ -58,19 +58,19 @@ export default class Startup {
     let providersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "providers.json"), "utf8"));
 
     this.getConnection((connection) => {
-      connection.createCollection("menu", { w:1 }, (err, collection) => {
+      connection.createCollection("menu", { w: 1 }, (err, collection) => {
         if (err) return;
         else {
           this.importCollection(collection, menusInfo);
         }
       });
-      connection.createCollection("customer", { w:1 }, (err, collection) => {
+      connection.createCollection("customer", { w: 1 }, (err, collection) => {
         if (err) return;
         else {
           this.importCollection(collection, customersInfo);
         }
       });
-      connection.createCollection("provider", { w:1 }, (err, collection) => {
+      connection.createCollection("provider", { w: 1 }, (err, collection) => {
         if (err) return;
         else {
           this.importCollection(collection, providersInfo);
