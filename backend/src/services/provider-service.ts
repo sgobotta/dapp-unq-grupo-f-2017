@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { MongoDBClient } from "../config/mongodb/client";
-import { Provider } from "../models/provider"
+import { Provider, ProviderBuilder } from "../models/provider"
 import TYPES from "./../constants/types";
 
 @injectable()
@@ -40,8 +40,23 @@ export class ProviderService {
     });
   }
 
-  public newProvider(provider: string): Promise<Provider>{
+  public newProvider(provider: Provider): Promise<Provider>{
     return new Promise<Provider>((resolve, reject) => {
+
+      let newProvider = new ProviderBuilder()
+      .withName(provider.name)
+      .withLogo(provider.logo)
+      .withAddress(provider.address.street, provider.address.number,
+        provider.address.city, provider.address.state,
+        provider.address.mapsLocation.latitude, provider.address.mapsLocation.longitude)
+      .withDescription(provider.description)
+      .withWebsite(provider.website)
+      .withEmail(provider.email)
+      .withPhone(provider.phone.area, provider.phone.number)
+      .withAvailability(provider.availability)
+      .withDeliveryLocationRange(provider.deliveryLocationRange.area)
+      .build();
+
       this.mongoClient.insert(this.collection, provider, (error, data: Provider) => {
         resolve(data);
       });
