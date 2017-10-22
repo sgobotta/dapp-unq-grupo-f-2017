@@ -1,0 +1,349 @@
+[
+  {
+    "name": "Universidad Nacional de Quilmes",
+    "logo": "unq@unq.edu.ar",
+    "address": {
+      "street": "Roque Sáenz Peña",
+      "number": "352",
+      "city": "Bernal",
+      "state": "Buenos Aires",
+      "mapsLocation": {
+        "latitude": "-34.7065604",
+        "longitude": "-58.2785224"
+      }
+    },
+    "description": "Bouffet de la Universidad Nacional de Quilmes, ahora con Delivery!",
+    "website": "http://www.unq.edu.ar/",
+    "email": "unq@unq.edu.ar",
+    "phone": {
+      "area": "+54",
+      "number": "011 4365-7100"
+    },
+    "availability": {
+      "daysOfTheWeek": [
+        {
+          "day": "Monday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 20
+            }
+          ]
+        },
+        {
+          "day": "Tuesday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 20
+            }
+          ]
+        },
+        {
+          "day": "Wednesday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 20
+            }
+          ]
+        },
+        {
+          "day": "Thursday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 20
+            }
+          ]
+        },
+        {
+          "day": "Friday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 20
+            }
+          ]
+        },
+        {
+          "day": "Saturday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 20
+            }
+          ]
+        }
+      ]
+    },
+    "deliveryLocationRange": {
+      "area": [
+        {
+          "latitude": "-34.7190196",
+          "longitude": "-58.262244"
+        },
+        {
+          "latitude": "-34.7083276",
+          "longitude": "-58.283822"
+        },
+        {
+          "latitude": "-34.6964735",
+          "longitude": "-58.3006348"
+        },
+        {
+          "latitude": "-34.7035125",
+          "longitude": "-58.2763073"
+        }
+      ]
+    },
+    "reputation": {
+      "averageRating": 9,
+      "quantity": 200
+    }
+  },
+  {
+    "name": "Los Gallegos",
+    "logo": "delivery@losgallegos.com.ar",
+    "address": {
+      "street": "Pres. Juan Domingo Perón 358",
+      "number": "358",
+      "city": "Quilmes Oeste",
+      "state": "Buenos Aires",
+      "mapsLocation": {
+        "latitude": "-34.7279409",
+        "longitude": "-58.2627366"
+      }
+    },
+    "description": "Historico restaruant Los Gallegos. Famoso por sus exquisitas super Milanesas; sus Rabas y sus cazuelas de mariscos.",
+    "website": "https://www.facebook.com/Restaurant-Los-Gallegos-Oficial-FBK-216651501686831/",
+    "email": "delivery@losgallegos.com.ar",
+    "phone": {
+      "area": "+54",
+      "number": "011 42571516"
+    },
+    "availability": {
+      "daysOfTheWeek": [
+        {
+          "day": "Monday",
+          "shifts": [
+            {
+              "start": 9,
+              "end": 14
+            },
+            {
+              "start": 18,
+              "end": 23
+            }
+          ]
+        },
+        {
+          "day": "Tuesday",
+          "shifts": [
+            {
+              "start": 9,
+              "end": 14
+            },
+            {
+              "start": 18,
+              "end": 23
+            }
+          ]
+        },
+        {
+          "day": "Wednesday",
+          "shifts": [
+            {
+              "start": 9,
+              "end": 14
+            },
+            {
+              "start": 18,
+              "end": 23
+            }
+          ]
+        },
+        {
+          "day": "Thursday",
+          "shifts": [
+            {
+              "start": 9,
+              "end": 14
+            },
+            {
+              "start": 18,
+              "end": 23
+            }
+          ]
+        },
+        {
+          "day": "Friday",
+          "shifts": [
+            {
+              "start": 9,
+              "end": 23
+            }
+          ]
+        },
+        {
+          "day": "Saturday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 23
+            }
+          ]
+        },
+        {
+          "day": "Sunday",
+          "shifts": [
+            {
+              "start": 18,
+              "end": 23
+            }
+          ]
+        }
+      ]
+    },
+    "deliveryLocationRange": {
+      "area": [
+        {
+          "latitude": "-34.7163487",
+          "longitude": "-58.271818899"
+        },
+        {
+          "latitude": "-34.7234468",
+          "longitude": "-58.2443689"
+        },
+        {
+          "latitude": "-34.7373293",
+          "longitude": "-58.2551235"
+        },
+        {
+          "latitude": "-34.7370427",
+          "longitude": "-58.277360499"
+        }
+      ]
+    },
+    "reputation": {
+      "averageRating": 9.3,
+      "quantity": 1365
+    }
+  },
+  {
+    "name": "Buenos Aires Sushi",
+    "logo": "contacto@buenosairessushi.com.ar",
+    "address": {
+      "street": "N. Videla",
+      "number": "363",
+      "city": "Quilmes",
+      "state": "Buenos Aires",
+      "mapsLocation": {
+        "latitude": "-34.718903",
+        "longitude": "-58.255325"
+      }
+    },
+    "description": "Especialidad en sushi y comida fusión oriental",
+    "website": "http://www.buenosairesushi.com.ar/",
+    "email": "contacto@buenosairessushi.com.ar",
+    "phone": {
+      "area": "+54",
+      "number": "011 4253-1964"
+    },
+    "availability": {
+      "daysOfTheWeek": [
+        {
+          "day": "Monday",
+          "shifts": [
+            {
+              "start": 18,
+              "end": 1
+            }
+          ]
+        },
+        {
+          "day": "Tuesday",
+          "shifts": [
+            {
+              "start": 18,
+              "end": 1
+            }
+          ]
+        },
+        {
+          "day": "Wednesday",
+          "shifts": [
+            {
+              "start": 18,
+              "end": 1
+            }
+          ]
+        },
+        {
+          "day": "Thursday",
+          "shifts": [
+            {
+              "start": 18,
+              "end": 1
+            }
+          ]
+        },
+        {
+          "day": "Friday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 14
+            },
+            {
+              "start": 18,
+              "end": 4
+            }
+          ]
+        },
+        {
+          "day": "Saturday",
+          "shifts": [
+            {
+              "start": 10,
+              "end": 4
+            }
+          ]
+        },
+        {
+          "day": "Sunday",
+          "shifts": [
+            {
+              "start": 18,
+              "end": 1
+            }
+          ]
+        }
+      ]
+    },
+    "deliveryLocationRange": {
+      "area": [
+        {
+          "latitude": "-34.7115399",
+          "longitude": "-58.263918300"
+        },
+        {
+          "latitude": "-34.7245401",
+          "longitude": "-58.26984170000001"
+        },
+        {
+          "latitude": "-34.7238551",
+          "longitude": "-58.24828369999999"
+        },
+        {
+          "latitude": "-34.7176918",
+          "longitude": "-58.2470774"
+        }
+      ]
+    },
+    "reputation": {
+      "averageRating": 9.1,
+      "quantity": 1169
+    }
+  }
+]
