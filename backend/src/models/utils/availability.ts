@@ -2,7 +2,7 @@ export default class Availability {
 
   daysOfTheWeek: [DayAvailability];
 
-  constructor(daysOfTheWeek){
+  constructor(daysOfTheWeek) {
     this.daysOfTheWeek = daysOfTheWeek;
   }
 }

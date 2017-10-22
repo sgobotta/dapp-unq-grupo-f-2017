@@ -3,7 +3,7 @@ import Phone from "./utils/phone";
 import Availability from "./utils/availability";
 import MapsPolygon from "./utils/maps/maps-polygon";
 import { Reputation } from "./reputation";
-import { MailValidator } from './utils/mailValidator';
+import { MailValidator } from "./utils/mailValidator";
 import MapsLocation from "./utils/maps/maps-location";
 
 export class Provider {
@@ -85,7 +85,7 @@ export class ProviderBuilder {
     return this;
   }
 
-  public withAddress(street:string, number:number, city:string, state: string,
+  public withAddress(street:string, number:number, city:string, state: string, 
   latitude:number, longitude:number) {
     this.address = new Address(street, number, city, state, new MapsLocation(latitude, longitude));
     return this;
