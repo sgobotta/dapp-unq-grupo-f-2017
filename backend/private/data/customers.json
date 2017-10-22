@@ -1,0 +1,62 @@
+[
+  {
+    "cuit": "2034368787",
+    "name": "Santiago",
+    "surname": "Botta",
+    "email": "sgobotta@gmail.com",
+    "phone": {
+      "area": "+54",
+      "number": "42545465"
+    },
+    "address": {
+      "street": "Alvear",
+      "number": "581",
+      "city": "Quilmes",
+      "state": "Buenos Aires",
+      "mapsLocation": {
+        "latitude": "-34.720841",
+        "longitude": "-58.2579859"
+      }
+    }
+  },
+  {
+    "cuit": "20382524765",
+    "name": "Lisandro",
+    "surname": "Botta",
+    "email": "bottalisandro94@gmail.com",
+    "phone": {
+      "area": "+54",
+      "number": "42546586"
+    },
+    "address": {
+      "street": "Alvear",
+      "number": "581",
+      "city": "Quilmes",
+      "state": "Buenos Aires",
+      "mapsLocation": {
+        "latitude": "-34.720841",
+        "longitude": "-58.2579859"
+      }
+    }
+  },
+  {
+    "cuit": "2034368787",
+    "name": "Giammarini",
+    "surname": "Marcelo Diego",
+    "email": "mdiegogiammarini@gmail.com",
+    "phone": {
+      "area": "+54",
+      "number": "42545465"
+    },
+    "address": {
+      "street": "Alte. Brown",
+      "number": "218",
+      "city": "Quilmes",
+      "state": "Buenos Aires",
+      "mapsLocation": {
+        "latitude": "-34.7151926",
+        "longitude": "-58.2632841"
+      }
+    }
+  }
+]
