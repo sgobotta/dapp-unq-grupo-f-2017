@@ -53,17 +53,29 @@ export default class Startup {
   private loadMongoCollections() {
 
     // TODO: implement get assets function from private data
-    let menuInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "menu.json"), "utf8"));
+    let menusInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "menu.json"), "utf8"));
+    let customersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "customers.json"), "utf8"));
+    let providersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "providers.json"), "utf8"));
 
     this.getConnection((connection) => {
-      connection.collection("menu", { strict: true}, (err, res) => {
+      connection.createCollection("menu", { w: 1 }, (err, collection) => {
         if (err) return;
         else {
-          this.importCollection(res, menuInfo);
+          this.importCollection(collection, menusInfo);
         }
-      })
+      });
+      connection.createCollection("customer", { w: 1 }, (err, collection) => {
+        if (err) return;
+        else {
+          this.importCollection(collection, customersInfo);
+        }
+      });
+      connection.createCollection("provider", { w: 1 }, (err, collection) => {
+        if (err) return;
+        else {
+          this.importCollection(collection, providersInfo);
+        }
+      });
     });
-
   }
-
 }
