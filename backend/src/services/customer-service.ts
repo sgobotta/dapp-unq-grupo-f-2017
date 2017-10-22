@@ -42,22 +42,21 @@ export class CustomerService {
   }
 
   public newCustomer(customer: Customer): Promise<Customer>{
-    let newCustomer = new CustomerBuilder()
+    return new Promise<Customer>((resolve, reject) => {
+      let newCustomer = new CustomerBuilder()
       .withCUIT(customer.cuit)
       .withName(customer.name)
       .withSurname(customer.surname)
       .withEmail(customer.email)
       .withPhone(customer.phone.area, customer.phone.number)
       .withAddress(customer.address.street, customer.address.number,
-      customer.address.city, customer.address.state,
-      customer.address.mapsLocation.latitude, customer.address.mapsLocation.longitude)
-    .build();
+        customer.address.city, customer.address.state,
+        customer.address.mapsLocation.latitude, customer.address.mapsLocation.longitude)
+      .build();
 
-    return new Promise<Customer>((resolve, reject) => {
-      this.mongoClient.insert(this.collection, newCustomer, (error, data: Customer) => {
+      this.mongoClient.insert(this.collection, customer, (error, data: Customer) => {
         resolve(data);
       });
     });
   }
-
 }
