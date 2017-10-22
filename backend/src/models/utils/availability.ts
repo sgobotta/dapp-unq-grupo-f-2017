@@ -2,13 +2,17 @@ export default class Availability {
 
   daysOfTheWeek: [DayAvailability];
 
-  constructor(){
-
+  constructor(daysOfTheWeek) {
+    this.daysOfTheWeek = daysOfTheWeek;
   }
 }
 
 interface DayAvailability {
   day: string,
-  fromTime: number,
-  toTime: number
+  shifts: [Workshift]
+}
+
+interface Workshift {
+  start: number,
+  end: number
 }

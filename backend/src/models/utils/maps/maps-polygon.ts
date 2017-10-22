@@ -2,9 +2,9 @@ import MapsLocation from "./maps-location";
 
 export default class MapsPolygon {
 
-  area: [MapsLocation];
+  area: MapsLocation[];
 
-  constructor() {
-
+  constructor(mapsLocation: MapsLocation[]) {
+    this.area = mapsLocation
   }
 }
