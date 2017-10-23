@@ -12,7 +12,8 @@ export const connectionConfig = {
     host              : "xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     user              : "s4zpr3bmowz0o9mg",
     password          : "o1v3l9nv3psb7e3i",
-    database          : "morfiya",
+    port              : 3306,
+    database          : "zkh38hike0cn5neb",
     multipleStatements: true
   }
 }
