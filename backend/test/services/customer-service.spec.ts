@@ -1,6 +1,6 @@
-import { CustomerService } from "./../src/services/customer-service";
-import { Customer } from "./../src/models/customer";
-import { MongoDBClient } from "./../src/config/mongodb/client";
+import { CustomerService } from "./../../src/services/customer-service";
+import { Customer } from "./../../src/models/customer";
+import { MongoDBClient } from "./../../src/config/mongodb/client";
 import { expect } from "chai";
 import "mocha";
 import { mock, instance, when, verify, anyString } from "ts-mockito";
