@@ -36,7 +36,7 @@ describe("A Customer Service when getCustomerByCUIT is called", () => {
 describe("A Customer Service when updateCustomerByCUIT is called", () => {
   it("should call updateByProperty on mongoClient", () => {
     customerService.updateCustomerByCUIT("20343687878", Object, () => {
-      verify(mongoClient.findOneByProperty).once();
+      verify(mongoClient.updateByProperty).once();
     });
   });
 });
@@ -44,7 +44,7 @@ describe("A Customer Service when updateCustomerByCUIT is called", () => {
 describe("A Customer Service when deleteCustomerByCUIT is called", () => {
   it("should call removeByProperty on mongoClient", () => {
     customerService.deleteCustomerByCUIT("20343687878", () => {
-      verify(mongoClient.findOneByProperty).once();
+      verify(mongoClient.removeByProperty).once();
     });
   });
 });
