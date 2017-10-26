@@ -17,15 +17,22 @@ export class Customer {
   	if (this.validateCuit(cuit)) {
   		this.cuit = cuit;
   	}
-  	if (MailValidator.validateMail(email)) {
-      this.email = email;
-    } else {
-      throw Error("ERROR ::: Provided e-mail is not valid.");
-    }
+    this.email = this.validateEmail(email);
   	this.name = name;
   	this.surname = surname;
   	this.phone = phone;
   	this.address = address;
+  }
+
+  private validateEmail(email) {
+    try {
+      if(MailValidator.validate(email)){
+        return email;
+      }
+    }
+    catch(err) {
+      console.log(err);
+    }
   }
 
   private validateCuit(cuit) {
