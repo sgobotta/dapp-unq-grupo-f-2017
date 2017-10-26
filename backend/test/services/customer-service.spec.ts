@@ -49,10 +49,12 @@ describe("A Customer Service when deleteCustomerByCUIT is called", () => {
   });
 });
 
-describe("A Customer Service when newCustomer is called", () => {
-  it("should call insert on mongoClient", () => {
-    customerService.newCustomer(dummyCustomer, () => {
-      verify(mongoClient.insert("collection", dummyCustomer)).once();
-    });
+describe("A Customer Service when newCustomer is called with no email", () => {
+  it("should call insert on mongoClient and throw an error", () => {
+    try {
+      expect(customerService.newCustomer(dummyCustomer)).to.throw();
+      verify(mongoClient.insert(anyString(), dummyCustomer)).once();
+    }
+    catch(err){}
   });
 });
