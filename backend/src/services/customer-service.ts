@@ -43,20 +43,26 @@ export class CustomerService {
 
   public newCustomer(customer: Customer): Promise<Customer>{
     return new Promise<Customer>((resolve, reject) => {
-      let newCustomer = new CustomerBuilder()
-      .withCUIT(customer.cuit)
-      .withName(customer.name)
-      .withSurname(customer.surname)
-      .withEmail(customer.email)
-      .withPhone(customer.phone.area, customer.phone.number)
-      .withAddress(customer.address.street, customer.address.number,
-        customer.address.city, customer.address.state,
-        customer.address.mapsLocation.latitude, customer.address.mapsLocation.longitude)
-      .build();
+      let newCustomer;
+      try {
+        newCustomer = new CustomerBuilder()
+        .withCUIT(customer.cuit)
+        .withName(customer.name)
+        .withSurname(customer.surname)
+        .withEmail(customer.email)
+        .withPhone(customer.phone.area, customer.phone.number)
+        .withAddress(customer.address.street, customer.address.number,
+          customer.address.city, customer.address.state,
+          customer.address.mapsLocation.latitude, customer.address.mapsLocation.longitude)
+          .build();
 
-      this.mongoClient.insert(this.collection, customer, (error, data: Customer) => {
-        resolve(data);
-      });
+          this.mongoClient.insert(this.collection, customer, (error, data: Customer) => {
+            resolve(data);
+          });
+      }
+      catch(err) {
+        return null;
+      }
     });
   }
 }
