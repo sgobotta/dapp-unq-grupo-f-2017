@@ -26,7 +26,7 @@ install:
   - (cd frontend && ng build -prod --output-path=../backend/dist/client)
 
 script:
-  - (cd backend && mocha -r ts-node/register test/**/**/*.spec.ts)
+  - (cd backend && npm test)
   - (cd frontend && ng test --single-run)
 
 deploy:
