@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "test": "mocha --compilers ts-node/register \" test/**/*.spec.ts\"",
+    "test": "./node_modules/mocha/bin/mocha --compilers ts:ts-node/register \" test/**/*.spec.ts\"",
     "build": "tsc",
     "devrun": "npm run build && npm start"
   },
