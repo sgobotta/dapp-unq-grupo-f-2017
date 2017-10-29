@@ -12,7 +12,7 @@ let dummyCustomer;
 beforeEach(() => {
 
   mongoClient = mock(MongoDBClient);
-	customerService = new CustomerService(mongoClient);
+  customerService = new CustomerService (mongoClient);
 });
 
 describe("A Customer Service when it's created", () => {
@@ -55,6 +55,6 @@ describe("A Customer Service when newCustomer is called with no email", () => {
       expect(customerService.newCustomer(dummyCustomer)).to.throw();
       verify(mongoClient.insert(anyString(), dummyCustomer)).once();
     }
-    catch(err){}
+    catch (err) {}
   });
 });

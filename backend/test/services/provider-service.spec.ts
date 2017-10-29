@@ -12,7 +12,7 @@ let dummyProvider;
 beforeEach(() => {
 
   mongoClient = mock(MongoDBClient);
-	providerService = new ProviderService(mongoClient);
+	providerService = new ProviderService (mongoClient);
 });
 
 describe("A Provider Service when it's created", () => {
@@ -55,6 +55,6 @@ describe("A Provider Service when newCustomer is called with no email", () => {
       expect(providerService.newProvider(dummyProvider)).to.throw();
       verify(mongoClient.insert("collection", dummyProvider)).once();
     }
-    catch(err){}
+    catch (err) {}
   });
 });

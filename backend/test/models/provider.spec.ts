@@ -9,7 +9,7 @@ describe("Provider class when it's created", () => {
         new Provider(null, null, null, null, null, "abc@abc.com", null, null, null, null);
       }).not.to.throw(Error);
     }
-    catch(err) {
+    catch (err) {
       expect(() => {
         new Provider(null, null, null, null, null, null, null, null, null, null);
       }).to.throw(Error);

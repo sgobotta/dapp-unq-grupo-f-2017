@@ -16,8 +16,8 @@ beforeEach(() => {
   dummyMongoClient = mock(MongoDBClient);
   dummySqlClient = mock(MySQLClient);
   dummyMenu = mock(Menu);
-  
-	menuService = new MenuService(dummyMongoClient, dummySqlClient);
+
+	menuService = new MenuService (dummyMongoClient, dummySqlClient);
 });
 
 describe("A Menu Service when it's created", () => {
