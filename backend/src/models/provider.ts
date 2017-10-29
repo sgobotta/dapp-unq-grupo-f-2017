@@ -37,11 +37,11 @@ export class Provider {
 
   private validateEmail(email) {
     try {
-      if(MailValidator.validate(email)){
+      if (MailValidator.validate(email)) {
         return email;
       }
     }
-    catch(err) {
+    catch (err) {
       console.log(err);
     }
   }

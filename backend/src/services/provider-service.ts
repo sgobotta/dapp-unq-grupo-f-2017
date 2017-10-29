@@ -62,7 +62,7 @@ export class ProviderService {
             resolve(data);
           });
       }
-      catch(err) {
+      catch (err) {
         return null;
       }
     });
