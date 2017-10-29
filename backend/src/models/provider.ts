@@ -28,15 +28,22 @@ export class Provider {
     this.address = address;
     this.description = description;
     this.website = website;
-    if(MailValidator.validateMail(email)){
-      this.email = email;
-    } else {
-      throw Error("ERROR ::: Provided e-mail is not valid.");
-    }
+    this.email = this.validateEmail(email);
     this.phone = phone;
     this.availability = availability;
     this.deliveryLocationRange = deliveryLocationRange;
     this.reputation = reputation;
+  }
+
+  private validateEmail(email) {
+    try {
+      if (MailValidator.validate(email)) {
+        return email;
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
   }
 
   public rate(value:number) : void {
@@ -85,7 +92,7 @@ export class ProviderBuilder {
     return this;
   }
 
-  public withAddress(street:string, number:number, city:string, state: string, 
+  public withAddress(street:string, number:number, city:string, state: string,
   latitude:number, longitude:number) {
     this.address = new Address(street, number, city, state, new MapsLocation(latitude, longitude));
     return this;

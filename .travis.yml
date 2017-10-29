@@ -16,7 +16,9 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   - npm i -g npm@3.10.10
   - npm install -g typescript
-  - npm install ts-node mocha chai -g
+  - npm install -g ts-node
+  - npm install -g mocha
+  - npm install -g chai
 
 install:
   - npm install -g @angular/cli
@@ -26,7 +28,7 @@ install:
   - (cd frontend && ng build -prod --output-path=../backend/dist/client)
 
 script:
-  - (cd backend && mocha -r ts-node/register test/**/**/*.spec.ts)
+  - (cd backend && npm test)
   - (cd frontend && ng test --single-run)
 
 deploy:
