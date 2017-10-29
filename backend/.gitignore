@@ -4,6 +4,8 @@
 # compiled output
 /client
 /dist
+.nyc_output
+/coverage
 
 # misc
 *.log
