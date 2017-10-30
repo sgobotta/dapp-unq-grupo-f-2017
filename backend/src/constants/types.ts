@@ -4,7 +4,8 @@ const TYPES = {
   DBStartup: Symbol("DBStartup"),
   MenuService: Symbol("MenuService"),
   CustomerService: Symbol("CustomerService"),
-  ProviderService: Symbol("ProviderService")
+  ProviderService: Symbol("ProviderService"),
+  BalanceService: Symbol("BalanceService")
 };
 
 export default TYPES;
