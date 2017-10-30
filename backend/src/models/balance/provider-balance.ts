@@ -2,7 +2,7 @@ import { Balance, BalanceBuilder } from "./balance";
 
 class ProviderBalance extends Balance {
 
-  private providerId:string;
+  private providerId: string;
 
   constructor(providerId: string, amount: number, lastAccessed: Date) {
     super(amount, lastAccessed);
@@ -17,7 +17,7 @@ class ProviderBalance extends Balance {
 
 export class ProviderBalanceBuilder extends BalanceBuilder {
 
-  private providerId:string;
+  private providerId: string;
 
   constructor() {
     super();
