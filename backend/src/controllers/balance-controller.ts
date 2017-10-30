@@ -2,7 +2,7 @@ import {
   controller, httpGet, httpPost, httpPut, httpDelete
 } from "inversify-express-utils";
 import { injectable, inject } from "inversify";
-import { BalanceService } from "../services/balance-service"
+import { BalanceService } from "../services/balance-service";
 import { Request, Response } from "express";
 import TYPES from "../constants/types";
 

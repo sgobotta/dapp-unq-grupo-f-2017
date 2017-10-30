@@ -4,7 +4,7 @@ class ProviderBalance extends Balance {
 
   private providerId:string;
 
-  constructor(providerId:string, amount:number, lastAccessed: Date) {
+  constructor(providerId: string, amount: number, lastAccessed: Date) {
     super(amount, lastAccessed);
     this.providerId = providerId;
   }
@@ -29,7 +29,7 @@ export class ProviderBalanceBuilder extends BalanceBuilder {
     this.providerId = null;
   }
 
-  public withId(providerId:string) {
+  public withId(providerId: string) {
     this.providerId = providerId;
     return this;
   }

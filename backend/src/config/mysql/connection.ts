@@ -3,7 +3,7 @@ import { connectionConfig } from "./config";
 
 export class MySqlConnection {
 
-  public static session:mysql.IConnection;;
+  public static session: mysql.IConnection;
 
   private static createConnection() {
     if (!process.env.ON_DEPLOY) {
@@ -16,7 +16,7 @@ export class MySqlConnection {
   }
 
   public static getSession() {
-    if(!this.session) {
+    if (!this.session) {
       this.session = this.createConnection();
     }
     return this.session;

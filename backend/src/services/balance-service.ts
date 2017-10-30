@@ -7,17 +7,17 @@ import { ProviderBalanceBuilder } from "./../models/balance/provider-balance";
 @injectable()
 export class BalanceService {
 
-  private mySqlClient:MySQLClient;
-  private collection:string;
+  private mySqlClient: MySQLClient;
+  private collection: string;
 
   constructor(
-    @inject(TYPES.MySQLClient) mySqlClient:MySQLClient
+    @inject(TYPES.MySQLClient) mySqlClient: MySQLClient
   ) {
       this.mySqlClient = mySqlClient;
       this.collection = "ProviderBalance";
   }
 
-  public getProviderBalanceByEmail(providerId:string, response) {
+  public getProviderBalanceByEmail(providerId: string, response) {
     return Runner.runInSession(() => {
       let balance;
       this.mySqlClient.findOneByProperty(this.collection, { providerId: providerId }, (err, res) => {
@@ -32,12 +32,12 @@ export class BalanceService {
           response.send({ success: true, balance });
           return;
         }
-        response.send({ success: false })
+        response.send({ success: false });
       });
     });
   }
 
-  public getCustomerBalanceByEmail(customerId:number, response) {
+  public getCustomerBalanceByEmail(customerId: number, response) {
 
   }
 
