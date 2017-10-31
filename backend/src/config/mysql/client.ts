@@ -21,7 +21,7 @@ export class MySQLClient {
 
   public findOneByProperty(collection, object, callback) {
     let prop = Object.keys(object)[0];
-    this.connection.query(`SELECT * FROM ${collection} WHERE providerId=?`, object[prop], (err, res) => {
+    this.connection.query(`SELECT * FROM ${collection} WHERE ${prop}=?`, object[prop], (err, res) => {
       callback(err, res);
     });
   }
