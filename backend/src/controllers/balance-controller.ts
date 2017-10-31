@@ -33,4 +33,9 @@ export class BalanceController {
     return this.balanceService.updateCustomerBalanceByCUIT(request.params.cuit, request.params.amount, response);
   }
 
+  @httpPost("/")
+  public newBalance(request: Request, response: Response) {
+    return this.balanceService.newBalance(request.body, response);
+  }
+
 }
