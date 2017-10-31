@@ -38,19 +38,19 @@ export class BalanceService {
   }
 
   public updateProviderBalanceByEmail(providerId: string, amount: number, response) {
-    //TODO
+    // TODO
   }
 
   public getCustomerBalanceByCUIT(customerId: number, response) {
-    //TODO
+    // TODO
   }
 
   public updateCustomerBalanceByCUIT(customerId: number, amount: number, response) {
-    //TODO
+    // TODO
   }
 
   public newBalance(id: any, response) {
-    //TODO
+    // TODO
   }
 
 }
