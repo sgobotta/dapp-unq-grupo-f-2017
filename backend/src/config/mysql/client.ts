@@ -21,7 +21,23 @@ export class MySQLClient {
 
   public findOneByProperty(collection, object, callback) {
     let prop = Object.keys(object)[0];
-    this.connection.query(`SELECT * FROM ${collection} WHERE providerId=?`, object[prop], (err, res) => {
+    this.connection.query(`SELECT * FROM ${collection} WHERE ${prop}=?`, object[prop], (err, res) => {
+      callback(err, res);
+    });
+  }
+
+  public updateOneByProperty(collection, object, callback) {
+    let id = Object.keys(object)[0];
+    let propToUpdate = Object.keys(object)[1];
+    this.connection.query(`UPDATE ${collection} SET ${propToUpdate}=? WHERE ${id}=?`, [object[propToUpdate], object[id]], (err, res) => {
+      callback(err, res);
+    });
+  }
+
+  public insertOne(collection, object, callback) {
+    let keys = Object.keys(object);
+    let values = keys.map((k) => { return object[k]; });
+    this.connection.query(`INSERT INTO ${collection} (${keys}) VALUES ?`, values, (err, res) => {
       callback(err, res);
     });
   }

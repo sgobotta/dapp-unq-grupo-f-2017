@@ -13,14 +13,29 @@ export class BalanceController {
 
   constructor(@inject(TYPES.BalanceService) private balanceService: BalanceService) { }
 
-  @httpGet("/:mail")
+  @httpGet("/provider/:mail")
   public getProviderBalance(request: Request, response: Response) {
     return this.balanceService.getProviderBalanceByEmail(request.params.mail, response);
   }
 
-  @httpGet("/customer/:mail")
-  public getCustomerBalanceByEmail(request: Request, response: Response) {
-    return this.balanceService.getCustomerBalanceByEmail(request.params.mail, response);
+  @httpPut("/provider/:mail/:amount")
+  public updateProviderBalance(request: Request, response: Response) {
+    return this.balanceService.updateProviderBalanceByEmail(request.params.mail, request.params.amount, response);
+  }
+
+  @httpGet("/customer/:cuit")
+  public getCustomerBalance(request: Request, response: Response) {
+    return this.balanceService.getCustomerBalanceByCUIT(request.params.cuit, response);
+  }
+
+  @httpPut("/customer/:cuit/:amount")
+  public updateCustomerBalance(request: Request, response: Response) {
+    return this.balanceService.updateCustomerBalanceByCUIT(request.params.cuit, request.params.amount, response);
+  }
+
+  @httpPost("/")
+  public newBalance(request: Request, response: Response) {
+    return this.balanceService.newBalance(request.body, response);
   }
 
 }
