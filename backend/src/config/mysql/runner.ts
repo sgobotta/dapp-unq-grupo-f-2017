@@ -7,7 +7,10 @@ export class Runner {
 
   public static runInSession(block) {
 
-    let connection = MySqlConnection.getSession();
+    let connection = MySqlConnection.getConnection();
+    if (!connection) {
+        connection = MySqlConnection.createConnection();
+    }
     let transaction = null;
 
     try {

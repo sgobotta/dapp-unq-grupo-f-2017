@@ -3,23 +3,28 @@ import { connectionConfig } from "./config";
 
 export class MySqlConnection {
 
-  public static session: mysql.IConnection;
+  public static connection: mysql.IConnection;
 
-  private static createConnection() {
+  public static createConnection() {
     if (!process.env.ON_DEPLOY) {
-      return mysql.createConnection(connectionConfig.local);
+      this.connection = mysql.createConnection(connectionConfig.local);
+      return this.connection;
     }
     if (process.env.ON_DEPLOY) {
-      return mysql.createConnection(connectionConfig.deploy);
-
+      this.connection = mysql.createConnection(connectionConfig.deploy);
+      return this.connection;
     }
   }
 
+  public static getConnection() {
+    return this.connection;
+  }
+
   public static getSession() {
-    if (!this.session) {
-      this.session = this.createConnection();
+    if (!this.connection) {
+      this.connection = this.createConnection();
     }
-    return this.session;
+    return this.connection;
   }
 
 }
