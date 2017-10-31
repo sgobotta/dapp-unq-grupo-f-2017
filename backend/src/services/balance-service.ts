@@ -37,8 +37,17 @@ export class BalanceService {
     });
   }
 
-  public getCustomerBalanceByEmail(customerId: number, response) {
+  public updateProviderBalanceByEmail(providerId: string, amount: number, response) {
 
   }
+
+  public getCustomerBalanceByCUIT(customerId: number, response) {
+
+  }
+
+  public updateCustomerBalanceByCUIT(customerId: number, amount: number, response) {
+
+  }
+
 
 }
