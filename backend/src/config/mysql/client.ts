@@ -26,4 +26,12 @@ export class MySQLClient {
     });
   }
 
+  public updateOneByProperty(collection, object, callback) {
+    let id = Object.keys(object)[0];
+    let propToUpdate = Object.keys(object)[1];
+    this.connection.query(`UPDATE ${collection} SET ${propToUpdate}=? WHERE ${id}=?`, [object[propToUpdate], object[id]], (err, res) => {
+      callback(err, res);
+    })
+  }
+
 }
