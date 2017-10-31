@@ -31,7 +31,15 @@ export class MySQLClient {
     let propToUpdate = Object.keys(object)[1];
     this.connection.query(`UPDATE ${collection} SET ${propToUpdate}=? WHERE ${id}=?`, [object[propToUpdate], object[id]], (err, res) => {
       callback(err, res);
-    })
+    });
+  }
+
+  public insertOne(collection, object, callback) {
+    let keys = Object.keys(object);
+    let values = keys.map((k) => { return object[k]; });
+    this.connection.query(`INSERT INTO ${collection} (${keys}) VALUES ?`, values, (err, res) => {
+      callback(err, res);
+    });
   }
 
 }
