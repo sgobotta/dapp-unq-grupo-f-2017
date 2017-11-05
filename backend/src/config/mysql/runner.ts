@@ -16,7 +16,7 @@ export class Runner {
 
     try {
       transaction = connection.beginTransaction((err) => {
-        let transactionResult = block();
+        block();
         if (state.status === "open") {
           connection.commit((err) => {
             if (err) throw err; // Log message
