@@ -38,13 +38,13 @@
     "@types/redis": "^2.6.0",
     "@types/request": "^2.0.6",
     "@types/sequelize": "^4.0.75",
+    "@types/winston": "^2.3.7",
     "body-parser": "^1.17.2",
     "config": "^1.19.0",
     "cors": "^2.7.1",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
     "express-validator": "^2.19.1",
-    "express-winston": "^1.2.0",
     "helmet": "3.8.1",
     "inversify": "^4.3.0",
     "inversify-express-utils": "4.0.0",
@@ -62,7 +62,7 @@
     "request": "^2.81.0",
     "sequelize": "^4.13.3",
     "typescript": "^2.5.3",
-    "winston": "^2.2.0"
+    "winston": "^2.4.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
