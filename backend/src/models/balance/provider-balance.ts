@@ -16,7 +16,6 @@ export class ProviderBalance extends Balance {
   public deposit(amount) {
     const newAmount = this.getAmount() + parseInt(amount);
     this.setAmount(newAmount);
-    return newAmount;
   }
 }
 
@@ -27,6 +26,8 @@ export class ProviderBalanceBuilder extends BalanceBuilder {
   constructor() {
     super();
     this.clear();
+    this.amount = 0;
+    this.lastAccessed = new Date;
   }
 
   public clear() {

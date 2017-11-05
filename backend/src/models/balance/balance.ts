@@ -29,6 +29,8 @@ export class BalanceBuilder {
 
   constructor() {
     this.clear();
+    this.amount = 0;
+    this.lastAccessed = new Date;
     return this;
   }
 
@@ -39,11 +41,6 @@ export class BalanceBuilder {
 
   public withAmount(amount: number) {
     this.amount = amount;
-    return this;
-  }
-
-  public withLastAccessDate(date: Date) {
-    this.lastAccessed = new Date;
     return this;
   }
 }
