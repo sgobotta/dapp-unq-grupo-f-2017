@@ -6,19 +6,22 @@ import TYPES from "./../../constants/types";
 export class Runner {
 
   public static runInSession(block) {
-
     let connection = MySqlConnection.getConnection();
+    let state = { status: "open" };
     if (!connection) {
         connection = MySqlConnection.createConnection();
+        let state = { status: "new" };
     }
     let transaction = null;
 
     try {
       transaction = connection.beginTransaction((err) => {
         let transactionResult = block();
-        connection.commit((err) => {
-          if (err) throw err; // Log message
-        });
+        if (state.status === "open") {
+          connection.commit((err) => {
+            if (err) throw err; // Log message
+          });
+        }
       });
     }
     catch (err) {
