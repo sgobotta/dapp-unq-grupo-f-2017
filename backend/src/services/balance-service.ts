@@ -86,20 +86,20 @@ export class BalanceService {
         else {
           callback({ succes: false, msg: "Provider id already exists."});
         }
-      })
+      });
     });
   }
 
   public newCustomerBalance(customerId: number, callback) {
     return Runner.runInSession(() => {
       this.getCustomerBalanceByCUIT(customerId, (query) => {
-        if(!query.success) {
+        if (!query.success) {
           let balance = new CustomerBalanceBuilder()
           .withId(customerId)
           .build();
           this.mySqlClient.insertOne(this.customerCollection, balance, (err, res) => {
             if (err) throw err;
-            if(res.affectedRows) {
+            if (res.affectedRows) {
               callback({ success: true, balance });
             }
             else {

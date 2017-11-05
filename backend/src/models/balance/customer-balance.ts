@@ -16,7 +16,7 @@ class CustomerBalance extends Balance {
   public extract(amount) {
     const currentAmount = this.getAmount();
     const extraction = currentAmount - parseInt(amount);
-    if(extraction >= 0) {
+    if (extraction >= 0) {
       this.setAmount(extraction);
     }
   }
