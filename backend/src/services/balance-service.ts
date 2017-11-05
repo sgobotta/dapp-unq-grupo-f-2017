@@ -30,7 +30,6 @@ export class BalanceService {
           balance = new ProviderBalanceBuilder()
             .withId(provider.providerId)
             .withAmount(provider.amount)
-            .withLastAccessDate(provider.lastAccessed)
             .build();
           callback({ success: true, balance });
           return;
@@ -54,7 +53,6 @@ export class BalanceService {
           balance = new CustomerBalanceBuilder()
             .withId(customer.customerId)
             .withAmount(customer.amount)
-            .withLastAccessDate(customer.lastAccessed)
             .build();
             callback({ success: true, balance });
             return;
@@ -65,11 +63,55 @@ export class BalanceService {
   }
 
   public updateCustomerBalanceByCUIT(customerId: number, amount: number, callback) {
-    // TODO
+    this.extractFromCustomerBalanceByEmail(customerId, amount, callback);
   }
 
-  public newBalance(id: any, callback) {
-    // TODO
+  public newProviderBalance(providerId: string, callback) {
+    return Runner.runInSession(() => {
+      this.getProviderBalanceByEmail(providerId, (query) => {
+        if (!query.success) {
+          let balance = new ProviderBalanceBuilder()
+          .withId(providerId)
+          .build();
+          this.mySqlClient.insertOne(this.providerCollection, balance, (err, res) => {
+            if (err) throw err;
+            if (res.affectedRows) {
+              callback({ success: true, balance });
+            }
+            else {
+              callback({ success: false });
+            }
+          });
+        }
+        else {
+          callback({ succes: false, msg: "Provider id already exists."});
+        }
+      });
+    });
+  }
+
+  public newCustomerBalance(customerId: number, callback) {
+    return Runner.runInSession(() => {
+      this.getCustomerBalanceByCUIT(customerId, (query) => {
+        if (!query.success) {
+          let balance = new CustomerBalanceBuilder()
+          .withId(customerId)
+          .build();
+          this.mySqlClient.insertOne(this.customerCollection, balance, (err, res) => {
+            if (err) throw err;
+            if (res.affectedRows) {
+              callback({ success: true, balance });
+            }
+            else {
+              callback({ success: false });
+            }
+          });
+        }
+        else {
+          callback({ succes: false, msg: "Customer id already exists."});
+        }
+      });
+    });
   }
 
   private depositToProviderBalanceByEmail(providerId: string, amount: number, callback) {
@@ -79,6 +121,26 @@ export class BalanceService {
           const balance = query.balance;
           balance.deposit(amount);
           this.mySqlClient.updateOneByProperty(this.providerCollection, { providerId: balance.providerId, amount: balance.amount }, (err, res) => {
+            if (err) throw err;
+            if (res.affectedRows & res.changedRows) {
+              callback({ success: true, balance });
+            }
+            else {
+              callback({ success: false });
+            }
+          });
+        }
+      });
+    });
+  }
+
+  private extractFromCustomerBalanceByEmail(customerId: number, amount: number, callback) {
+    return Runner.runInSession(() => {
+      this.getCustomerBalanceByCUIT(customerId, (query) => {
+        if (query.success) {
+          const balance = query.balance;
+          balance.extract(amount);
+          this.mySqlClient.updateOneByProperty(this.customerCollection, { customerId: balance.customerId, amount: balance.amount }, (err, res) => {
             if (err) throw err;
             if (res.affectedRows & res.changedRows) {
               callback({ success: true, balance });

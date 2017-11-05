@@ -13,6 +13,13 @@ class CustomerBalance extends Balance {
     return this.customerId;
   }
 
+  public extract(amount) {
+    const currentAmount = this.getAmount();
+    const extraction = currentAmount - parseInt(amount);
+    if (extraction >= 0) {
+      this.setAmount(extraction);
+    }
+  }
 }
 
 export class CustomerBalanceBuilder extends BalanceBuilder {
@@ -22,6 +29,8 @@ export class CustomerBalanceBuilder extends BalanceBuilder {
   constructor() {
     super();
     this.clear();
+    this.amount = 0;
+    this.lastAccessed = new Date;
   }
 
   public clear() {
@@ -39,5 +48,4 @@ export class CustomerBalanceBuilder extends BalanceBuilder {
     this.clear();
     return customerBalance;
   }
-
 }

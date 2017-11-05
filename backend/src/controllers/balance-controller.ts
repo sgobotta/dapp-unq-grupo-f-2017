@@ -41,9 +41,16 @@ export class BalanceController {
     });
   }
 
-  @httpPost("/")
-  public newBalance(request: Request, response: Response) {
-    return this.balanceService.newBalance(request.body, (result) => {
+  @httpPost("/provider")
+  public newProviderBalance(request: Request, response: Response) {
+    return this.balanceService.newProviderBalance(request.body.providerId, (result) => {
+      response.send(result);
+    });
+  }
+
+  @httpPost("/customer")
+  public newCustomerBalance(request: Request, response: Response) {
+    return this.balanceService.newCustomerBalance(request.body.customerId, (result) => {
       response.send(result);
     });
   }
