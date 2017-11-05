@@ -35,9 +35,7 @@ export class MySQLClient {
   }
 
   public insertOne(collection, object, callback) {
-    let keys = Object.keys(object);
-    let values = keys.map((k) => { return object[k]; });
-    this.connection.query(`INSERT INTO ${collection} (${keys}) VALUES ?`, values, (err, res) => {
+    this.connection.query(`INSERT INTO ${collection} SET ?`, object, (err, res) => {
       callback(err, res);
     });
   }
