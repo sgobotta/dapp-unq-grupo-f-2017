@@ -4,13 +4,17 @@ export class Balance {
   private amount: number;
   private lastAccessed: Date;
 
-  constructor(amount, lastAccesed) {
+  constructor(amount: number, lastAccesed: Date) {
     this.amount = amount;
     this.lastAccessed = lastAccesed;
   }
 
   public getAmount() {
     return this.amount;
+  }
+
+  public setAmount(amount: number) {
+    this.amount = amount;
   }
 
   public getLastAccesed() {
@@ -42,5 +46,4 @@ export class BalanceBuilder {
     this.lastAccessed = new Date;
     return this;
   }
-
 }
