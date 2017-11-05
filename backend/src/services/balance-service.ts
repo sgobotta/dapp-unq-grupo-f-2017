@@ -69,13 +69,13 @@ export class BalanceService {
   public newProviderBalance(providerId: string, callback) {
     return Runner.runInSession(() => {
       this.getProviderBalanceByEmail(providerId, (query) => {
-        if(!query.success) {
+        if (!query.success) {
           let balance = new ProviderBalanceBuilder()
           .withId(providerId)
           .build();
           this.mySqlClient.insertOne(this.providerCollection, balance, (err, res) => {
             if (err) throw err;
-            if(res.affectedRows) {
+            if (res.affectedRows) {
               callback({ success: true, balance });
             }
             else {
@@ -110,7 +110,7 @@ export class BalanceService {
         else {
           callback({ succes: false, msg: "Customer id already exists."});
         }
-      })
+      });
     });
   }
 
