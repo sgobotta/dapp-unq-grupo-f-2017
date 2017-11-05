@@ -20,7 +20,7 @@ export class BalanceService {
       this.customerCollection = "CustomerBalance";
   }
 
-  public getProviderBalanceByEmail(providerId: string, response) {
+  public getProviderBalanceByEmail(providerId: string, callback) {
     return Runner.runInSession(() => {
       let balance;
       this.mySqlClient.findOneByProperty(this.providerCollection, { providerId: providerId }, (err, res) => {
@@ -32,19 +32,19 @@ export class BalanceService {
             .withAmount(provider.amount)
             .withLastAccessDate(provider.lastAccessed)
             .build();
-          response.send({ success: true, balance });
+          callback({ success: true, balance });
           return;
         }
-        response.send({ success: false });
+        callback({ success: false });
       });
     });
   }
 
-  public updateProviderBalanceByEmail(providerId: string, amount: number, response) {
-    // TODO
+  public updateProviderBalanceByEmail(providerId: string, amount: number, callback) {
+    this.depositToProviderBalanceByEmail(providerId, amount, callback);
   }
 
-  public getCustomerBalanceByCUIT(customerId: number, response) {
+  public getCustomerBalanceByCUIT(customerId: number, callback) {
     return Runner.runInSession(() => {
       let balance;
       this.mySqlClient.findOneByProperty(this.customerCollection, { customerId: customerId }, (err, res) => {
@@ -56,20 +56,40 @@ export class BalanceService {
             .withAmount(customer.amount)
             .withLastAccessDate(customer.lastAccessed)
             .build();
-          response.send({ success: true, balance });
-          return;
+            callback({ success: true, balance });
+            return;
         }
-        response.send({ success: false });
+          callback({ success: false });
       });
     });
   }
 
-  public updateCustomerBalanceByCUIT(customerId: number, amount: number, response) {
+  public updateCustomerBalanceByCUIT(customerId: number, amount: number, callback) {
     // TODO
   }
 
-  public newBalance(id: any, response) {
+  public newBalance(id: any, callback) {
     // TODO
+  }
+
+  private depositToProviderBalanceByEmail(providerId: string, amount: number, callback) {
+    return Runner.runInSession(() => {
+      this.getProviderBalanceByEmail(providerId, (query) => {
+        if (query.success) {
+          const balance = query.balance;
+          balance.deposit(amount);
+          this.mySqlClient.updateOneByProperty(this.providerCollection, { providerId: balance.providerId, amount: balance.amount }, (err, res) => {
+            if (err) throw err;
+            if (res.affectedRows & res.changedRows) {
+              callback({ success: true, balance });
+            }
+            else {
+              callback({ success: false });
+            }
+          });
+        }
+      });
+    });
   }
 
 }

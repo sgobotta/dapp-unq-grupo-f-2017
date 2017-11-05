@@ -15,27 +15,37 @@ export class BalanceController {
 
   @httpGet("/provider/:mail")
   public getProviderBalance(request: Request, response: Response) {
-    return this.balanceService.getProviderBalanceByEmail(request.params.mail, response);
+    return this.balanceService.getProviderBalanceByEmail(request.params.mail, (result) => {
+      response.send(result);
+    });
   }
 
   @httpPut("/provider/:mail/:amount")
   public updateProviderBalance(request: Request, response: Response) {
-    return this.balanceService.updateProviderBalanceByEmail(request.params.mail, request.params.amount, response);
+    return this.balanceService.updateProviderBalanceByEmail(request.params.mail, request.params.amount, (result) => {
+      response.send(result);
+    });
   }
 
   @httpGet("/customer/:cuit")
   public getCustomerBalance(request: Request, response: Response) {
-    return this.balanceService.getCustomerBalanceByCUIT(request.params.cuit, response);
+    return this.balanceService.getCustomerBalanceByCUIT(request.params.cuit, (result) => {
+      response.send(result);
+    });
   }
 
   @httpPut("/customer/:cuit/:amount")
   public updateCustomerBalance(request: Request, response: Response) {
-    return this.balanceService.updateCustomerBalanceByCUIT(request.params.cuit, request.params.amount, response);
+    return this.balanceService.updateCustomerBalanceByCUIT(request.params.cuit, request.params.amount, (result) => {
+      response.send(result);
+    });
   }
 
   @httpPost("/")
   public newBalance(request: Request, response: Response) {
-    return this.balanceService.newBalance(request.body, response);
+    return this.balanceService.newBalance(request.body, (result) => {
+      response.send(result);
+    });
   }
 
 }

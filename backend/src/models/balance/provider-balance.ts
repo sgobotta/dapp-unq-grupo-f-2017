@@ -1,6 +1,6 @@
 import { Balance, BalanceBuilder } from "./balance";
 
-class ProviderBalance extends Balance {
+export class ProviderBalance extends Balance {
 
   private providerId: string;
 
@@ -13,6 +13,11 @@ class ProviderBalance extends Balance {
     return this.providerId;
   }
 
+  public deposit(amount) {
+    const newAmount = this.getAmount() + parseInt(amount);
+    this.setAmount(newAmount);
+    return newAmount;
+  }
 }
 
 export class ProviderBalanceBuilder extends BalanceBuilder {
@@ -39,5 +44,4 @@ export class ProviderBalanceBuilder extends BalanceBuilder {
     this.clear();
     return providerBalance;
   }
-
 }
