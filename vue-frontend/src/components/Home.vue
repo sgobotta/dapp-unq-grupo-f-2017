@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-
-  <md-image :md-src="images[currentNumber % images.length]" class="image-background" :key="image">asd</md-image>
-
+    <img :src="images[currentNumber]" ref="bgimage" class="image-background"/>
   </div>
 </template>
 
@@ -23,7 +21,7 @@ export default {
 
   methods: {
     startRotation: function () {
-      this.timer = setInterval(this.next, 6000)
+      this.timer = setInterval(this.transition, 5000)
     },
 
     stopRotation: function () {
@@ -31,8 +29,42 @@ export default {
       this.timer = null
     },
 
-    next: function () {
-      this.currentNumber += 1
+    next: function (element) {
+      console.log('pepe')
+      this.currentNumber = (this.currentNumber + 1) % this.$data.images.length
+      this.fadein(element)
+    },
+
+    transition: function () {
+      let element = this.$refs.bgimage
+      this.fadeout(element, this.next)
+    },
+
+    fadeout: function (element, callback) {
+      var op = 1
+      var timer = setInterval(function () {
+        if (op <= 0.05) {
+          clearInterval(timer)
+          element.style.display = 'none'
+          callback(element)
+        }
+        element.style.opacity = op
+        element.style.filter = 'alpha(opacity=' + op * 100 + ')'
+        op -= op * 0.05
+      }, 0)
+    },
+
+    fadein: function (element) {
+      var op = 0.05
+      element.style.display = 'block'
+      var timer = setInterval(function () {
+        if (op >= 1) {
+          clearInterval(timer)
+        }
+        element.style.opacity = op
+        element.style.filter = 'alpha(opacity=' + op * 100 + ')'
+        op += op * 0.05
+      }, 0)
     }
   }
 }
@@ -41,8 +73,8 @@ export default {
 <style scoped>
 
 .image-background {
-  background-color: black;
+  width: 100%;
+  height: auto;
 }
-
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="background">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -47,6 +47,10 @@ export default {
 
 .centered {
   text-align: center;
+}
+
+.background {
+  background: black;
 }
 
 </style>
