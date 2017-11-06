@@ -5,7 +5,6 @@ export default class Logger {
   public static logger: winston.LoggerInstance;
 
   public static createLogger() {
-    const tsFormat = () => (new Date()).toLocaleTimeString();
     this.logger = new winston.Logger({
       transports: [
         new winston.transports.Console({ colorize: true, align: true, handleExceptions: true }),
@@ -13,13 +12,6 @@ export default class Logger {
       ]
     });
   }
-
-  public static getLogger() {
-
-    return this.logger;
-  }
-
-
 
   public static info(...params) {
     this.logger.info(params.join());
