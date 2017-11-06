@@ -9,7 +9,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      images: ['/static/food-background1.jpg', '/static/food-background2.jpg', '/static/food-background3.jpg'],
+      images: ['/static/food-background1.jpg', '/static/food-background2.jpg', '/static/food-background6.jpg', '/static/food-background3.jpg', '/static/food-background4.jpg', '/static/food-background5.jpg', '/static/food-background7.jpg'],
       currentNumber: 0,
       timer: null
     }
@@ -83,6 +83,11 @@ img {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+.home {
+  position: relative;
+  width: 100%;
 }
 
 </style>
