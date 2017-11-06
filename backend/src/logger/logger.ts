@@ -8,7 +8,7 @@ export default class Logger {
     this.logger = new winston.Logger({
       transports: [
         new winston.transports.Console(),
-        new winston.transports.File({ filename: 'morfi-ya.log' })
+        new winston.transports.File({ filename: "morfi-ya.log" })
       ]
     });
   }
