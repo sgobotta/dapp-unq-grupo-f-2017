@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img :src="images[currentNumber]" ref="bgimage" class="image-background"/>
+    <img draggable="false" ondragstart="return false;" :src="images[currentNumber]" ref="bgimage" class="image-background" />
   </div>
 </template>
 
@@ -45,7 +45,7 @@ export default {
       var timer = setInterval(function () {
         if (op <= 0.05) {
           clearInterval(timer)
-          element.style.display = 'none'
+          // element.style.display = 'none'
           callback(element)
         }
         element.style.opacity = op
@@ -56,7 +56,7 @@ export default {
 
     fadein: function (element) {
       var op = 0.05
-      element.style.display = 'block'
+      // element.style.display = 'block'
       var timer = setInterval(function () {
         if (op >= 1) {
           clearInterval(timer)
@@ -75,6 +75,14 @@ export default {
 .image-background {
   width: 100%;
   height: auto;
+}
+
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 </style>
