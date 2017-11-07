@@ -15,6 +15,8 @@ import { inject, Container } from "inversify";
 import { MailingSystem } from "./models/system/mailing-system";
 import DBStartup from "./config/init";
 import Logger from "./logger/logger";
+import * as events from "events";
+
 
 export class Server {
 
@@ -126,7 +128,7 @@ export class Server {
         if (err) {
           throw err;
         } else {
-          Logger.info(`Server is listening on ${port}`);
+          Logger.info({ message: `Server is listening on ${port}`, user: "lala", method: "lalalala" });
         }
       });
     });
