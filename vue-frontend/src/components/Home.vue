@@ -1,12 +1,22 @@
 <template>
-  <div class="home">
-    <img draggable="false" ondragstart="return false;" :src="images[currentNumber]" ref="bgimage" class="image-background" />
-  </div>
-</template>
+    <div class="home">
+      <img draggable="false" ondragstart="return false;" :src="images[currentNumber]" ref="bgimage" class="image-background"/>
+
+      <div class="md-toolbar-container">
+        <h4 v-if="authenticated">
+            You are logged in!
+        </h4>
+        <h4 v-else="authenticated">
+          You are not logged in! Please <a @click="auth.login()">Log In</a> to continue.
+        </h4>
+      </div>
+    </div>
+  </template>
 
 <script>
 export default {
   name: 'Home',
+  props: ['auth', 'authenticated'],
   data () {
     return {
       images: ['/static/food-background1.jpg', '/static/food-background2.jpg', '/static/food-background6.jpg', '/static/food-background3.jpg', '/static/food-background4.jpg', '/static/food-background5.jpg', '/static/food-background7.jpg'],

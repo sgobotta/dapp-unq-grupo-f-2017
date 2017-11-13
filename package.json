@@ -5,5 +5,8 @@
     "build-backend": "cd ./backend && npm run build",
     "start": "node backend/dist/index.js",
     "all": "npm run build-frontend && npm run build-backend && npm run start"
+  },
+  "dependencies": {
+    "auth0-js": "^8.11.2"
   }
 }
