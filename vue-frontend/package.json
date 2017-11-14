@@ -5,8 +5,10 @@
   "author": "juanmardefago <juanma.rdefago@gmail.com>",
   "private": true,
   "scripts": {
+    "start": "npm-run-all --parallel dev server",
     "dev": "node build/dev-server.js",
-    "start": "npm run dev",
+    "rundevstart": "npm run dev",
+    "server": "node server.js",
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
