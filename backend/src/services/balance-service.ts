@@ -1,11 +1,12 @@
+import { Wove } from "aspect.js";
 import { inject, injectable } from "inversify";
 import { MySQLClient } from "../config/mysql/client";
-import { Runner } from "../config/mysql/runner";
 import TYPES from "./../constants/types";
 import { ProviderBalanceBuilder } from "./../models/balance/provider-balance";
 import { CustomerBalanceBuilder } from "./../models/balance/customer-balance";
 
 @injectable()
+@Wove()
 export class BalanceService {
 
   private mySqlClient: MySQLClient;
@@ -21,21 +22,19 @@ export class BalanceService {
   }
 
   public getProviderBalanceByEmail(providerId: string, callback) {
-    return Runner.runInSession(() => {
-      let balance;
-      this.mySqlClient.findOneByProperty(this.providerCollection, { providerId: providerId }, (err, res) => {
-        let provider = res[0];
-        if (err) throw err;
-        else if (provider !== undefined) {
-          balance = new ProviderBalanceBuilder()
-            .withId(provider.providerId)
-            .withAmount(provider.amount)
-            .build();
-          callback({ success: true, balance });
-          return;
-        }
-        callback({ success: false });
-      });
+    let balance;
+    this.mySqlClient.findOneByProperty(this.providerCollection, { providerId: providerId }, (err, res) => {
+      let provider = res[0];
+      if (err) throw err;
+      else if (provider !== undefined) {
+        balance = new ProviderBalanceBuilder()
+          .withId(provider.providerId)
+          .withAmount(provider.amount)
+          .build();
+        callback({ success: true, balance });
+        return;
+      }
+      callback({ success: false });
     });
   }
 
@@ -44,21 +43,19 @@ export class BalanceService {
   }
 
   public getCustomerBalanceByCUIT(customerId: number, callback) {
-    return Runner.runInSession(() => {
-      let balance;
-      this.mySqlClient.findOneByProperty(this.customerCollection, { customerId: customerId }, (err, res) => {
-        let customer = res[0];
-        if (err) throw err;
-        else if (customer !== undefined) {
-          balance = new CustomerBalanceBuilder()
-            .withId(customer.customerId)
-            .withAmount(customer.amount)
-            .build();
-            callback({ success: true, balance });
-            return;
-        }
-          callback({ success: false });
-      });
+    let balance;
+    this.mySqlClient.findOneByProperty(this.customerCollection, { customerId: customerId }, (err, res) => {
+      let customer = res[0];
+      if (err) throw err;
+      else if (customer !== undefined) {
+        balance = new CustomerBalanceBuilder()
+          .withId(customer.customerId)
+          .withAmount(customer.amount)
+          .build();
+          callback({ success: true, balance });
+          return;
+      }
+        callback({ success: false });
     });
   }
 
@@ -67,90 +64,82 @@ export class BalanceService {
   }
 
   public newProviderBalance(providerId: string, callback) {
-    return Runner.runInSession(() => {
-      this.getProviderBalanceByEmail(providerId, (query) => {
-        if (!query.success) {
-          let balance = new ProviderBalanceBuilder()
-          .withId(providerId)
-          .build();
-          this.mySqlClient.insertOne(this.providerCollection, balance, (err, res) => {
-            if (err) throw err;
-            if (res.affectedRows) {
-              callback({ success: true, balance });
-            }
-            else {
-              callback({ success: false });
-            }
-          });
-        }
-        else {
-          callback({ succes: false, msg: "Provider id already exists."});
-        }
-      });
+    this.getProviderBalanceByEmail(providerId, (query) => {
+      if (!query.success) {
+        let balance = new ProviderBalanceBuilder()
+        .withId(providerId)
+        .build();
+        this.mySqlClient.insertOne(this.providerCollection, balance, (err, res) => {
+          if (err) throw err;
+          if (res.affectedRows) {
+            callback({ success: true, balance });
+          }
+          else {
+            callback({ success: false });
+          }
+        });
+      }
+      else {
+        callback({ succes: false, msg: "Provider id already exists."});
+      }
     });
   }
 
   public newCustomerBalance(customerId: number, callback) {
-    return Runner.runInSession(() => {
-      this.getCustomerBalanceByCUIT(customerId, (query) => {
-        if (!query.success) {
-          let balance = new CustomerBalanceBuilder()
-          .withId(customerId)
-          .build();
-          this.mySqlClient.insertOne(this.customerCollection, balance, (err, res) => {
-            if (err) throw err;
-            if (res.affectedRows) {
-              callback({ success: true, balance });
-            }
-            else {
-              callback({ success: false });
-            }
-          });
-        }
-        else {
-          callback({ succes: false, msg: "Customer id already exists."});
-        }
-      });
+    this.getCustomerBalanceByCUIT(customerId, (query) => {
+      if (!query.success) {
+        let balance = new CustomerBalanceBuilder()
+        .withId(customerId)
+        .build();
+        this.mySqlClient.insertOne(this.customerCollection, balance, (err, res) => {
+          if (err) throw err;
+          if (res.affectedRows) {
+            callback({ success: true, balance });
+          }
+          else {
+            callback({ success: false });
+          }
+        });
+      }
+      else {
+        callback({ succes: false, msg: "Customer id already exists."});
+      }
     });
   }
 
   private depositToProviderBalanceByEmail(providerId: string, amount: number, callback) {
-    return Runner.runInSession(() => {
-      this.getProviderBalanceByEmail(providerId, (query) => {
-        if (query.success) {
-          const balance = query.balance;
-          balance.deposit(amount);
-          this.mySqlClient.updateOneByProperty(this.providerCollection, { providerId: balance.providerId, amount: balance.amount }, (err, res) => {
-            if (err) throw err;
-            if (res.affectedRows & res.changedRows) {
-              callback({ success: true, balance });
-            }
-            else {
-              callback({ success: false });
-            }
-          });
-        }
-      });
+    this.getProviderBalanceByEmail(providerId, (query) => {
+      if (query.success) {
+        const balance = query.balance;
+        balance.deposit(amount);
+        this.mySqlClient.updateOneByProperty(this.providerCollection, { providerId: balance.providerId, amount: balance.amount }, (err, res) => {
+          if (err) throw err;
+          if (res.affectedRows & res.changedRows) {
+            callback({ success: true, balance });
+          }
+          else {
+            callback({ success: false });
+          }
+        });
+      }
     });
   }
 
   private extractFromCustomerBalanceByEmail(customerId: number, amount: number, callback) {
-    return Runner.runInSession(() => {
-      this.getCustomerBalanceByCUIT(customerId, (query) => {
-        if (query.success) {
-          const balance = query.balance;
-          balance.extract(amount);
-          this.mySqlClient.updateOneByProperty(this.customerCollection, { customerId: balance.customerId, amount: balance.amount }, (err, res) => {
-            if (err) throw err;
-            if (res.affectedRows & res.changedRows) {
-              callback({ success: true, balance });
-            }
-            else {
-              callback({ success: false });
-            }
-          });
-        }
-      });
+    this.getCustomerBalanceByCUIT(customerId, (query) => {
+      if (query.success) {
+        const balance = query.balance;
+        balance.extract(amount);
+        this.mySqlClient.updateOneByProperty(this.customerCollection, { customerId: balance.customerId, amount: balance.amount }, (err, res) => {
+          if (err) throw err;
+          if (res.affectedRows & res.changedRows) {
+            callback({ success: true, balance });
+          }
+          else {
+            callback({ success: false });
+          }
+        });
+      }
     });
   }
 
