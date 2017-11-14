@@ -1,4 +1,4 @@
-import { beforeMethod, afterMethod, Wove, Metadata } from 'aspect.js';
+import { beforeMethod, afterMethod, Wove, Metadata } from "aspect.js";
 import Logger from "./logger";
 import { MongoDBClient } from "./../config/mongodb/client";
 

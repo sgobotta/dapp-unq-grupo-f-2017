@@ -1,7 +1,7 @@
 import { Db, ObjectID } from "mongodb";
 import { injectable } from "inversify";
 import { MongoDBConnection } from "./connection";
-import { Wove } from 'aspect.js';
+import { Wove } from "aspect.js";
 
 @injectable()
 @Wove()
