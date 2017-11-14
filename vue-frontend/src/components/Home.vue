@@ -40,7 +40,6 @@ export default {
     },
 
     next: function (element) {
-      console.log('pepe')
       this.currentNumber = (this.currentNumber + 1) % this.$data.images.length
       this.fadein(element)
     },
