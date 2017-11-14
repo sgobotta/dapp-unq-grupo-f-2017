@@ -17,11 +17,5 @@ export class RunnerAspect {
     });
 
     meta.method.proceed = false;
-    // Runner.runInSession(() => {
-    //   meta.method.invoke(meta.method.args);
-    // })
-
-    // const args = JSON.stringify(meta.method.args);
-    // Logger.info({ message: `Called ${meta.className}`, method: `${meta.method.name}`, args: `${args}` });1
   }
 }
