@@ -1,9 +1,12 @@
 {
   "scripts": {
-    "install": "cd ./backend && npm install && cd ../frontend && npm install",
-    "build-frontend": "cd ./frontend && npm run build",
+    "install": "cd ./backend && npm install && cd ../vue-frontend && npm install",
+    "build-frontend": "cd ./vue-frontend && npm run build",
     "build-backend": "cd ./backend && npm run build",
     "start": "node backend/dist/index.js",
     "all": "npm run build-frontend && npm run build-backend && npm run start"
+  },
+  "dependencies": {
+    "auth0-js": "^8.11.2"
   }
 }

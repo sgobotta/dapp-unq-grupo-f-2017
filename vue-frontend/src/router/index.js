@@ -1,21 +1,29 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import Callback from '@/components/Callback'
 
 Vue.use(Router)
 
-export default new Router({
+// application routes
+const router = new Router({
+  mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'Home',
       component: Home
-    }, 
+    },
     {
-      path: '/register/customer'
-    }, 
+      path: '/callback',
+      name: 'Callback',
+      component: Callback
+    },
     {
-      path: '/register/provider'
+      path: '*',
+      redirect: '/home'
     }
   ]
 })
+
+export default router

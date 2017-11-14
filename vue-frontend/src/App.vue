@@ -6,38 +6,66 @@
 	<md-whiteframe md-tag="md-toolbar" md-elevation="6" class="md-medium">
 
       <div class="md-toolbar-container">
-        <md-button class="md-primary md-raised">Pepon</md-button>
-
-        <span style="flex: 1;">
-              <h2 class="md-title centered">{{ title }}</h2>
-        </span>
 
         <md-button class="md-primary md-raised">Registrate!</md-button>
 
         <md-button class="md-primary md-raised">Sos una empresa?</md-button>
 
+        <span style="flex: 1;">
+              <h2 class="md-title centered">{{ title }}</h2>
+        </span>
+
+        <md-button class="md-primary md-raised"
+           v-if="!authenticated"
+           @click="login()">
+              Log In
+        </md-button>
+
+        <md-button class="md-primary md-raised"
+           v-if="authenticated"
+           @click="logout()">
+              Log Out
+        </md-button>
+
       </div>
-
     </md-whiteframe>
-
-    <router-view/>
-  </div>
+    <div class="container">
+        <router-view
+          :auth="auth"
+          :authenticated="authenticated">
+          </router-view>
+      </div>
+    </div>
 </template>
 
 <script>
+import AuthService from './auth/AuthService'
+
+const auth = new AuthService()
+const {login, logout, authenticated, authNotifier} = auth
+
 export default {
   name: 'app',
   data () {
+    authNotifier.on('authChange', authState => {
+      this.authenticated = authState.authenticated
+    })
     return {
+      auth,
+      authenticated,
       title: 'MorfiYa!'
     }
+  },
+  methods: {
+    login,
+    logout
   }
 }
 </script>
 
 <style src="vue-material/dist/vue-material.css"></style>
 
-<style> 
+<style>
 
 .centered {
   text-align: center;
