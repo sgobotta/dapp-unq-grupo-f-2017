@@ -5,19 +5,21 @@ import TYPES from "./../../constants/types";
 @injectable()
 export class Runner {
 
+  public static state: { status: String };
+
   public static runInSession(block) {
     let connection = MySqlConnection.getConnection();
-    let state = { status: "open" };
+    this.state = { status: "open" };
     if (!connection) {
-        connection = MySqlConnection.createConnection();
-        let state = { status: "new" };
+      connection = MySqlConnection.createConnection();
+      this.state = { status: "new" };
     }
     let transaction = null;
 
     try {
       transaction = connection.beginTransaction((err) => {
         block();
-        if (state.status === "open") {
+        if (this.state.status === "open") {
           connection.commit((err) => {
             if (err) throw err; // Log message
           });
