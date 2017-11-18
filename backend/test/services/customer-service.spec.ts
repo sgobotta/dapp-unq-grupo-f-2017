@@ -3,7 +3,7 @@ import { Customer } from "./../../src/models/customer";
 import { MongoDBClient } from "./../../src/config/mongodb/client";
 import { expect } from "chai";
 import "mocha";
-import { mock, instance, when, verify, anyString } from "ts-mockito";
+import { mock, instance, when, verify, anyString, anything, anyFunction } from "ts-mockito";
 
 let customerService;
 let mongoClient;
@@ -28,7 +28,7 @@ describe("A Customer Service when it's created", () => {
 describe("A Customer Service when getCustomerByCUIT is called", () => {
   it("should call findOneByProperty on mongoClient", () => {
     customerService.getCustomerByCUIT("20343687878", () => {
-      verify(mongoClient.findOneByProperty).once();
+      verify(mongoClient.findOneByProperty(anyString(), anything(), anyFunction())).once();
     });
   });
 });
