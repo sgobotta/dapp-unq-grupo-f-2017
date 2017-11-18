@@ -60,7 +60,7 @@ export class BalanceService {
   }
 
   public updateCustomerBalanceByCUIT(customerId: number, amount: number, callback) {
-    this.extractFromCustomerBalanceByEmail(customerId, amount, callback);
+    this.extractFromCustomerBalanceByCUIT(customerId, amount, callback);
   }
 
   public newProviderBalance(providerId: string, callback) {
@@ -125,7 +125,7 @@ export class BalanceService {
     });
   }
 
-  private extractFromCustomerBalanceByEmail(customerId: number, amount: number, callback) {
+  private extractFromCustomerBalanceByCUIT(customerId: number, amount: number, callback) {
     this.getCustomerBalanceByCUIT(customerId, (query) => {
       if (query.success) {
         const balance = query.balance;
