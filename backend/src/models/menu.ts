@@ -1,4 +1,5 @@
 import { Currency, CurrencyBuilder } from "./utils/currency/currency";
+import { Availability } from "./utils/availability";
 
 export class Menu {
 
@@ -8,7 +9,7 @@ export class Menu {
   currencyName: string;
   deliveryPrice: Currency;
   validityRange: [Date];
-  deliveryTimeRange: [Date];
+  deliveryTimeRange: Availability;
   price: Currency;
   minQuantity: number;
   minQuantityPrice: Currency;
@@ -16,7 +17,7 @@ export class Menu {
   ancestors: [string];
 
   constructor(name: string, description: string, category: [string],
-    deliveryPrice: Currency, validityRange: [Date], deliveryTimeRange: [Date],
+    deliveryPrice: Currency, validityRange: [Date], deliveryTimeRange: Availability,
     price: Currency, minQuantity: number, minQuantityPrice: Currency,
     maxDailySalesQuantity: number, ancestors: [string]) {
 
@@ -41,7 +42,7 @@ export class MenuBuilder {
   currencyName: string;
   deliveryPrice: Currency;
   validityRange: [Date];
-  deliveryTimeRange: [Date];
+  deliveryTimeRange: Availability;
   price: Currency;
   minQuantity: number;
   minQuantityPrice: Currency;
@@ -101,7 +102,7 @@ export class MenuBuilder {
     return this;
   }
 
-  public withDeliveryTimeRange(deliveryTimeRange: [Date]) {
+  public withDeliveryTimeRange(deliveryTimeRange: Availability) {
     this.deliveryTimeRange = deliveryTimeRange;
     return this;
   }
