@@ -25,7 +25,7 @@ export class CustomerService {
     });
   }
 
-  public updateCustomerByCUIT(cuit:string, customer:Customer): Promise<Customer> {
+  public updateCustomerByCUIT(cuit:string, customer: Customer): Promise<Customer> {
     return new Promise<Customer>((resolve, reject) => {
       this.mongoClient.updateByProperty(this.collection, { cuit: cuit }, customer, (error, data: Customer) => {
         resolve(data);
