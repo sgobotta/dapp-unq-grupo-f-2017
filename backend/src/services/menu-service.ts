@@ -51,7 +51,7 @@ export class MenuService {
     });
   }
 
-  public newMenu(menu: Menu) {
+  public newMenu(menu: Menu): Promise<Menu> {
     return new Promise<Menu>((resolve, reject) => {
       let newMenu;
       try {
@@ -74,6 +74,7 @@ export class MenuService {
         });
       }
       catch (err) {
+        console.log(err);
         return null;
       }
     });
