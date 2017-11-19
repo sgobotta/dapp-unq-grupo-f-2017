@@ -1,7 +1,6 @@
 import { injectable } from "inversify";
 import * as mysql from "mysql";
 import * as path from "path";
-import Menu from "./../../models/menu";
 import { connectionConfig } from "./config";
 import { MySqlConnection } from "./connection";
 import { Wove } from "aspect.js";

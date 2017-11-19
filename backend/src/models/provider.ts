@@ -1,6 +1,6 @@
 import Address from "./utils/address";
 import Phone from "./utils/phone";
-import Availability from "./utils/availability";
+import { Availability, AvailabilityBuilder, Workshift } from "./utils/availability";
 import MapsPolygon from "./utils/maps/maps-polygon";
 import { Reputation } from "./reputation";
 import { MailValidator } from "./utils/mailValidator";
@@ -19,9 +19,9 @@ export class Provider {
   deliveryLocationRange: MapsPolygon;
   reputation: Reputation;
 
-  constructor(name:string, logo:string, address:Address, description:string, website:string,
-    email:string, phone:Phone, availability:Availability,
-    deliveryLocationRange: MapsPolygon, reputation:Reputation) {
+  constructor(name: string, logo: string, address: Address, description: string, website: string,
+    email: string, phone: Phone, availability: Availability,
+    deliveryLocationRange: MapsPolygon, reputation: Reputation) {
 
     this.name = name;
     this.logo = logo;
@@ -118,8 +118,19 @@ export class ProviderBuilder {
     return this;
   }
 
-  public withAvailability(availability) {
-    this.availability = new Availability(availability);
+  public withAvailability(monday: Workshift[], tuesday: Workshift[],
+    wednesday: Workshift[], thursday: Workshift[], friday: Workshift[],
+    saturday: Workshift[], sunday: Workshift[]) {
+
+    this.availability = new AvailabilityBuilder()
+      .withMonday(monday)
+      .withTuesday(tuesday)
+      .withWednesday(wednesday)
+      .withThursday(thursday)
+      .withFriday(friday)
+      .withSaturday(saturday)
+      .withSunday(sunday)
+      .build();
     return this;
   }
 

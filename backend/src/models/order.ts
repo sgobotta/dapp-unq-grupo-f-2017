@@ -1,5 +1,5 @@
 import { DeliveryType } from "./constants/delivery-type";
-import Menu from "./menu";
+import { Menu } from "./menu";
 
 export class Order {
 
@@ -15,5 +15,5 @@ export class Order {
   	this.quantity = quantity;
   	this.deliveryTime = deliveryTime;
   }
-  
+
 }

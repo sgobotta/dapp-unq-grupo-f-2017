@@ -20,60 +20,46 @@
       "number": "011 4365-7100"
     },
     "availability": {
-      "daysOfTheWeek": [
+      "monday": [
         {
-          "day": "Monday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 20
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "tuesday": [
         {
-          "day": "Tuesday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 20
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "wednesday": [
         {
-          "day": "Wednesday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 20
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "thursday": [
         {
-          "day": "Thursday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 20
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "friday": [
         {
-          "day": "Friday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 20
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "saturday": [
         {
-          "day": "Saturday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 20
-            }
-          ]
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "sunday": [
+        {
+          "startTime": 0,
+          "endTime": 0
         }
       ]
     },
@@ -123,85 +109,46 @@
       "number": "011 42571516"
     },
     "availability": {
-      "daysOfTheWeek": [
+      "monday": [
         {
-          "day": "Monday",
-          "shifts": [
-            {
-              "start": 9,
-              "end": 14
-            },
-            {
-              "start": 18,
-              "end": 23
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "tuesday": [
         {
-          "day": "Tuesday",
-          "shifts": [
-            {
-              "start": 9,
-              "end": 14
-            },
-            {
-              "start": 18,
-              "end": 23
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "wednesday": [
         {
-          "day": "Wednesday",
-          "shifts": [
-            {
-              "start": 9,
-              "end": 14
-            },
-            {
-              "start": 18,
-              "end": 23
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "thursday": [
         {
-          "day": "Thursday",
-          "shifts": [
-            {
-              "start": 9,
-              "end": 14
-            },
-            {
-              "start": 18,
-              "end": 23
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "friday": [
         {
-          "day": "Friday",
-          "shifts": [
-            {
-              "start": 9,
-              "end": 23
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "saturday": [
         {
-          "day": "Saturday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 23
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "sunday": [
         {
-          "day": "Sunday",
-          "shifts": [
-            {
-              "start": 18,
-              "end": 23
-            }
-          ]
+          "startTime": 0,
+          "endTime": 0
         }
       ]
     },
@@ -251,73 +198,46 @@
       "number": "011 4253-1964"
     },
     "availability": {
-      "daysOfTheWeek": [
+      "monday": [
         {
-          "day": "Monday",
-          "shifts": [
-            {
-              "start": 18,
-              "end": 1
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "tuesday": [
         {
-          "day": "Tuesday",
-          "shifts": [
-            {
-              "start": 18,
-              "end": 1
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "wednesday": [
         {
-          "day": "Wednesday",
-          "shifts": [
-            {
-              "start": 18,
-              "end": 1
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "thursday": [
         {
-          "day": "Thursday",
-          "shifts": [
-            {
-              "start": 18,
-              "end": 1
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "friday": [
         {
-          "day": "Friday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 14
-            },
-            {
-              "start": 18,
-              "end": 4
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "saturday": [
         {
-          "day": "Saturday",
-          "shifts": [
-            {
-              "start": 10,
-              "end": 4
-            }
-          ]
-        },
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "sunday": [
         {
-          "day": "Sunday",
-          "shifts": [
-            {
-              "start": 18,
-              "end": 1
-            }
-          ]
+          "startTime": 0,
+          "endTime": 0
         }
       ]
     },

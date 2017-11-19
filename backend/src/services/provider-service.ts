@@ -54,7 +54,10 @@ export class ProviderService {
           .withWebsite(provider.website)
           .withEmail(provider.email)
           .withPhone(provider.phone.area, provider.phone.number)
-          .withAvailability(provider.availability)
+          .withAvailability(provider.availability.monday, provider.availability.tuesday,
+            provider.availability.wednesday, provider.availability.thursday,
+            provider.availability.friday, provider.availability.saturday,
+            provider.availability.sunday)
           .withDeliveryLocationRange(provider.deliveryLocationRange.area)
           .build();
 

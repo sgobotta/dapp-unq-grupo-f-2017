@@ -1,5 +1,5 @@
 import { MenuService } from "./../../src/services/menu-service";
-import Menu from "./../../src/models/menu";
+import { Menu } from "./../../src/models/menu";
 import { MongoDBClient } from "./../../src/config/mongodb/client";
 import { MySQLClient } from "./../../src/config/mysql/client";
 import { expect } from "chai";

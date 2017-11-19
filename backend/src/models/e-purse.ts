@@ -1,4 +1,4 @@
-import Currency from "./utils/currency";
+import { Currency } from "./utils/currency/currency";
 
 export class EPurse {
 

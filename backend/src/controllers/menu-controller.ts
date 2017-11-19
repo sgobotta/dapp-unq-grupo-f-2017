@@ -3,7 +3,7 @@ import {
 } from "inversify-express-utils";
 import { injectable, inject } from "inversify";
 import { MenuService } from "./../services/menu-service";
-import Menu from "./../models/menu";
+import { Menu } from "./../models/menu";
 import { Request, Response } from "express";
 import TYPES from "./../constants/types";
 
