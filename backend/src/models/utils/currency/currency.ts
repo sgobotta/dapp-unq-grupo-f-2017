@@ -11,24 +11,23 @@ export class Currency {
     this.amount = ExchangeRate.convert(this.currencyName, this.amount);
   }
 
-  public substract(amount: Currency){
+  public substract(amount: Currency) {
   	// Simple implementation with no conversion rate
-  	if(this.amount - amount.getAmount() > 0){
-  		this.amount = this.amount - amount.getAmount();
+  	if(this.amount - amount.getAmount() > 0) {
+      this.amount = this.amount - amount.getAmount();
   	} else {
-  		// throw error maybe
-  		console.log("Pibe no te alcanza pa' garpar");
-  	}
-
+      // throw error maybe
+      console.log("Pibe no te alcanza pa' garpar");
+    }
   }
 
-  public add(amount: Currency){
-  	// Simple implementation with no conversion rate
-  	this.amount = this.amount + amount.getAmount();
+  public add(amount: Currency) {
+    // Simple implementation with no conversion rate
+    this.amount = this.amount + amount.getAmount();
   }
 
-  public getAmount() : number {
-  	return this.amount;
+  public getAmount(): number {
+    return this.amount;
   }
 
 }

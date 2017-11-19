@@ -54,15 +54,16 @@ export class AvailabilityBuilder {
       const workshift: Workshift = new WorkshiftBuilder()
         .withStartTime(shift.startTime)
         .withEndTime(shift.endTime)
-        .build()
+        .build();
       newShifts.push(workshift);
-    })
+    });
     return newShifts;
   }
 
+  // TO-DO Refactor with<day> function. Could be prettier.
+
   public withMonday(shifts: Workshift[]) {
     this.monday = this.buildWorkshifts(shifts);
-    console.log(this.monday)
     return this;
   }
 
@@ -107,8 +108,8 @@ export class AvailabilityBuilder {
 
 export class Workshift {
 
-  startTime: number
-  endTime: number
+  startTime: number;
+  endTime: number;
 
   constructor(startTime: number, endTime: number) {
     this.startTime = startTime;
