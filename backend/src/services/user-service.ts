@@ -31,8 +31,8 @@ export class UserService {
           })
           .catch((result) => {
             if (!result) resolve({ success: true, data: user });
-            else resolve({ success: false, data: "Error while getting user." })
-          })
+            else resolve({ success: false, data: "Error while getting user." });
+          });
         } else {
           reject({ success: false, msg: "User not found." });
         }
@@ -116,7 +116,6 @@ export class UserService {
         if (result) {
           const today = new Date;
           const res = result.session.expireDate < today;
-          console.log(res);
           if (res) resolve(true);
           else reject(false);
         } else  {
@@ -128,6 +127,6 @@ export class UserService {
 }
 
 export interface UserResponse {
-  success: boolean,
-  data: any
+  success: boolean;
+  data: any;
 }

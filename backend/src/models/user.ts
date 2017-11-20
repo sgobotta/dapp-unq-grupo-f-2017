@@ -11,7 +11,7 @@ export class User {
 
     this.email = email;
     this.password = password;
-    this.session = session
+    this.session = session;
     this.roles = roles;
   }
 }
@@ -25,7 +25,7 @@ export class UserBuilder {
   roles: string[];
 
   constructor() {
-    this.clear()
+    this.clear();
     return this;
   }
 
