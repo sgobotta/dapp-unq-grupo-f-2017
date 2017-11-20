@@ -69,7 +69,7 @@ export class MenuService {
           .withMaxDailySalesQuantity(menu.maxDailySalesQuantity)
           .withAncestors(menu.ancestors)
           .build();
-        this.mongoClient.insert(this.collection, menu, (error, data: Menu) => {
+        this.mongoClient.insert(this.collection, newMenu, (error, data: Menu) => {
           resolve(data);
         });
       }
