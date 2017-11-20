@@ -34,6 +34,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/ioredis": "0.0.25",
+    "@types/lodash": "^4.14.85",
     "@types/mysql": "0.0.34",
     "@types/redis": "^2.6.0",
     "@types/request": "^2.0.6",
@@ -50,6 +51,7 @@
     "inversify-express-utils": "4.0.0",
     "inversify-logger-middleware": "3.0.0",
     "ioredis": "^3.1.4",
+    "lodash": "^4.17.4",
     "mailgun-js": "^0.13.1",
     "mongodb": "2.2.31",
     "mongojs": "^2.4.1",
