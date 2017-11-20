@@ -82,11 +82,6 @@ class Session {
     this.token = token;
     this.expireDate = expireDate;
   }
-
-  public tokenExpired() {
-    const today = new Date;
-    return this.expireDate < today;
-  }
 }
 
 class SessionBuilder {
