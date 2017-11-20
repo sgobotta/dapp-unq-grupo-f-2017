@@ -2,7 +2,8 @@ const TAGS = {
     MenuController: "MenuController",
     CustomerController: "CustomerController",
     ProviderController: "ProviderController",
-    BalanceController: "BalanceController"
+    BalanceController: "BalanceController",
+    UserController: "UserController"
 };
 
 export default TAGS;
