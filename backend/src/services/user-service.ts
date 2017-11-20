@@ -21,21 +21,18 @@ export class UserService {
     this.collection = "users";
   }
 
-  public getUserByEmail(email: string): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.mongoClient.findOneByProperty(this.collection, { email: email }, (error, data: User) => {
-        if (data) {
-          const user = new UserBuilder()
-          .withEmail(data.email)
-          .withPassword(data.password)
-          .withSession(data.session.token)
-          .withRoles(data.roles)
-          .build();
-          if (!user.session.tokenExpired()) {
-            resolve({ success: true, data });
-          } else {
-            reject({ success: false, msg: "User not found." });
-          }
+  public getUserByEmail(email: string): Promise<UserResponse> {
+    return new Promise<UserResponse>((resolve, reject) => {
+      this.mongoClient.findOneByProperty(this.collection, { email: email }, (error, user: User) => {
+        if (user) {
+          this.tokenExpired(user)
+          .then((result) => {
+            reject({ success: !result, msg: "Token has expired." });
+          })
+          .catch((result) => {
+            if (!result) resolve({ success: true, data: user });
+            else resolve({ success: false, data: "Error while getting user." })
+          })
         } else {
           reject({ success: false, msg: "User not found." });
         }
@@ -43,29 +40,38 @@ export class UserService {
     });
   }
 
-  public updateUserByEmail(email: string, user: User): Promise<User> {
-    return new Promise<User>((resolve, reject) => {
-      this.mongoClient.updateByProperty(this.collection, { email: email }, user, (error, data: User) => {
-        resolve(data);
+  public updateUserByEmail(email: string, user: User): Promise<UserResponse> {
+    return new Promise<UserResponse>((resolve, reject) => {
+      this.mongoClient.updateByProperty(this.collection, { email: email }, user, (error, user: User) => {
+        if (error) {
+          reject({ success: false, msg: "Error while updating" });
+        }
+        else if (user) {
+          resolve({ success: true, data: user });
+        }
       });
     });
   }
 
-  public deleteUserByEmail(email: string): Promise<User> {
-    return new Promise<User>((resolve, reject) => {
-      this.mongoClient.removeByProperty(this.collection, { email: email }, (error, data: any) => {
-        resolve(data);
+  public deleteUserByEmail(email: string): Promise<UserResponse> {
+    return new Promise<UserResponse>((resolve, reject) => {
+      this.mongoClient.removeByProperty(this.collection, { email: email }, (error, user: any) => {
+        if (error) {
+          reject({ success: false, msg: "Error while deleting." });
+        } else if (user)  {
+          resolve({ success: true, data: "User has been deleted. Bye bye ~" });
+        }
       });
     });
   }
 
-  public newUser(user: User): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+  public newUser(user: User): Promise<UserResponse> {
+    return new Promise<UserResponse>((resolve, reject) => {
       let newUser: User;
       try {
         this.userExists(user.email)
         .then((result) => {
-          reject({ success: result, msg: "User already exists."});
+          reject({ success: !result, msg: "User already exists."});
         })
         .catch((result) => {
           newUser = new UserBuilder()
@@ -75,8 +81,13 @@ export class UserService {
           .withSession(user.session.token)
           .withRoles(user.roles)
           .build();
-          this.mongoClient.insert(this.collection, newUser, (error, data: User) => {
-            resolve({ success: result, data });
+          this.mongoClient.insert(this.collection, newUser, (error, user: User) => {
+            if (error) {
+              reject({ success: result, msg: "Insertion error." });
+            }
+            else if (user) {
+              resolve({ success: !result, data: user });
+            }
           });
         });
       }
@@ -89,13 +100,34 @@ export class UserService {
 
   private userExists(email: string) {
     return new Promise<Boolean>((resolve, reject) => {
-      this.mongoClient.findOneByProperty(this.collection, { email: email }, (error, data: User) => {
-        if (data) {
+      this.mongoClient.findOneByProperty(this.collection, { email: email }, (error, user: User) => {
+        if (user) {
           resolve(true);
         } else {
           reject(false);
         }
       });
-    })
+    });
   }
+
+  private tokenExpired(user: User) {
+    return new Promise<Boolean>((resolve, reject) => {
+      this.mongoClient.findOneByProperty(this.collection, { email: user.email }, (error, result: User) => {
+        if (result) {
+          const today = new Date;
+          const res = result.session.expireDate < today;
+          console.log(res);
+          if (res) resolve(true);
+          else reject(false);
+        } else  {
+          reject(false);
+        }
+      });
+    });
+  }
+}
+
+export interface UserResponse {
+  success: boolean,
+  data: any
 }
