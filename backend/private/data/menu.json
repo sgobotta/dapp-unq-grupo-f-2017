@@ -1,127 +1,333 @@
 [
   {
-    "providerId": "delivery@losgallegos.com.ar",
     "name": "Hamburguesas con fritas",
     "description": "1 hamburguesa y porcion de papas fritas para una persona",
     "category": ["carne", "hamburguesa"],
+    "currencyName": "ARS",
     "deliveryPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
       "amount": 20
     },
-    "validityRange": ["Sun Oct 15 2017 02:30:10 GMT-0300 (ART)", "Thu Dic 28 2017 02:30:10 GMT-0300 (ART)"],
-    "deliveryTimeRange": "5 hours",
+    "validityRange": [ "Sat Nov 18 2017 18:34:05 GMT-0300", "Sat Dec 30 2017 18:34:05 GMT-0300" ],
+    "deliveryTimeRange": {
+      "monday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "tuesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "wednesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "thursday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "friday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "saturday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "sunday": [
+        {
+          "startTime": 0,
+          "endTime": 0
+        }
+      ]
+    },
     "price": {
-      "name": "USDollars",
-      "symbol": "u$s",
-      "amount": 80
+      "amount": 40
     },
     "minQuantity": 10,
     "minQuantityPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
-      "amount": 800
+      "amount": 90
     },
-    "maxDailySalesQuantity": 40
+    "maxDailySalesQuantity": 40,
+    "ancestors": ["delivery@losgallegos.com.ar"]
   },
   {
-    "providerId": "unq@unq.edu.ar",
     "name": "Pollo al espiedo",
     "description": "porción para 1 persona, con papas o ensalada",
     "category": ["pollo", "carne blanca", "ensalada", "delicious"],
+    "currencyName": "ARS",
     "deliveryPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
       "amount": 20
     },
-    "validityRange": ["Sun Oct 15 2017 02:30:10 GMT-0300 (ART)", "Thu Dic 28 2017 02:30:10 GMT-0300 (ART)"],
-    "deliveryTimeRange": "5 hours",
+    "validityRange": [ "Sat Nov 18 2017 18:34:05 GMT-0300", "Sat Dec 30 2017 18:34:05 GMT-0300" ],
+    "deliveryTimeRange": {
+      "monday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "tuesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "wednesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "thursday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "friday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "saturday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "sunday": [
+        {
+          "startTime": 0,
+          "endTime": 0
+        }
+      ]
+    },
     "price": {
-      "name": "USDollars",
-      "symbol": "u$s",
       "amount": 100
     },
     "minQuantity": 10,
     "minQuantityPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
-      "amount": 1000
+      "amount": 120
     },
-    "maxDailySalesQuantity": 20
+    "maxDailySalesQuantity": 35,
+    "ancestors": [ "unq@unq.edu.ar" ]
   },
   {
-    "providerId": "unq@unq.edu.ar",
     "name": "Milanesas de soja",
     "description": "Porción de dos milaesas con arroz, ensalada o papas al horno",
     "category": ["soy", "veggie"],
+    "currencyName": "ARS",
     "deliveryPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
       "amount": 20
     },
-    "validityRange": ["Sun Oct 15 2017 02:30:10 GMT-0300 (ART)", "Thu Dic 28 2017 02:30:10 GMT-0300 (ART)"],
-    "deliveryTimeRange": "5 hours",
+    "validityRange": [ "Sat Nov 18 2017 18:34:05 GMT-0300", "Sat Dec 30 2017 18:34:05 GMT-0300" ],
+    "deliveryTimeRange": {
+      "monday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "tuesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "wednesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "thursday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "friday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "saturday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "sunday": [
+        {
+          "startTime": 0,
+          "endTime": 0
+        }
+      ]
+    },
     "price": {
-      "name": "USDollars",
-      "symbol": "u$s",
       "amount": 60
     },
     "minQuantity": 10,
     "minQuantityPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
-      "amount": 600
+      "amount": 90
     },
-    "maxDailySalesQuantity": 80
+    "maxDailySalesQuantity": 80,
+    "ancestors": "unq@unq.edu.ar"
   },
   {
-    "providerId": "contacto@buenosairessushi.com.ar",
     "name": "Spring",
     "description": "Roll crocante relleno de salmón. (8 u)",
     "category": ["roll", "sushi"],
+    "currencyName": "ARS",
     "deliveryPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
-      "amount": 2
+      "amount": 30
     },
-    "validityRange": ["Sun Oct 15 2017 02:30:10 GMT-0300 (ART)", "Thu Dic 28 2017 02:30:10 GMT-0300 (ART)"],
-    "deliveryTimeRange": "2 hours",
+    "validityRange": [ "Sat Nov 18 2017 18:34:05 GMT-0300", "Sat Dec 30 2017 18:34:05 GMT-0300" ],
+    "deliveryTimeRange": {
+      "monday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "tuesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "wednesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "thursday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "friday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "saturday": [
+        {
+          "startTime": 10,
+          "endTime": 15
+        },
+        {
+          "startTime": 18,
+          "endTime": 5
+        }
+      ],
+      "sunday": [
+        {
+          "startTime": 10,
+          "endTime": 15
+        },
+        {
+          "startTime": 18,
+          "endTime": 23
+        }
+      ]
+    },
     "price": {
-      "name": "USDollars",
-      "symbol": "u$s",
       "amount": 10
     },
     "minQuantity": 2,
     "minQuantityPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
-      "amount": 18
+      "amount": 130
     },
-    "maxDailySalesQuantity": 80
+    "maxDailySalesQuantity": 80,
+    "ancestors": [ "contacto@buenosairessushi.com.ar" ]
   },
   {
-    "providerId": "contacto@buenosairessushi.com.ar",
     "name": "Gran Maki",
     "description": "(Sin arroz) salmón, salmón ahumado, palta, phila, cilantro, morrón rojo, en tempura de papa, mayo de curry. (8 u)",
     "category": ["roll", "sushi"],
+    "currencyName": "ARS",
     "deliveryPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
-      "amount": 2
+      "amount": 30
     },
-    "validityRange": ["Sun Oct 15 2017 02:30:10 GMT-0300 (ART)", "Thu Dic 28 2017 02:30:10 GMT-0300 (ART)"],
-    "deliveryTimeRange": "2 hours",
+    "validityRange": [ "Sat Nov 18 2017 18:34:05 GMT-0300", "Sat Dec 30 2017 18:34:05 GMT-0300" ],
+    "deliveryTimeRange": {
+      "monday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "tuesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "wednesday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "thursday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "friday": [
+        {
+          "startTime": 10,
+          "endTime": 20
+        }
+      ],
+      "saturday": [
+        {
+          "startTime": 10,
+          "endTime": 15
+        },
+        {
+          "startTime": 18,
+          "endTime": 5
+        }
+      ],
+      "sunday": [
+        {
+          "startTime": 10,
+          "endTime": 15
+        },
+        {
+          "startTime": 18,
+          "endTime": 23
+        }
+      ]
+    },
     "price": {
-      "name": "USDollars",
-      "symbol": "u$s",
       "amount": 9
     },
     "minQuantity": 2,
     "minQuantityPrice": {
-      "name": "USDollars",
-      "symbol": "u$s",
       "amount": 16
     },
-    "maxDailySalesQuantity": 80
+    "maxDailySalesQuantity": 80,
+    "ancestors": [ "contacto@buenosairessushi.com.ar" ]
   }
 ]

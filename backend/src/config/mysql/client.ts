@@ -1,44 +1,43 @@
 import { injectable } from "inversify";
 import * as mysql from "mysql";
 import * as path from "path";
-import Menu from "./../../models/menu";
 import { connectionConfig } from "./config";
+import { MySqlConnection } from "./connection";
+import { Wove } from "aspect.js";
 
 @injectable()
+@Wove()
 export class MySQLClient {
 
   private connection: mysql.IConnection;
   private pool: mysql.IPool;
 
   constructor() {
-    if (!process.env.ON_DEPLOY) {
-      this.connection = mysql.createConnection(connectionConfig.local);
-    }
-    if (process.env.ON_DEPLOY) {
-      this.connection = mysql.createConnection(connectionConfig.deploy);
-    }
+    this.connection = MySqlConnection.getSession();
   }
 
   public getConnection() {
     return this.connection;
   }
 
-  public connect(): void {
-    this.connection.connect((res, err) => {
-      if(err) {
-        console.log(err);
-      }
-      else {
-        console.log(res);
-      }
+  public findOneByProperty(collection, object, callback) {
+    let prop = Object.keys(object)[0];
+    this.connection.query(`SELECT * FROM ${collection} WHERE ${prop}=?`, object[prop], (err, res) => {
+      callback(err, res);
     });
   }
 
-  public disconnect(): void {
-    this.connection.end((err) => {
-      if(err) {
-        throw err;
-      }
+  public updateOneByProperty(collection, object, callback) {
+    let id = Object.keys(object)[0];
+    let propToUpdate = Object.keys(object)[1];
+    this.connection.query(`UPDATE ${collection} SET ${propToUpdate}=? WHERE ${id}=?`, [object[propToUpdate], object[id]], (err, res) => {
+      callback(err, res);
+    });
+  }
+
+  public insertOne(collection, object, callback) {
+    this.connection.query(`INSERT INTO ${collection} SET ?`, object, (err, res) => {
+      callback(err, res);
     });
   }
 

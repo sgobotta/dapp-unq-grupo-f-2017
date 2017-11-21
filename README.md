@@ -9,8 +9,8 @@ Morfi Ya! es una Single Web Application que tiene como objetivo facilitar la int
 
 #### Tecnologías Utilizadas
 
-Backend: NodeJS, Express, MongoDB, Chai
-Frontend: Angular2, Jasmine
+Backend: NodeJS, Typescript, MongoDB, Chai
+Frontend: VUE, Jasmine
 
 
 #### Instalación

@@ -17,7 +17,7 @@ export class CustomerService {
     this.collection = "customer";
   }
 
-  public getCustomerByCUIT(cuit:string): Promise<Customer>{
+  public getCustomerByCUIT(cuit:string): Promise<Customer> {
     return new Promise<Customer>((resolve, reject) => {
       this.mongoClient.findOneByProperty(this.collection, { cuit: cuit}, (error, data: Customer) => {
         resolve(data);
@@ -25,7 +25,7 @@ export class CustomerService {
     });
   }
 
-  public updateCustomerByCUIT(cuit:string, customer:string): Promise<Customer>{
+  public updateCustomerByCUIT(cuit:string, customer: Customer): Promise<Customer> {
     return new Promise<Customer>((resolve, reject) => {
       this.mongoClient.updateByProperty(this.collection, { cuit: cuit }, customer, (error, data: Customer) => {
         resolve(data);
@@ -33,7 +33,7 @@ export class CustomerService {
     });
   }
 
-  public deleteCustomerByCUIT(cuit:string): Promise<Customer>{
+  public deleteCustomerByCUIT(cuit:string): Promise<Customer> {
     return new Promise<Customer>((resolve, reject) => {
       this.mongoClient.removeByProperty(this.collection, { cuit: cuit }, (error, data: any) => {
         resolve(data);
@@ -41,22 +41,28 @@ export class CustomerService {
     });
   }
 
-  public newCustomer(customer: Customer): Promise<Customer>{
+  public newCustomer(customer: Customer): Promise<Customer> {
     return new Promise<Customer>((resolve, reject) => {
-      let newCustomer = new CustomerBuilder()
-      .withCUIT(customer.cuit)
-      .withName(customer.name)
-      .withSurname(customer.surname)
-      .withEmail(customer.email)
-      .withPhone(customer.phone.area, customer.phone.number)
-      .withAddress(customer.address.street, customer.address.number,
-        customer.address.city, customer.address.state,
-        customer.address.mapsLocation.latitude, customer.address.mapsLocation.longitude)
-      .build();
+      let newCustomer;
+      try {
+        newCustomer = new CustomerBuilder()
+        .withCUIT(customer.cuit)
+        .withName(customer.name)
+        .withSurname(customer.surname)
+        .withEmail(customer.email)
+        .withPhone(customer.phone.area, customer.phone.number)
+        .withAddress(customer.address.street, customer.address.number,
+          customer.address.city, customer.address.state,
+          customer.address.mapsLocation.latitude, customer.address.mapsLocation.longitude)
+          .build();
 
-      this.mongoClient.insert(this.collection, customer, (error, data: Customer) => {
-        resolve(data);
-      });
+          this.mongoClient.insert(this.collection, customer, (error, data: Customer) => {
+            resolve(data);
+          });
+      }
+      catch (err) {
+        return null;
+      }
     });
   }
 }

@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { MongoDBClient } from "../config/mongodb/client";
 import { MySQLClient } from "../config/mysql/client";
-import Menu from "./../models/menu";
+import { Menu, MenuBuilder } from "./../models/menu";
 import TYPES from "./../constants/types";
 
 @injectable()
@@ -51,11 +51,32 @@ export class MenuService {
     });
   }
 
-  public newMenu(menu: Menu) {
+  public newMenu(menu: Menu): Promise<Menu> {
     return new Promise<Menu>((resolve, reject) => {
-      this.mongoClient.insert(this.collection, menu, (error, data: Menu) => {
-        resolve(data);
-      });
+      let newMenu;
+      try {
+        newMenu = new MenuBuilder()
+          .withName(menu.name)
+          .withDescription(menu.description)
+          .withCategory(menu.category)
+          .withCurrencyName(menu.currencyName)
+          .withDeliveryPrice(menu.deliveryPrice.amount)
+          .withValidityRange(menu.validityRange)
+          .withDeliveryTimeRange(menu.deliveryTimeRange)
+          .withPrice(menu.price.amount)
+          .withMinQuantity(menu.minQuantity)
+          .withMinQuantityPrice(menu.minQuantityPrice.amount)
+          .withMaxDailySalesQuantity(menu.maxDailySalesQuantity)
+          .withAncestors(menu.ancestors)
+          .build();
+        this.mongoClient.insert(this.collection, newMenu, (error, data: Menu) => {
+          resolve(data);
+        });
+      }
+      catch (err) {
+        console.log(err);
+        return null;
+      }
     });
   }
 

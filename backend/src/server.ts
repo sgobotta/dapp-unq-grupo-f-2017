@@ -14,6 +14,10 @@ import Routes from "./routes";
 import { inject, Container } from "inversify";
 import { MailingSystem } from "./models/system/mailing-system";
 import DBStartup from "./config/init";
+import Logger from "./logger/logger";
+import * as events from "events";
+import "./logger/logger-aspect";
+import "./config/mysql/runner-aspect";
 
 export class Server {
 
@@ -99,9 +103,12 @@ export class Server {
 
   private loadDatabases(container: Container, callback) {
     let dbStartup = container.get<DBStartup>(TYPES.DBStartup);
-
     dbStartup.loadDatabases();
     callback();
+  }
+
+  private createLogger() {
+    Logger.createLogger();
   }
 
   public start(port): void {
@@ -114,13 +121,15 @@ export class Server {
 
     let app = this.buildServer(container, this.app);
 
+    this.createLogger();
+
     this.loadDatabases(container, () => {
 
       app.listen(port, (err) => {
         if (err) {
-          console.log(err);
+          throw err;
         } else {
-          console.log(`Server is listening on ${port}`);
+          Logger.info({ message: `Server is listening on ${port}`});
         }
       });
     });

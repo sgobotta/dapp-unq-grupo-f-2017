@@ -5,6 +5,7 @@ import { MongoDBConnection } from "./mongodb/connection";
 import TYPES from "./../constants/types";
 import * as path from "path";
 import * as fs from "fs";
+import Logger from "../logger/logger";
 
 @injectable()
 export default class Startup {
@@ -40,7 +41,7 @@ export default class Startup {
     collection.insert(data, (err, insert) => {
       if (err) throw err;
       if (insert) {
-        console.log(`MongoDB ::: Collection ${collection.collectionName} loaded succesfully.`);
+        Logger.info({ message: `MongoDB ::: Collection ${collection.collectionName} loaded succesfully.` });
       }
     });
   }
@@ -81,7 +82,7 @@ export default class Startup {
     connection.query(tablesInfo, (err, res) => {
         if (err) throw err;
         if (res) {
-          console.log("MySql ::: Database loaded succesfully");
+          Logger.info({ message: "MySql ::: Database loaded succesfully" });
         }
     });
   }

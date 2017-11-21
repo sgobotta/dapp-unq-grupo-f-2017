@@ -17,24 +17,31 @@ export class Customer {
   	if (this.validateCuit(cuit)) {
   		this.cuit = cuit;
   	}
-  	if (MailValidator.validateMail(email)) {
-      this.email = email;
-    } else {
-      throw Error("ERROR ::: Provided e-mail is not valid.");
-    }
+    this.email = this.validateEmail(email);
   	this.name = name;
   	this.surname = surname;
   	this.phone = phone;
   	this.address = address;
   }
 
+  private validateEmail(email) {
+    try {
+      if (MailValidator.validate(email)) {
+        return email;
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
   private validateCuit(cuit) {
   	request('https://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, (err, res, body) => {
-  		if (err){
+  		if (err) {
   			throw Error("ERROR ::: Connection could't be established");
   		}
       let success = JSON.parse(res.body).success;
-  		if (success){
+  		if (success) {
   			return body.estadoClave === "ACTIVO";
   		}
   		else {
@@ -99,7 +106,7 @@ export class CustomerBuilder {
     return this;
   }
 
-  public build(){
+  public build() {
     const customer = new Customer(this.cuit, this.name, this.surname, this.email, this.phone, this.address);
     this.clear();
     return customer;
