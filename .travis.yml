@@ -21,15 +21,13 @@ before_install:
   - npm install -g chai
 
 install:
-  - npm install -g @angular/cli
   - (cd backend && npm install)
-  - (cd frontend && npm install)
   - (cd backend && npm run build)
-  - (cd frontend && ng build -prod --output-path=../backend/dist/client)
+  - (cd vue-frontend && npm install)
+  - (cd vue-frontend && npm run build)
 
 script:
   - (cd backend && npm test)
-  - (cd frontend && ng test --single-run)
 
 deploy:
   provider: heroku
