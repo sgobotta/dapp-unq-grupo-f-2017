@@ -1,6 +1,6 @@
 import auth0 from 'auth0-js'
 import { AUTH_CONFIG } from './auth0-variables'
-import EventEmitter from 'EventEmitter'
+import EventEmitter from 'event-emitter'
 import router from './../router'
 
 export default class AuthService {

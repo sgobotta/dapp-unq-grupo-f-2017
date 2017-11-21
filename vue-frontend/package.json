@@ -14,7 +14,6 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "EventEmitter": "^1.0.0",
     "auth0-js": "^8.11.2",
     "vue": "^2.5.2",
     "vue-material": "^0.8.1",
