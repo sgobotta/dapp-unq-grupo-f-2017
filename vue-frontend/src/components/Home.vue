@@ -1,15 +1,6 @@
 <template>
     <div class="home">
       <img draggable="false" ondragstart="return false;" :src="images[currentNumber]" ref="bgimage" class="image-background"/>
-
-      <div class="md-toolbar-container">
-        <h4 v-if="authenticated">
-            You are logged in!
-        </h4>
-        <h4 v-else="authenticated">
-          You are not logged in! Please <a @click="auth.login()">Log In</a> to continue.
-        </h4>
-      </div>
     </div>
   </template>
 

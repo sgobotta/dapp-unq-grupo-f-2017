@@ -20,7 +20,7 @@ const router = new Router({
       component: Callback
     },
     {
-      path: '*',
+      path: '/',
       redirect: '/home'
     }
   ]

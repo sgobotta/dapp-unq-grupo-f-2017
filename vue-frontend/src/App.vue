@@ -7,9 +7,10 @@
 
       <div class="md-toolbar-container">
 
-        <md-button class="md-primary md-raised">Registrate!</md-button>
-
-        <md-button class="md-primary md-raised">Sos una empresa?</md-button>
+        <md-button 
+        class="md-primary md-raised"
+        @click="openDialog('dialog')"
+        v-if="!authenticated">Registrate!</md-button>
 
         <span style="flex: 1;">
               <h2 class="md-title centered">{{ title }}</h2>
@@ -27,8 +28,47 @@
               Log Out
         </md-button>
 
+        <md-dialog md-open-from="#register" md-close-to="#register" ref="dialog">
+          <md-dialog-title>Formulario de registro</md-dialog-title>
+
+          <md-dialog-content>
+
+            <md-input-container>
+              <label>Nombre</label>
+              <md-input placeholder="Nombre"></md-input>
+            </md-input-container>
+            <md-input-container>
+              <label>Apellido</label>
+              <md-input placeholder="Apellido"></md-input>
+            </md-input-container>
+            <md-input-container>
+              <label>E-Mail</label>
+              <md-input placeholder="E-Mail"></md-input>
+            </md-input-container>
+            <md-input-container>
+              <label>Password</label>
+              <md-input placeholder="Password"></md-input>
+            </md-input-container>
+            <md-input-container>
+              <label>Phone</label>
+              <md-input placeholder="Phone"></md-input>
+            </md-input-container>
+            <md-input-container>
+              <label>Address</label>
+              <md-input placeholder="Address"></md-input>
+            </md-input-container>
+            <md-input-container>
+              <label>CUIT</label>
+              <md-input placeholder="CUIT"></md-input>
+            </md-input-container>
+            
+          </md-dialog-content>
+
+        </md-dialog>
+
       </div>
     </md-whiteframe>
+
     <div class="container">
         <router-view
           :auth="auth"
@@ -58,7 +98,13 @@ export default {
   },
   methods: {
     login,
-    logout
+    logout,
+    openDialog (ref) {
+      this.$refs[ref].open()
+    },
+    closeDialog (ref) {
+      this.$refs[ref].close()
+    }
   }
 }
 </script>
