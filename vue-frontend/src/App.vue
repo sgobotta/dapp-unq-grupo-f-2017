@@ -7,10 +7,11 @@
 
       <div class="md-toolbar-container">
 
-        <md-button 
+        <md-button
         class="md-primary md-raised"
         @click="openDialog('dialog')"
-        v-if="!authenticated">Registrate!</md-button>
+        v-if="!authenticated"
+        id="register">Registrate!</md-button>
 
         <span style="flex: 1;">
               <h2 class="md-title centered">{{ title }}</h2>
@@ -29,41 +30,89 @@
         </md-button>
 
         <md-dialog md-open-from="#register" md-close-to="#register" ref="dialog">
-          <md-dialog-title>Formulario de registro</md-dialog-title>
-
           <md-dialog-content>
+            <md-tabs md-fixed md-elevation="4" class="md-transparent">
+              <md-tab id="customer" md-label="Customer">
+                <md-layout md-align="center">
+                  <md-input-container>
+                    <label>Nombre</label>
+                    <md-input v-model="name" placeholder="Nombre"></md-input>
+                  </md-input-container>
 
-            <md-input-container>
-              <label>Nombre</label>
-              <md-input placeholder="Nombre"></md-input>
-            </md-input-container>
-            <md-input-container>
-              <label>Apellido</label>
-              <md-input placeholder="Apellido"></md-input>
-            </md-input-container>
-            <md-input-container>
-              <label>E-Mail</label>
-              <md-input placeholder="E-Mail"></md-input>
-            </md-input-container>
-            <md-input-container>
-              <label>Password</label>
-              <md-input placeholder="Password"></md-input>
-            </md-input-container>
-            <md-input-container>
-              <label>Phone</label>
-              <md-input placeholder="Phone"></md-input>
-            </md-input-container>
-            <md-input-container>
-              <label>Address</label>
-              <md-input placeholder="Address"></md-input>
-            </md-input-container>
-            <md-input-container>
-              <label>CUIT</label>
-              <md-input placeholder="CUIT"></md-input>
-            </md-input-container>
-            
+                  <md-input-container>
+                    <label>Apellido</label>
+                    <md-input v-model="surname" placeholder="Apellido"></md-input>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>E-Mail</label>
+                    <md-input v-model="email" type="email" placeholder="E-Mail"></md-input>
+                  </md-input-container>
+
+                  <md-input-container md-has-password>
+                    <label>Password</label>
+                    <md-input v-model="password" type="password" placeholder="Password"></md-input>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>Phone</label>
+                    <md-input v-model="phone" placeholder="Phone"></md-input>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>Address</label>
+                    <md-input placeholder="Address"></md-input>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>CUIT</label>
+                    <md-input placeholder="CUIT"></md-input>
+                  </md-input-container>
+
+                  <md-button class="md-raised">Aceptar</md-button>
+                  <md-button class="md-raised">Cancelar</md-button>
+
+                </md-layout>
+              </md-tab>
+
+              <md-tab id="provider" md-label="Provider">
+                <md-layout md-align="center">
+                  <md-input-container>
+                    <label>Nombre</label>
+                    <md-input v-model="name" placeholder="Nombre"></md-input>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>Apellido</label>
+                    <md-input v-model="surname" placeholder="Apellido"></md-input>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>E-Mail</label>
+                    <md-input v-model="email" type="email" placeholder="E-Mail"></md-input>
+                  </md-input-container>
+
+                  <md-input-container md-has-password>
+                    <label>Password</label>
+                    <md-input v-model="password" type="password" placeholder="Password"></md-input>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>Phone</label>
+                    <md-input v-model="phone" placeholder="Phone"></md-input>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>Address</label>
+                    <md-input placeholder="Address"></md-input>
+                  </md-input-container>
+
+                  <md-button class="md-raised">Aceptar</md-button>
+                  <md-button class="md-raised">Cancelar</md-button>
+                </md-layout>
+              </md-tab>
+            </md-tabs>
           </md-dialog-content>
-
         </md-dialog>
 
       </div>
@@ -119,6 +168,10 @@ export default {
 
 .background {
   background: black;
+}
+
+.md-dialog {
+  width: 30%;
 }
 
 </style>
