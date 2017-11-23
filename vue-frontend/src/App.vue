@@ -19,7 +19,8 @@
 
         <md-button class="md-primary md-raised"
            v-if="!authenticated"
-           @click="login()">
+           @click="openDialog('login-dialog')"
+           id="login">
               Log In
         </md-button>
 
@@ -30,6 +31,7 @@
         </md-button>
 
         <register-dialog ref='register-dialog'/>
+        <log-in-dialog ref='login-dialog'/>
 
       </div>
     </md-whiteframe>
@@ -46,6 +48,7 @@
 <script>
 import AuthService from './auth/AuthService'
 import RegisterDialog from './components/RegisterDialog'
+import LogInDialog from './components/LogInDialog'
 
 const auth = new AuthService()
 const {login, logout, authenticated, authNotifier} = auth
@@ -73,7 +76,8 @@ export default {
     }
   },
   components: {
-    RegisterDialog
+    RegisterDialog,
+    LogInDialog
   }
 }
 </script>
