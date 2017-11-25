@@ -7,12 +7,12 @@
 
             <md-input-container>
               <label>CUIT</label>
-              <md-input v-model="cuit" placeholder="CUIT"></md-input>
+              <md-input v-model="cuit"></md-input>
             </md-input-container>
 
             <md-input-container md-has-password>
-              <label>Apellido</label>
-              <md-input v-model="password" type="password" placeholder="Password"></md-input>
+              <label>Password</label>
+              <md-input v-model="password" type="password"></md-input>
             </md-input-container>
 
             <md-button class="md-raised" @click="apply()">Aceptar</md-button>
@@ -26,12 +26,12 @@
 
             <md-input-container>
               <label>E-Mail</label>
-              <md-input v-model="email" placeholder="E-Mail"></md-input>
+              <md-input v-model="email"></md-input>
             </md-input-container>
 
             <md-input-container md-has-password>
-              <label>Apellido</label>
-              <md-input v-model="password" type="password" placeholder="Password"></md-input>
+              <label>Password</label>
+              <md-input v-model="password" type="password"></md-input>
             </md-input-container>
 
             <md-button class="md-raised" @click="apply()">Aceptar</md-button>
