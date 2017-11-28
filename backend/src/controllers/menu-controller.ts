@@ -27,6 +27,13 @@ export class MenuController {
       .catch((response) => { return response; });
   }
 
+  @httpPost("/category/:categories")
+  public getMenusWithCategory(request: Request): Promise<MenuListResponse> {
+    return this.menuService.getMenusWithName(request.body)
+      .then((response) => { return response; })
+      .catch((response) => { return response; });
+  }
+
   @httpGet("/:id")
   public getMenu(request: Request): Promise<MenuResponse> {
     return this.menuService.getMenu(request.params.id)
