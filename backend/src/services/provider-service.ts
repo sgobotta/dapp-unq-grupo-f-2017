@@ -40,8 +40,8 @@ export class ProviderService {
     });
   }
 
-  public newProvider(provider: Provider): Promise<Provider>{
-    return new Promise<Provider>((resolve, reject) => {
+  public newProvider(provider: Provider): Promise<ProviderResponse>{
+    return new Promise<ProviderResponse>((resolve, reject) => {
       let newProvider;
       try {
         newProvider = new ProviderBuilder()
@@ -62,12 +62,17 @@ export class ProviderService {
           .build();
 
           this.mongoClient.insert(this.collection, provider, (error, data: Provider) => {
-            resolve(data);
+            if(!error) resolve({ success: true, data });
           });
       }
       catch (err) {
-        return null;
+        reject({ success: false });
       }
     });
   }
+}
+
+export interface ProviderResponse {
+  success: boolean;
+  data: any;
 }

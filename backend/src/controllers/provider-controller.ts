@@ -2,7 +2,7 @@ import {
   controller, httpGet, httpPost, httpPut, httpDelete
 } from "inversify-express-utils";
 import { injectable, inject } from "inversify";
-import { ProviderService } from "../services/provider-service"
+import { ProviderService, ProviderResponse } from "../services/provider-service"
 import { Request, Response } from "express";
 import TYPES from "../constants/types";
 import { Provider } from "../models/provider"
@@ -31,8 +31,10 @@ export class ProviderController {
   }
 
   @httpPost("/")
-  public newProvider(request: Request): Promise<Provider> {
+  public newProvider(request: Request): Promise<ProviderResponse> {
   	return this.providerService.newProvider(request.body)
+      .then((response) => { return response; })
+      .catch((response) => { console.log(response); return response; });
   }
 
 }
