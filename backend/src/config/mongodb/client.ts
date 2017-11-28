@@ -28,6 +28,14 @@ export class MongoDBClient {
     });
   }
 
+  public findIncluding(collection: string, property: string, filter: any, result: (error, data) => void): void {
+    const obj = {};
+    obj[property] = { $in: filter };
+    this.db.collection(collection).find(obj, (error, data) => {
+      return result(error, data);
+    } );
+  }
+
   public findOneById(collection: string, objectId: string, result: (error, data) => void): void {
     this.db.collection(collection).find({ _id: new ObjectID(objectId) }).limit(1).toArray((error, find) => {
       return result(error, find[0]);
