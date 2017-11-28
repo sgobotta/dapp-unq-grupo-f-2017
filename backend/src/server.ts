@@ -17,6 +17,7 @@ import DBStartup from "./config/init";
 import Logger from "./logger/logger";
 import * as events from "events";
 import "./logger/logger-aspect";
+import "./models/builder-aspect";
 import "./config/mysql/runner-aspect";
 
 export class Server {

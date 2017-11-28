@@ -2,7 +2,7 @@ import {
   controller, httpGet, httpPost, httpPut, httpDelete
 } from "inversify-express-utils";
 import { injectable, inject } from "inversify";
-import { ProviderService } from "../services/provider-service"
+import { ProviderService, ProviderResponse } from "../services/provider-service"
 import { Request, Response } from "express";
 import TYPES from "../constants/types";
 import { Provider } from "../models/provider"
@@ -16,23 +16,31 @@ export class ProviderController {
   }
 
   @httpGet("/:email")
-  public getProvider(request: Request) : Promise<Provider> {
+  public getProvider(request: Request) : Promise<ProviderResponse> {
     return this.providerService.getProviderByEMail(request.params.email)
+      .then((response) => { return response; })
+      .catch((response) => { console.log(response); return response; });
   }
 
   @httpPut("/:email")
-  public updateProvider(request: Request): Promise<Provider> {
+  public updateProvider(request: Request): Promise<ProviderResponse> {
   	return this.providerService.updateProviderByEMail(request.params.email, request.body)
+      .then((response) => { return response; })
+      .catch((response) => { console.log(response); return response; });
   }
 
   @httpDelete("/:email")
-  public deleteProvider(request: Request): Promise<Provider> {
+  public deleteProvider(request: Request): Promise<ProviderResponse> {
   	return this.providerService.deleteProviderByEMail(request.params.email)
+      .then((response) => { return response; })
+      .catch((response) => { console.log(response); return response; });
   }
 
   @httpPost("/")
-  public newProvider(request: Request): Promise<Provider> {
+  public newProvider(request: Request): Promise<ProviderResponse> {
   	return this.providerService.newProvider(request.body)
+      .then((response) => { return response; })
+      .catch((response) => { console.log(response); return response; });
   }
 
 }

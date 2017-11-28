@@ -17,6 +17,10 @@ export default class Logger {
     this.logger.info(params);
   }
 
+  public static error(...params) {
+    this.logger.error(params);
+  }
+
 }
 
 

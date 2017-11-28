@@ -16,32 +16,35 @@ export class ProviderService {
     this.collection = "provider";
   }
 
-  public getProviderByEMail(email:string): Promise<Provider>{
-    return new Promise<Provider>((resolve, reject) => {
+  public getProviderByEMail(email:string): Promise<ProviderResponse>{
+    return new Promise<ProviderResponse>((resolve, reject) => {
       this.mongoClient.findOneByProperty(this.collection, { email: email}, (error, data: Provider) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public updateProviderByEMail(email:string, provider:string): Promise<Provider>{
-    return new Promise<Provider>((resolve, reject) => {
+  public updateProviderByEMail(email:string, provider:string): Promise<ProviderResponse>{
+    return new Promise<ProviderResponse>((resolve, reject) => {
       this.mongoClient.updateByProperty(this.collection, { email: email }, provider, (error, data: Provider) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false })
       });
     });
   }
 
-  public deleteProviderByEMail(email:string): Promise<Provider>{
-    return new Promise<Provider>((resolve, reject) => {
+  public deleteProviderByEMail(email:string): Promise<ProviderResponse>{
+    return new Promise<ProviderResponse>((resolve, reject) => {
       this.mongoClient.removeByProperty(this.collection, { email: email }, (error, data: any) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data})
+        if (error) reject({ success: false});
       });
     });
   }
 
-  public newProvider(provider: Provider): Promise<Provider>{
-    return new Promise<Provider>((resolve, reject) => {
+  public newProvider(provider: Provider): Promise<ProviderResponse>{
+    return new Promise<ProviderResponse>((resolve, reject) => {
       let newProvider;
       try {
         newProvider = new ProviderBuilder()
@@ -62,12 +65,17 @@ export class ProviderService {
           .build();
 
           this.mongoClient.insert(this.collection, provider, (error, data: Provider) => {
-            resolve(data);
+            if(!error) resolve({ success: true, data });
           });
       }
       catch (err) {
-        return null;
+        reject({ success: false });
       }
     });
   }
+}
+
+export interface ProviderResponse {
+  success: boolean;
+  data: any;
 }
