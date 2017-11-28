@@ -16,26 +16,29 @@ export class ProviderService {
     this.collection = "provider";
   }
 
-  public getProviderByEMail(email:string): Promise<Provider>{
-    return new Promise<Provider>((resolve, reject) => {
+  public getProviderByEMail(email:string): Promise<ProviderResponse>{
+    return new Promise<ProviderResponse>((resolve, reject) => {
       this.mongoClient.findOneByProperty(this.collection, { email: email}, (error, data: Provider) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public updateProviderByEMail(email:string, provider:string): Promise<Provider>{
-    return new Promise<Provider>((resolve, reject) => {
+  public updateProviderByEMail(email:string, provider:string): Promise<ProviderResponse>{
+    return new Promise<ProviderResponse>((resolve, reject) => {
       this.mongoClient.updateByProperty(this.collection, { email: email }, provider, (error, data: Provider) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false })
       });
     });
   }
 
-  public deleteProviderByEMail(email:string): Promise<Provider>{
-    return new Promise<Provider>((resolve, reject) => {
+  public deleteProviderByEMail(email:string): Promise<ProviderResponse>{
+    return new Promise<ProviderResponse>((resolve, reject) => {
       this.mongoClient.removeByProperty(this.collection, { email: email }, (error, data: any) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data})
+        if (error) reject({ success: false});
       });
     });
   }
