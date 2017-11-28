@@ -7,15 +7,15 @@
 
       <div class="md-toolbar-container">
 
+        <span style="flex: 1;">
+          <h2 class="md-title">{{ title }}</h2>
+        </span>
+
         <md-button
         class="md-primary md-raised"
         @click="openDialog('register-dialog')"
         v-if="!authenticated"
         id="register">Registrate!</md-button>
-
-        <span style="flex: 1;">
-              <h2 class="md-title centered">{{ title }}</h2>
-        </span>
 
         <md-button class="md-primary md-raised"
            v-if="!authenticated"
@@ -95,7 +95,7 @@ export default {
 }
 
 .md-dialog {
-  width: 30%;
+  width: 40%;
 }
 
 </style>

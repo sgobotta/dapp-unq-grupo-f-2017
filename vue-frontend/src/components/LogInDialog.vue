@@ -7,7 +7,7 @@
 
             <md-input-container>
               <label>CUIT</label>
-              <md-input v-model="cuit"></md-input>
+              <md-input v-model="cuit" type="number"></md-input>
             </md-input-container>
 
             <md-input-container md-has-password>
@@ -50,7 +50,9 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      providerPassword: '',
+      cuit: ''
     }
   },
   methods: {
@@ -60,8 +62,13 @@ export default {
     close: function () {
       this.$refs['dialog'].close()
     },
-    apply: function () {
+    applyProvider: function () {
       console.log('email: ' + this.email)
+      console.log('password: ' + this.providerPassword)
+      this.close()
+    },
+    applyCustomer: function () {
+      console.log('cuit: ' + this.cuit)
       console.log('password: ' + this.password)
       this.close()
     }
