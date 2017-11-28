@@ -37,6 +37,15 @@ export class MenuService {
     });
   }
 
+  public getMenusWithCategory(categories: string[]): Promise<MenuListResponse> {
+    return new Promise<MenuListResponse>((resolve, reject) => {
+      this.mongoClient.findIncluding(this.collection, "category", categories, (error, data) => {
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
+      });;
+    })
+  }
+
   public getMenu(id: string): Promise<MenuResponse> {
     return new Promise<MenuResponse>((resolve, reject) => {
       this.mongoClient.findOneById(this.collection, id, (error, data: Menu) => {
@@ -48,7 +57,7 @@ export class MenuService {
 
   public getMenuByName(name: string): Promise<MenuResponse> {
     return new Promise<MenuResponse>((resolve, reject) => {
-      this.mongoClient.findOneByProperty(this.collection, name, (error, data: Menu) => {
+      this.mongoClient.findOneByProperty(this.collection, { name: name }, (error, data: Menu) => {
         if (data) resolve({ success: true, data: data});
         if (error) reject({ success: false });
       });
