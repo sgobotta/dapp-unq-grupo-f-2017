@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify";
 import { Collection } from "mongodb";
 import { MySQLClient } from "./mysql/client";
+import { MySqlConnection } from "./mysql/connection";
 import { MongoDBConnection } from "./mongodb/connection";
 import TYPES from "./../constants/types";
 import * as path from "path";
@@ -78,11 +79,12 @@ export default class Startup {
   private loadSqlTables() {
     // TODO: implement get assets function
     const tablesInfo = fs.readFileSync(path.join(__dirname + "./../../private/data/initial_data.sql"), "utf8").toString();
-    const connection = this.mySqlClient.getConnection();
+    const connection = MySqlConnection.createConnection();
     connection.query(tablesInfo, (err, res) => {
         if (err) throw err;
         if (res) {
           Logger.info({ message: "MySql ::: Database loaded succesfully" });
+          MySqlConnection.destroyConnection();
         }
     });
   }

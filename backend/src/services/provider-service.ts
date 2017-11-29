@@ -29,7 +29,7 @@ export class ProviderService {
     return new Promise<ProviderResponse>((resolve, reject) => {
       this.mongoClient.updateByProperty(this.collection, { email: email }, provider, (error, data: Provider) => {
         if (data) resolve({ success: true, data: data });
-        if (error) reject({ success: false })
+        if (error) reject({ success: false });
       });
     });
   }
@@ -37,7 +37,7 @@ export class ProviderService {
   public deleteProviderByEMail(email:string): Promise<ProviderResponse>{
     return new Promise<ProviderResponse>((resolve, reject) => {
       this.mongoClient.removeByProperty(this.collection, { email: email }, (error, data: any) => {
-        if (data) resolve({ success: true, data: data})
+        if (data) resolve({ success: true, data: data});
         if (error) reject({ success: false});
       });
     });

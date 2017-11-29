@@ -19,6 +19,7 @@ import * as events from "events";
 import "./logger/logger-aspect";
 import "./models/builder-aspect";
 import "./config/mysql/runner-aspect";
+import "./config/mysql/connection-aspect";
 
 export class Server {
 

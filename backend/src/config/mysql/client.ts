@@ -12,13 +12,7 @@ export class MySQLClient {
   private connection: mysql.IConnection;
   private pool: mysql.IPool;
 
-  constructor() {
-    this.connection = MySqlConnection.getSession();
-  }
-
-  public getConnection() {
-    return this.connection;
-  }
+  constructor() {}
 
   public findOneByProperty(collection, object, callback) {
     let prop = Object.keys(object)[0];

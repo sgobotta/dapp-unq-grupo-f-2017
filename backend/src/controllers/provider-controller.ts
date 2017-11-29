@@ -19,28 +19,28 @@ export class ProviderController {
   public getProvider(request: Request) : Promise<ProviderResponse> {
     return this.providerService.getProviderByEMail(request.params.email)
       .then((response) => { return response; })
-      .catch((response) => { console.log(response); return response; });
+      .catch((response) => { return response; });
   }
 
   @httpPut("/:email")
   public updateProvider(request: Request): Promise<ProviderResponse> {
   	return this.providerService.updateProviderByEMail(request.params.email, request.body)
       .then((response) => { return response; })
-      .catch((response) => { console.log(response); return response; });
+      .catch((response) => { return response; });
   }
 
   @httpDelete("/:email")
   public deleteProvider(request: Request): Promise<ProviderResponse> {
   	return this.providerService.deleteProviderByEMail(request.params.email)
       .then((response) => { return response; })
-      .catch((response) => { console.log(response); return response; });
+      .catch((response) => { return response; });
   }
 
   @httpPost("/")
   public newProvider(request: Request): Promise<ProviderResponse> {
   	return this.providerService.newProvider(request.body)
       .then((response) => { return response; })
-      .catch((response) => { console.log(response); return response; });
+      .catch((response) => { return response; });
   }
 
 }

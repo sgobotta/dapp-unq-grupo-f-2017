@@ -8,7 +8,7 @@ export class Currency {
   constructor(currencyName: string, amount: number) {
 
     this.currencyName = currencyName;
-    this.amount = ExchangeRate.convert(this.currencyName, this.amount);
+    this.amount = amount;
   }
 
   public substract(amount: Currency) {
@@ -53,7 +53,7 @@ export class CurrencyBuilder {
   }
 
   public withAmount(amount: number) {
-    this.amount = amount;
+    this.amount = ExchangeRate.convert(this.name, amount);
     return this;
   }
 

@@ -20,11 +20,7 @@ export class MySqlConnection {
     return this.connection;
   }
 
-  public static getSession() {
-    if (!this.connection) {
-      this.connection = this.createConnection();
-    }
-    return this.connection;
+  public static destroyConnection() {
+    this.connection = null;
   }
-
 }

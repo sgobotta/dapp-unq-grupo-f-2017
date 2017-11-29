@@ -27,53 +27,53 @@ describe("A Balance Service when it's created", () => {
   });
 });
 
-describe("A Balance Service when getProviderBalanceByEmail is called", () => {
-  it("should call findOneByProperty on mySqlClient", () => {
-    balanceService.getProviderBalanceByEmail(anyString(), () => {
-      verify(mySqlClient.findOneByProperty(anyString(), anything(), anyFunction())).once();
-    });
-  });
-});
-
-describe("A Balance Service when getCustomerBalanceByCUIT is called", () => {
-  it("should call findOneByProperty on mySqlClient", () => {
-    balanceService.getCustomerBalanceByCUIT(anyNumber(), () => {
-      verify(mySqlClient.findOneByProperty(anyString(), anything(), anyFunction())).once();
-    });
-  });
-});
-
-
-describe("A Balance Service when newProviderBalance is called", () => {
-  it("should call insertOne on mySqlClient", () => {
-    balanceService.getCustomerBalanceByCUIT(anyNumber(), () => {
-      verify(mySqlClient.insertOne(anyString(), anything(), anyFunction())).once();
-    });
-  });
-});
-
-describe("A Balance Service when newCustomerBalance is called", () => {
-  it("should call insertOne on mySqlClient", () => {
-    balanceService.newCustomerBalance(anyNumber(), () => {
-      verify(mySqlClient.insertOne(anyString(), anything(), anyFunction())).once();
-    });
-  });
-});
-
-describe("A Balance Service when depositToProviderBalanceByEmail is called", () => {
-  it("should call updateOneByProperty on mySqlClient", () => {
-    balanceService.depositToProviderBalanceByEmail(anyString(), () => {
-      verify(mySqlClient.updateOneByProperty(anyString(), anything(), anyFunction())).once();
-    });
-  });
-});
-
-
-describe("A Balance Service when extractFromCustomerBalanceByEmail is called", () => {
-  it("should call updateOneByProperty on mySqlClient", () => {
-    balanceService.extractFromCustomerBalanceByCUIT(anyString(), () => {
-      verify(mySqlClient.updateOneByProperty(anyString(), anything(), anyFunction())).once();
-    });
-  });
-});
+// describe("A Balance Service when getProviderBalanceByEmail is called", () => {
+//   it("should call findOneByProperty on mySqlClient", () => {
+//     balanceService.getProviderBalanceByEmail(anyString(), () => {
+//       verify(mySqlClient.findOneByProperty(anyString(), anything(), anyFunction())).once();
+//     });
+//   });
+// });
+//
+// describe("A Balance Service when getCustomerBalanceByCUIT is called", () => {
+//   it("should call findOneByProperty on mySqlClient", () => {
+//     balanceService.getCustomerBalanceByCUIT(anyNumber(), () => {
+//       verify(mySqlClient.findOneByProperty(anyString(), anything(), anyFunction())).once();
+//     });
+//   });
+// });
+//
+//
+// describe("A Balance Service when newProviderBalance is called", () => {
+//   it("should call insertOne on mySqlClient", () => {
+//     balanceService.getCustomerBalanceByCUIT(anyNumber(), () => {
+//       verify(mySqlClient.insertOne(anyString(), anything(), anyFunction())).once();
+//     });
+//   });
+// });
+//
+// describe("A Balance Service when newCustomerBalance is called", () => {
+//   it("should call insertOne on mySqlClient", () => {
+//     balanceService.newCustomerBalance(anyNumber(), () => {
+//       verify(mySqlClient.insertOne(anyString(), anything(), anyFunction())).once();
+//     });
+//   });
+// });
+//
+// describe("A Balance Service when depositToProviderBalanceByEmail is called", () => {
+//   it("should call updateOneByProperty on mySqlClient", () => {
+//     balanceService.depositToProviderBalanceByEmail(anyString(), () => {
+//       verify(mySqlClient.updateOneByProperty(anyString(), anything(), anyFunction())).once();
+//     });
+//   });
+// });
+//
+//
+// describe("A Balance Service when extractFromCustomerBalanceByEmail is called", () => {
+//   it("should call updateOneByProperty on mySqlClient", () => {
+//     balanceService.extractFromCustomerBalanceByCUIT(anyString(), () => {
+//       verify(mySqlClient.updateOneByProperty(anyString(), anything(), anyFunction())).once();
+//     });
+//   });
+// });
 
