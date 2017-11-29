@@ -1,34 +1,45 @@
 import { inject, injectable } from "inversify";
 import { MySqlConnection } from "./connection";
 import TYPES from "./../../constants/types";
+import Logger from "./../../logger/logger";
 
 @injectable()
 export class Runner {
 
-  public static state: { status: String };
 
-  public static runInSession(block) {
+  constructor() {}
+
+  public state: { status: String };
+
+  public runInSession(block) {
     let connection = MySqlConnection.getConnection();
-    this.state = { status: "open" };
-    if (!connection) {
+
+    if (connection === null) {
       connection = MySqlConnection.createConnection();
       this.state = { status: "new" };
+    } else {
+      this.state = { status: "open" };
     }
+    Logger.info({ message: `Running in Session with state "${this.state.status}"` });
     let transaction = null;
 
     try {
       transaction = connection.beginTransaction((err) => {
         block();
-        if (this.state.status === "open") {
+        if (this.state.status === "new") {
           connection.commit((err) => {
-            if (err) throw err; // Log message
+            Logger.info({ message: "Performing Commit. Session will terminate." });
+            MySqlConnection.destroyConnection();
+            if (err) throw err;
           });
+        } else {
+          Logger.info({ message: "Skipping Commit. Session is still running..." });
         }
       });
     }
     catch (err) {
       connection.rollback(() => {
-        console.log(err.message); // Log message
+        Logger.error(err);
       });
     }
     finally {
