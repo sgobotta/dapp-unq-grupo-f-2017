@@ -43,10 +43,21 @@
               </md-step>
 
               <md-step md-label="Address" :md-disabled="!validStep1" :md-continue="validStep2">
-                <md-input-container>
-                  <label>Address</label>
-                  <md-input required></md-input>
-                </md-input-container>
+                <div class="maps-autocomplete md-input-container md-theme-default">
+                  <gmap-autocomplete
+                    @place_changed="usePlace">
+                  </gmap-autocomplete>
+                </div>
+                <gmap-map
+                  :center="center"
+                  :zoom="10"
+                  map-type-id="terrain"
+                  style="width: auto; height: 300px">
+                  <gmap-marker v-for="(marker, index) in markers"
+                    :key="index"
+                    :position="marker.position">
+                  </gmap-marker>
+                </gmap-map>
               </md-step>
 
               <md-step md-label="Verify Information" :md-disabled="!validStep2">
@@ -103,11 +114,21 @@
               </md-step>
 
               <md-step md-label="Address" :md-continue="validStep2Provider" :md-disabled="!validStep1Provider" :md-error="!validStep2Provider">
-
-                <md-input-container>
-                  <label>Address</label>
-                  <md-input required></md-input>
-                </md-input-container>
+                <div class="maps-autocomplete md-input-container md-theme-default">
+                  <gmap-autocomplete
+                    @place_changed="usePlace">
+                  </gmap-autocomplete>
+                </div>
+                <gmap-map
+                  :center="center"
+                  :zoom="10"
+                  map-type-id="terrain"
+                  style="width: auto; height: 300px">
+                  <gmap-marker v-for="(marker, index) in markers"
+                    :key="index"
+                    :position="marker.position">
+                  </gmap-marker>
+                </gmap-map>
 
               </md-step>
 
@@ -171,7 +192,10 @@ export default {
       providerCity: '',
       providerOpenTimes: '',
       providerDescription: '',
-      providerPassword: ''
+      providerPassword: '',
+      markers: [],
+      place: null,
+      center: {lat: -34.7068012, lng: -58.29490709999999}
     }
   },
   methods: {
@@ -205,23 +229,42 @@ export default {
     testPhone: function (phone) {
       const regex = /^\d+$/
       return regex.test(phone)
+    },
+    setDescription (description) {
+      this.description = description
+    },
+    setPlace (place) {
+      this.place = place
+    },
+    usePlace (place) {
+      this.setPlace(place)
+      if (this.place) {
+        this.markers.length = 0
+        this.markers.push({
+          position: {
+            lat: this.place.geometry.location.lat(),
+            lng: this.place.geometry.location.lng()
+          }
+        })
+        this.place = null
+      }
     }
   },
   computed: {
     validPhone: function () {
-      return this.testPhone(this.phone) && this.testPhone(this.phonearea)
+      return this.testPhone(this.customerPhone) && this.testPhone(this.customerPhonearea)
     },
     validEmail: function () {
-      return this.testEmail(this.email)
+      return this.testEmail(this.customerEmail)
     },
     validStep1: function () {
       return this.step1FieldsCompleted && this.validPhone && this.validEmail
     },
     step1FieldsCompleted: function () {
-      return this.name !== '' && this.surname !== '' && this.email !== '' && this.password !== '' && this.phone !== '' && this.phonearea !== '' && this.cuit !== ''
+      return this.customerName !== '' && this.customerSurname !== '' && this.customerEmail !== '' && this.customerPassword !== '' && this.customerPhone !== '' && this.customerPhonearea !== '' && this.customerCuit !== ''
     },
     validStep2: function () {
-      return true
+      return this.validStep1 && true
     },
     validStep1Provider: function () {
       return this.validProviderPhone && this.step1ProviderFieldsCompleted && this.validProviderEmail
@@ -233,10 +276,10 @@ export default {
       return this.providerName !== '' && this.providerEmail !== '' && this.providerPhone !== '' && this.providerPhoneArea !== '' && this.providerPassword !== ''
     },
     validStep2Provider: function () {
-      return true
+      return this.validStep1Provider && true
     },
     validStep3Provider: function () {
-      return this.providerLogo !== ''
+      return this.validStep2Provider && this.providerLogo !== ''
     },
     validProviderEmail: function () {
       return this.testEmail(this.providerEmail)
@@ -244,3 +287,11 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.maps-autocomplete.md-input-container.md-theme-default input {
+  font-size: 16px;
+  color: black;
+}
+</style>
