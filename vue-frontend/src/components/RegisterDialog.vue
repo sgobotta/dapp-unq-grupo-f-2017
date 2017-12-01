@@ -172,6 +172,8 @@
 </template>
 
 <script>
+import { registerCustomer } from './../services/customer-service'
+
 export default {
   name: 'register-dialog',
   data () {
@@ -212,6 +214,29 @@ export default {
       console.log('password: ' + this.customerPassword)
       console.log('phone: ' + this.customerPhone)
       console.log('cuit: ' + this.customerCuit)
+      const customer = {
+        name: this.customerName,
+        surname: this.customerSurname,
+        cuit: this.customerCuit,
+        email: this.customerEmail,
+        phone: {
+          area: this.customerPhonearea,
+          number: this.customerPhone
+        }
+        /**
+        address: {
+          street: Alvear,
+          number: 666,
+          city: Quilmes,
+          state: Buenos Aires,
+          mapsLocation: {
+            latitude: -34.720841,
+            longitude: -58.2579859
+          }
+        }
+        */
+      }
+      registerCustomer(customer)
       this.close()
     },
     applyProvider: function () {
@@ -220,6 +245,62 @@ export default {
       console.log('email: ' + this.providerEmail)
       console.log('password: ' + this.providerPassword)
       console.log('phone: ' + this.providerPhone)
+      /**
+        const provider = {
+          name: this.providerName
+          logo: this.providerLogo 'contacto@buenosairessushi.com', ### IGUAL A KEY ### storearlo directamente en
+          address: {                                                                  algun static, mas sencillo, zzz
+            street: this.providerAddressStreet,
+            number: this.providerAddressNumber,
+            city: this.providerAddressCity,
+            state: this.providerAddressState,
+            mapsLocation: {
+              latitude: this.providerAddressLatitude -34.720841,
+              longitude: this.providerAddressLongitude -58.2579859
+            }
+          },
+          description: this.providerDescription Especialidad en sushi y comida fusión oriental,
+          website: this.providerWebsite http://www.buenosairesushi.com.ar/,
+          email: this.providerEmail contacto@buenosairessushi.com.ar,              ### KEY ###
+          phone: {
+            area: this.providerPhoneArea
+            number: this.providerPhone
+          },
+          availability: {
+            monday: [{ startTime: 8, endTime: 20}],
+            tuesday: [{ startTime: 8, endTime: 20}],
+            wednesday: [{ startTime: 8, endTime: 20}],
+            thursday: [{ startTime: 8, endTime: 20}],
+            friday: [{ startTime: 8, endTime: 20}],
+            saturday: [
+              { startTime: 8, endTime: 15},
+              { startTime: 18, endTime: 2}
+            ],
+            sunday: [{ startTime: 8, endTime: 15}]
+          },
+          deliveryLocationRange: { // ES UN CUADRADO
+            area: [
+              {
+                latitude: this.providerAddressLatitude -34.7115399,
+                longitude: this.providerAddressLongitude -58.263918300
+              },
+              {
+                latitude: this.providerAddressLatitude -34.7245401,
+                longitude: this.providerAddressLongitude -58.26984170000001
+              },
+              {
+                latitude: this.providerAddressLatitude -34.7238551,
+                longitude: this.providerAddressLongitude -58.24828369999999
+              },
+              {
+                latitude: this.providerAddressLatitude -34.7176918,
+                longitude: this.providerAddressLongitude -58.2470774
+              }
+            ]
+          }
+        }
+      registerProvider(provider)
+      */
       this.close()
     },
     testEmail: function (mail) {
