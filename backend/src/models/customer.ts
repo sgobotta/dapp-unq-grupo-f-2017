@@ -1,7 +1,7 @@
 import Phone from "./utils/phone";
 import Address from "./utils/address";
-import * as request from "request";
 import { MailValidator } from "./utils/mailValidator";
+import { CuitValidator } from "./utils/cuit-validator";
 import MapsLocation from "./utils/maps/maps-location";
 
 export class Customer {
@@ -36,18 +36,12 @@ export class Customer {
   }
 
   private validateCuit(cuit) {
-  	request('https://soa.afip.gob.ar/sr-padron/v2/persona/' + cuit, (err, res, body) => {
-  		if (err) {
-  			throw Error("ERROR ::: Connection could't be established");
-  		}
-      let success = JSON.parse(res.body).success;
-  		if (success) {
-  			return body.estadoClave === "ACTIVO";
-  		}
-  		else {
-  			throw Error("ERROR ::: CUIT provided seems to be invalid");
-  		}
-  	});
+    const validation = new CuitValidator(cuit).requestValidation();
+    if(validation) {
+      return cuit;
+    }
+    // Since soa afip service is down, we had to mock it and accept any cuit.
+    return cuit;
   }
 }
 
