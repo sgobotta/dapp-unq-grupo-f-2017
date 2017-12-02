@@ -37,7 +37,7 @@ export class Customer {
 
   private validateCuit(cuit) {
     const validation = new CuitValidator(cuit).requestValidation();
-    if(validation) {
+    if (validation) {
       return cuit;
     }
     // Since soa afip service is down, we had to mock it and accept any cuit.
