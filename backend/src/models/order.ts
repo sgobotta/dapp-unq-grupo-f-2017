@@ -1,19 +1,79 @@
 import { DeliveryType } from "./constants/delivery-type";
-import { Menu } from "./menu";
+import { Menu, MenuBuilder } from "./menu";
 
 export class Order {
 
-  deliveryType: DeliveryType;
+  deliveryType: string;
   menu: Menu;
   quantity: number;
   deliveryTime: Date; // Date and time
   // We must validate that date is at least 48 hours from now
 
-  constructor(deliveryType : DeliveryType, menu : Menu, quantity : number, deliveryTime: Date) {
+  constructor(deliveryType: string, menu: Menu, quantity: number, deliveryTime: Date) {
   	this.deliveryType = deliveryType;
   	this.menu = menu;
   	this.quantity = quantity;
   	this.deliveryTime = deliveryTime;
   }
 
+}
+
+export class OrderBuilder {
+
+  deliveryType: string;
+  menu: Menu;
+  quantity: number;
+  deliveryTime: Date;
+
+  constructor() {
+    this.clear();
+    return this;
+  }
+
+  private clear() {
+    this.deliveryType = null;
+    this.menu = null;
+    this.quantity = null;
+    this.deliveryTime = null;
+  }
+
+  withDeliveryType(deliveryType: string) {
+    this.deliveryType = deliveryType;
+    return this;
+  }
+
+  withMenu(menu: Menu) {
+    this.menu = new MenuBuilder()
+      .withName(menu.name)
+      .withDescription(menu.description)
+      .withCategory(menu.category)
+      .withCurrencyName(menu.currencyName)
+      .withDeliveryPrice(menu.deliveryPrice.amount)
+      .withValidityRange(menu.validityRange)
+      .withDeliveryTimeRange(menu.deliveryTimeRange)
+      .withPrice(menu.price.amount)
+      .withMinQuantity(menu.minQuantity)
+      .withMinQuantityPrice(menu.minQuantityPrice.amount)
+      .withMaxDailySalesQuantity(menu.maxDailySalesQuantity)
+      .withAncestors(menu.ancestors)
+      .build();
+    return this;
+  }
+
+  withQuantity(quantity: number) {
+    this.quantity = quantity;
+    return this;
+  }
+
+  withDeliveryTime(deliveryTime: Date) {
+    this.deliveryTime = deliveryTime;
+    return this;
+  }
+
+  build() {
+    const order = new Order(this.deliveryType, this.menu, this.quantity,
+      this.deliveryTime);
+    this.clear();
+    return order;
+  }
 }
