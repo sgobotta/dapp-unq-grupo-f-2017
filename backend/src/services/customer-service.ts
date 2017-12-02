@@ -2,18 +2,23 @@ import { inject, injectable } from "inversify";
 import { MongoDBClient } from "../config/mongodb/client";
 import TYPES from "./../constants/types";
 import { Customer, CustomerBuilder } from "../models/customer";
+import { User, UserBuilder } from "../models/user";
 import Address from "../models/utils/address";
+import { UserService } from "./user-service";
 
 @injectable()
 export class CustomerService {
 
   private mongoClient: MongoDBClient;
+  private userService: UserService;
   private collection: string;
 
   constructor(
-    @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient
+    @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient,
+    @inject(TYPES.UserService) userService: UserService
   ) {
     this.mongoClient = mongoClient;
+    this.userService = userService;
     this.collection = "customer";
   }
 
@@ -44,28 +49,33 @@ export class CustomerService {
     });
   }
 
-  public newCustomer(customer: Customer): Promise<CustomerResponse> {
-    return new Promise<CustomerResponse>((resolve, reject) => {
+  public newCustomer(request: CustomerRequest): Promise<CustomerSessionResponse> {
+    return new Promise<CustomerSessionResponse>((resolve, reject) => {
       let newCustomer;
       try {
-        newCustomer = new CustomerBuilder()
-        .withCUIT(customer.cuit)
-        .withName(customer.name)
-        .withSurname(customer.surname)
-        .withEmail(customer.email)
-        .withPhone(customer.phone.area, customer.phone.number)
-        .withAddress(customer.address.street, customer.address.number,
-          customer.address.city, customer.address.state,
-          customer.address.mapsLocation.latitude, customer.address.mapsLocation.longitude)
-          .build();
-
-          this.mongoClient.insert(this.collection, customer, (error, data: Customer) => {
-            if (!error) resolve({ success: true, data });
-            if (error) throw error;
-          });
+        this.userService.newUser(request.user)
+          .then((response) => {
+            newCustomer = new CustomerBuilder()
+            .withCUIT(request.customer.cuit)
+            .withName(request.customer.name)
+            .withSurname(request.customer.surname)
+            .withEmail(request.customer.email)
+            .withPhone(request.customer.phone.area, request.customer.phone.number)
+            .withAddress(request.customer.address.street, request.customer.address.number,
+              request.customer.address.city, request.customer.address.state,
+              request.customer.address.mapsLocation.latitude, request.customer.address.mapsLocation.longitude)
+              .build();
+            this.mongoClient.insert(this.collection, newCustomer, (error, data: Customer) => {
+              if (!error) resolve({ success: true, data, token: response.data.session.token });
+              if (error) throw error;
+            });
+          })
+          .catch((response) => {
+            reject({ success: false, msg: response })
+          })
       }
       catch (err) {
-        reject({ success: false });
+        reject({ success: false, msg: err });
       }
     });
   }
@@ -74,4 +84,15 @@ export class CustomerService {
 export interface CustomerResponse {
   success: boolean;
   data: any;
+}
+
+export interface CustomerSessionResponse {
+  success: boolean;
+  data: any;
+  token: string
+}
+
+export interface CustomerRequest {
+  customer: Customer,
+  user: User
 }
