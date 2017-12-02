@@ -3,8 +3,6 @@ import * as _ from "lodash";
 import { MongoDBClient } from "../config/mongodb/client";
 import TYPES from "./../constants/types";
 import { User, UserBuilder } from "../models/user";
-import { CustomerService } from "./customer-service";
-import { ProviderService } from "./provider-service";
 
 @injectable()
 export class UserService {
@@ -14,8 +12,6 @@ export class UserService {
 
   constructor(
     @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient,
-    @inject(TYPES.MongoDBClient) customerService: CustomerService,
-    @inject(TYPES.MongoDBClient) ProviderService: ProviderService
   ) {
     this.mongoClient = mongoClient;
     this.collection = "users";
@@ -31,7 +27,7 @@ export class UserService {
           })
           .catch((result) => {
             if (!result) resolve({ success: true, data: user });
-            else resolve({ success: false, data: "Error while getting user." });
+            else reject({ success: false, data: "Error while getting user." });
           });
         } else {
           reject({ success: false, msg: "User not found." });
@@ -128,4 +124,9 @@ export class UserService {
 export interface UserResponse {
   success: boolean;
   data: any;
+}
+
+export interface LoginResponse {
+  success: boolean;
+  token: string;
 }
