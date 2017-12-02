@@ -65,7 +65,8 @@ export class ProviderService {
           .build();
 
           this.mongoClient.insert(this.collection, provider, (error, data: Provider) => {
-            if(!error) resolve({ success: true, data });
+            if (!error) resolve({ success: true, data });
+            if (error) throw error;
           });
       }
       catch (err) {
