@@ -129,14 +129,14 @@ export class BalanceService {
     this.getCustomerBalanceByCUIT(customerId, (query) => {
       if (query.success) {
         const balance = query.balance;
-        balance.extract(amount);
+        const extractionResult = balance.extract(amount);
         this.mySqlClient.updateOneByProperty(this.customerCollection, { customerId: balance.customerId, amount: balance.amount }, (err, res) => {
           if (err) throw err;
           if (res.affectedRows & res.changedRows) {
-            callback({ success: true, balance });
+            callback({ success: true, balance, msg: extractionResult });
           }
           else {
-            callback({ success: false });
+            callback({ success: false, msg: extractionResult });
           }
         });
       }
