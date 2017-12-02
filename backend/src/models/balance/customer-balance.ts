@@ -18,9 +18,10 @@ export class CustomerBalance extends Balance {
     const extraction = currentAmount - parseInt(amount);
     if (extraction >= 0) {
       this.setAmount(extraction);
+      return "Extraction succesfully made."
     }
     else {
-      throw new Error("CustomerBalance ::: Insufficient funds.")
+      return "Insufficient funds.";
     }
   }
 }
