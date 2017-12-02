@@ -1,3 +1,5 @@
+import * as jwt from "jwt-simple";
+import { jwtConfig } from "./../config/jwt/config";
 
 export class User {
 
@@ -43,13 +45,18 @@ export class UserBuilder {
   }
 
   public withPassword(password: any) {
-    this.password = password;
+    const hash = jwt.encode(password, jwtConfig.key);
+    this.password = hash;
     return this;
   }
 
   public withPasswordRepeat(passwordRepeat: any) {
-    this.passwordRepeat = passwordRepeat;
-    return this;
+    const hash = jwt.encode(passwordRepeat, jwtConfig.key);
+    if (hash === this.password) {
+      this.passwordRepeat = hash;
+      return this;
+    }
+    throw new Error("::: Error: Passwords don't match.");
   }
 
   public withSession(token: string) {
@@ -100,7 +107,8 @@ class SessionBuilder {
   }
 
   withToken(token: string) {
-    this.token = token;
+    const hash = jwt.encode(token, jwtConfig.key);
+    this.token = hash;
     return this;
   }
 
