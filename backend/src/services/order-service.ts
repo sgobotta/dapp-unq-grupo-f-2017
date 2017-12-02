@@ -22,6 +22,8 @@ export class OrderService {
     @inject(TYPES.BalanceService) balanceService: BalanceService
   ) {
     this.mongoClient = mongoClient;
+    this.menuService = menuService;
+    this.balanceService = balanceService;
     this.collection = "order";
   }
 
@@ -41,22 +43,17 @@ export class OrderService {
       try {
         this.menuService.getMenuByOwner(order.menu.name, order.menu.ancestors)
           .then((response) => {
-            console.log("THE MENU RESPONSE")
-            console.log(response);
-            newMenu = response;
-
             newOrder = new OrderBuilder()
               .withCustomerId(order.customerId)
               .withDeliveryType(order.deliveryType)
-              .withMenu(newMenu)
+              .withMenu(response.data)
               .withQuantity(order.quantity)
               .withDeliveryTime(order.deliveryTime)
               .build();
             const finalPrice = newOrder.getFinalPrice();
-
             this.balanceService.updateCustomerBalanceByCUIT(
               newOrder.customerId, finalPrice, (err, res) => {
-                if (res.success) {
+                if (res) {
                   this.mongoClient.insert(this.collection, newOrder, (error, order: Order) => {
                     if (order) {
                       resolve({ success: true, order: order, balance: res.balance });
@@ -64,16 +61,17 @@ export class OrderService {
                     if (error) throw err;
                   });
                 }
-                if (err) throw err;
-              })
+                if (err) {
+                  reject({ success: false, msg: err.msg });
+                }
+              });
           })
           .catch((response) => {
-            throw new Error(response);
+            reject({ success: false, msg: response });
           })
       }
       catch (err) {
-        console.log(err)
-        reject({ success: false });
+        reject({ success: false, msg: err.msg });
       }
     });
   }
