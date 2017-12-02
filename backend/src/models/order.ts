@@ -3,13 +3,15 @@ import { Menu, MenuBuilder } from "./menu";
 
 export class Order {
 
+  customerId: number;
   deliveryType: string;
   menu: Menu;
   quantity: number;
   deliveryTime: Date; // Date and time
   // We must validate that date is at least 48 hours from now
 
-  constructor(deliveryType: string, menu: Menu, quantity: number, deliveryTime: Date) {
+  constructor(customerId: number, deliveryType: string, menu: Menu, quantity: number, deliveryTime: Date) {
+    this.customerId = customerId;
   	this.deliveryType = deliveryType;
   	this.menu = menu;
   	this.quantity = quantity;
@@ -20,6 +22,7 @@ export class Order {
 
 export class OrderBuilder {
 
+  customerId: number;
   deliveryType: string;
   menu: Menu;
   quantity: number;
@@ -31,10 +34,16 @@ export class OrderBuilder {
   }
 
   private clear() {
+    this.customerId = null;
     this.deliveryType = null;
     this.menu = null;
     this.quantity = null;
     this.deliveryTime = null;
+  }
+
+  withCustomerId(cuit: number) {
+    this.customerId = cuit;
+    return this;
   }
 
   withDeliveryType(deliveryType: string) {
