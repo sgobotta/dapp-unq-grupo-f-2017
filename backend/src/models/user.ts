@@ -16,6 +16,13 @@ export class User {
     this.session = session;
     this.roles = roles;
   }
+
+  public passwordMatch(password: string) {
+    const currentPassword = jwt.decode(this.password, jwtConfig.key);
+    if (password !== currentPassword) {
+      throw new Error("::: Error: Password is not correct");
+    }
+  }
 }
 
 export class UserBuilder {
@@ -51,8 +58,9 @@ export class UserBuilder {
   }
 
   public withPasswordRepeat(passwordRepeat: any) {
-    const hash = jwt.encode(passwordRepeat, jwtConfig.key);
-    if (hash === this.password) {
+    const hash = passwordRepeat;
+    const currentPassword = jwt.decode(this.password, jwtConfig.key);
+    if (hash === currentPassword) {
       this.passwordRepeat = hash;
       return this;
     }
@@ -80,7 +88,7 @@ export class UserBuilder {
   }
 }
 
-class Session {
+export class Session {
 
   token: string;
   expireDate: Date;
@@ -91,7 +99,7 @@ class Session {
   }
 }
 
-class SessionBuilder {
+export class SessionBuilder {
 
   token: string;
   expireDate: Date;
