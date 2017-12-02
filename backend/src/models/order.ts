@@ -1,5 +1,6 @@
 import { DeliveryType } from "./constants/delivery-type";
 import { Menu, MenuBuilder } from "./menu";
+import { Currency } from "./utils/currency/currency";
 
 export class Order {
 
@@ -16,6 +17,14 @@ export class Order {
   	this.menu = menu;
   	this.quantity = quantity;
   	this.deliveryTime = deliveryTime;
+  }
+
+  getFinalPrice() {
+    const menuPrice:Currency = this.menu.price
+    const deliveryPrice:Currency = this.menu.deliveryPrice;
+    const finalPrice:number = menuPrice.add(deliveryPrice);
+    console.log("::: AMOUNT: " + finalPrice + " Menu Final Price: " + menuPrice.amount);
+    return finalPrice;
   }
 
 }
@@ -80,7 +89,7 @@ export class OrderBuilder {
   }
 
   build() {
-    const order = new Order(this.deliveryType, this.menu, this.quantity,
+    const order = new Order(this.customerId, this.deliveryType, this.menu, this.quantity,
       this.deliveryTime);
     this.clear();
     return order;
