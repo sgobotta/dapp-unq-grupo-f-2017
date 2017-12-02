@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import { MongoDBClient } from "../config/mongodb/client";
 import { MenuService } from "./menu-service";
 import { BalanceService } from "./balance-service";
+import { PurchaseService } from "./purchase-service";
 import { Order, OrderBuilder } from "./../models/order";
 import { Menu, MenuBuilder } from "./../models/menu";
 import { CustomerBalance } from "./../models/balance/customer-balance";
@@ -14,17 +15,19 @@ export class OrderService {
   private mongoClient: MongoDBClient;
   private menuService: MenuService;
   private balanceService: BalanceService;
+  private purchaseService: PurchaseService;
   private collection: string;
 
   constructor(
     @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient,
     @inject(TYPES.MenuService) menuService: MenuService,
-    @inject(TYPES.BalanceService) balanceService: BalanceService
+    @inject(TYPES.BalanceService) balanceService: BalanceService,
+    @inject(TYPES.PurchaseService) purchaseService: PurchaseService
   ) {
     this.mongoClient = mongoClient;
     this.menuService = menuService;
     this.balanceService = balanceService;
-    this.collection = "order";
+    this.purchaseService = purchaseService;
   }
 
   public getOrders(cuit: number): Promise<OrderListResponse> {
@@ -50,25 +53,19 @@ export class OrderService {
               .withQuantity(order.quantity)
               .withDeliveryTime(order.deliveryTime)
               .build();
-            const finalPrice = newOrder.getFinalPrice();
-            this.balanceService.updateCustomerBalanceByCUIT(
-              newOrder.customerId, finalPrice, (err, res) => {
-                if (res) {
-                  this.mongoClient.insert(this.collection, newOrder, (error, order: Order) => {
-                    if (order) {
-                      resolve({ success: true, order: order, balance: res.balance });
-                    }
-                    if (error) throw err;
-                  });
-                }
-                if (err) {
-                  reject({ success: false, msg: err.msg });
-                }
+
+            this.purchaseService.newPurchase(newOrder)
+              .then((response) => {
+                resolve({ success: true, order: response.order, balance: response.balance });
+              })
+              .catch((response) => {
+                reject(response);
               });
+
           })
           .catch((response) => {
-            reject({ success: false, msg: response });
-          })
+            reject({ success: true, msg: "Error while getting Menu with provede name and ancestors" });
+          });
       }
       catch (err) {
         reject({ success: false, msg: err.msg });
