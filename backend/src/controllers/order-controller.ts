@@ -11,18 +11,18 @@ import TYPES from "./../constants/types";
 @controller("/order")
 export class OrderController {
 
-  constructor(@inject(TYPES.MenuService) private menuService: OrderService) { }
+  constructor(@inject(TYPES.OrderService) private orderService: OrderService) { }
 
   @httpGet("/:cuit")
   public getOrders(request: Request): Promise<OrderListResponse> {
-    return this.menuService.getOrders(request.params.cuit)
+    return this.orderService.getOrders(request.params.cuit)
       .then((response) => { return response; })
       .catch((response) => { return response; });
   }
 
   @httpPost("/")
   public newMenu(request: Request): Promise<OrderListResponse> {
-    return this.menuService.newOrder(request.body)
+    return this.orderService.newOrder(request.body.order)
       .then((response) => { return response; })
       .catch((response) => { return response; });
   }
