@@ -1,0 +1,56 @@
+[
+  {
+    "email": "sgobotta@gmail.com",
+    "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.InNhbHNhY3Jpb2xsYSI.GYTve0fplJmUTXPIrwlh-iz-It1s38LQNzQk9ezzoYg",
+    "session": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.InNnb2JvdHRhQGdtYWlsLmNvbSI.T05bPgRvjyGtF6QVjzLmk59hb0vAl-mPIhHokgR1aIk",
+      "expireDate": "Mon Dec 18 2017 18:34:05 GMT-0300"
+    },
+    "roles": [ "customer" ]
+  },
+  {
+    "email": "bottalisandro94@gmail.com",
+    "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.InNhbHNhY3Jpb2xsYSI.GYTve0fplJmUTXPIrwlh-iz-It1s38LQNzQk9ezzoYg",
+    "session": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.ImJvdHRhbGlzYW5kcm85NEBnbWFpbC5jb20i.ZHdQWgf7rCA8yHmeF7ZxKFhXFjyNfONOXNiqw5jK5Sc",
+      "expireDate": "Mon Dec 18 2017 18:34:05 GMT-0300"
+    },
+    "roles": [ "customer" ]
+  },
+  {
+    "email": "mdiegogiammarini@gmail.com",
+    "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.InNhbHNhY3Jpb2xsYSI.GYTve0fplJmUTXPIrwlh-iz-It1s38LQNzQk9ezzoYg",
+    "session": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.Im1kaWVnb2dpYW1tYXJpbmlAZ21haWwuY29tIg.w-8czmdqEdMQ4mW42THFk5UziANoatOTE1NGDwjMbAA",
+      "expireDate": "Mon Dec 18 2017 18:34:05 GMT-0300"
+    },
+    "roles": [ "customer" ]
+  },
+  {
+    "email": "bouffet@unq.edu.ar",
+    "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.InNhbHNhY3Jpb2xsYSI.GYTve0fplJmUTXPIrwlh-iz-It1s38LQNzQk9ezzoYg",
+    "session": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.ImJvdWZmZXRAdW5xLmVkdS5hciI.hQ4DK8yQU4P_0J86_WlS__ZsCgcCc38-KHPLq3vI8V8",
+      "expireDate": "Mon Dec 18 2017 18:34:05 GMT-0300"
+    },
+    "roles": [ "provider" ]
+  },
+  {
+    "email": "delivery@losgallegos.com.ar",
+    "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.InNhbHNhY3Jpb2xsYSI.GYTve0fplJmUTXPIrwlh-iz-It1s38LQNzQk9ezzoYg",
+    "session": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.ImRlbGl2ZXJ5QGxvc2dhbGxlZ29zLmNvbS5hciI.h1NFwqP6yaGKpFLmUU_xyHEHftdcRUBVdHOYJCrKkgc",
+      "expireDate": "Mon Dec 18 2017 18:34:05 GMT-0300"
+    },
+    "roles": [ "provider" ]
+  },
+  {
+    "email": "contacto@buenosairessushi.com.ar",
+    "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.InNhbHNhY3Jpb2xsYSI.GYTve0fplJmUTXPIrwlh-iz-It1s38LQNzQk9ezzoYg",
+    "session": {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.ImNvbnRhY3RvQGJ1ZW5vc2FpcmVzc3VzaGkuY29tLmFyIg.dYj0JS491d8Z2b-Iv3dQNWYfW0mMgxD7fRwYRWeik3U",
+      "expireDate": "Mon Dec 18 2017 18:34:05 GMT-0300"
+    },
+    "roles": [ "provider" ]
+  }
+]
