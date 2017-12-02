@@ -7,17 +7,20 @@
 
       <div class="md-toolbar-container">
 
-        <md-button class="md-primary md-raised">Registrate!</md-button>
-
-        <md-button class="md-primary md-raised">Sos una empresa?</md-button>
-
         <span style="flex: 1;">
-              <h2 class="md-title centered">{{ title }}</h2>
+          <h2 class="md-title">{{ title }}</h2>
         </span>
+
+        <md-button
+        class="md-primary md-raised"
+        @click="openDialog('register-dialog')"
+        v-if="!authenticated"
+        id="register">Registrate!</md-button>
 
         <md-button class="md-primary md-raised"
            v-if="!authenticated"
-           @click="login()">
+           @click="openDialog('login-dialog')"
+           id="login">
               Log In
         </md-button>
 
@@ -27,8 +30,12 @@
               Log Out
         </md-button>
 
+        <register-dialog ref='register-dialog'/>
+        <log-in-dialog ref='login-dialog'/>
+
       </div>
     </md-whiteframe>
+
     <div class="container">
         <router-view
           :auth="auth"
@@ -40,6 +47,8 @@
 
 <script>
 import AuthService from './auth/AuthService'
+import RegisterDialog from './components/RegisterDialog'
+import LogInDialog from './components/LogInDialog'
 
 const auth = new AuthService()
 const {login, logout, authenticated, authNotifier} = auth
@@ -58,7 +67,17 @@ export default {
   },
   methods: {
     login,
-    logout
+    logout,
+    openDialog (ref) {
+      this.$refs[ref].open()
+    },
+    closeDialog (ref) {
+      this.$refs[ref].close()
+    }
+  },
+  components: {
+    RegisterDialog,
+    LogInDialog
   }
 }
 </script>
@@ -73,6 +92,10 @@ export default {
 
 .background {
   background: black;
+}
+
+.md-dialog {
+  width: 40%;
 }
 
 </style>
