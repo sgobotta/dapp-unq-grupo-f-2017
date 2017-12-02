@@ -17,32 +17,35 @@ export class CustomerService {
     this.collection = "customer";
   }
 
-  public getCustomerByCUIT(cuit:string): Promise<Customer> {
-    return new Promise<Customer>((resolve, reject) => {
+  public getCustomerByCUIT(cuit:string): Promise<CustomerResponse> {
+    return new Promise<CustomerResponse>((resolve, reject) => {
       this.mongoClient.findOneByProperty(this.collection, { cuit: cuit}, (error, data: Customer) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public updateCustomerByCUIT(cuit:string, customer: Customer): Promise<Customer> {
-    return new Promise<Customer>((resolve, reject) => {
+  public updateCustomerByCUIT(cuit:string, customer: Customer): Promise<CustomerResponse> {
+    return new Promise<CustomerResponse>((resolve, reject) => {
       this.mongoClient.updateByProperty(this.collection, { cuit: cuit }, customer, (error, data: Customer) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public deleteCustomerByCUIT(cuit:string): Promise<Customer> {
-    return new Promise<Customer>((resolve, reject) => {
+  public deleteCustomerByCUIT(cuit:string): Promise<CustomerResponse> {
+    return new Promise<CustomerResponse>((resolve, reject) => {
       this.mongoClient.removeByProperty(this.collection, { cuit: cuit }, (error, data: any) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public newCustomer(customer: Customer): Promise<Customer> {
-    return new Promise<Customer>((resolve, reject) => {
+  public newCustomer(customer: Customer): Promise<CustomerResponse> {
+    return new Promise<CustomerResponse>((resolve, reject) => {
       let newCustomer;
       try {
         newCustomer = new CustomerBuilder()
@@ -57,12 +60,18 @@ export class CustomerService {
           .build();
 
           this.mongoClient.insert(this.collection, customer, (error, data: Customer) => {
-            resolve(data);
+            if (!error) resolve({ success: true, data });
+            if (error) throw error;
           });
       }
       catch (err) {
-        return null;
+        reject({ success: false });
       }
     });
   }
+}
+
+export interface CustomerResponse {
+  success: boolean;
+  data: any;
 }
