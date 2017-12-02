@@ -12,7 +12,7 @@ export class RunnerAspect {
     const args = JSON.stringify(meta.method.args);
 
     new Runner().runInSession(() => {
-      Logger.info({ message: `Called ${meta.className}`, method: `${meta.method.name}`, args: `${args}`});
+      // Logger.info({ message: `Called ${meta.className}`, method: `${meta.method.name}`, args: `${args}`});
       meta.method.invoke(...meta.method.args);
     });
     meta.method.proceed = false;
