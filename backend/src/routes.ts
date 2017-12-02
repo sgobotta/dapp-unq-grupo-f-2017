@@ -13,6 +13,8 @@ import { BalanceController } from "./controllers/balance-controller";
 import { BalanceService } from "./services/balance-service";
 import { UserController } from "./controllers/user-controller";
 import { UserService } from "./services/user-service";
+import { AuthorizationController } from "./controllers/authorization-controller";
+import { AuthorizationService } from "./services/authorization-service";
 
 @injectable()
 export default class Routes {
@@ -37,6 +39,9 @@ export default class Routes {
 
     container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed(TAGS.UserController);
     container.bind<UserService>(TYPES.UserService).to(UserService);
+
+    container.bind<interfaces.Controller>(TYPE.Controller).to(AuthorizationController).whenTargetNamed(TAGS.AuthorizationController);
+    container.bind<AuthorizationService>(TYPES.AuthorizationService).to(AuthorizationService);
   }
 
 }
