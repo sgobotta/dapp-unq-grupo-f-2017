@@ -65,7 +65,7 @@ export class UserService {
     });
   }
 
-  public newUser(user: User): Promise<UserResponse> {
+  public newUser(user: any): Promise<UserResponse> {
     return new Promise<UserResponse>((resolve, reject) => {
       let newUser: User;
       try {
@@ -77,8 +77,8 @@ export class UserService {
           newUser = new UserBuilder()
           .withEmail(user.email)
           .withPassword(user.password)
-          .withPasswordRepeat(user.passwordRepeat)
-          .withSession(user.session.token)
+          .withPasswordRepeat(user.password)
+          .withSession(user.email)
           .withRoles(user.roles)
           .build();
           this.mongoClient.insert(this.collection, newUser, (error, user: User) => {
@@ -92,8 +92,7 @@ export class UserService {
         });
       }
       catch (err) {
-        console.log(err);
-        return null;
+        reject({ success: false, msg: err });
       }
     });
   }
