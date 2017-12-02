@@ -66,6 +66,15 @@ export class MenuService {
     });
   }
 
+  public getMenuByOwner(name: string, ancestors: string[]): Promise<MenuResponse> {
+    return new Promise<MenuResponse>((resolve, reject) => {
+      this.mongoClient.findOneByProperty(this.collection, { name: name, ancestors: ancestors }, (error, data: Menu) => {
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
+      })
+    })
+  }
+
   public newMenu(menu: Menu): Promise<MenuResponse> {
     return new Promise<MenuResponse>((resolve, reject) => {
       let newMenu;
