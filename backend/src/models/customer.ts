@@ -36,11 +36,16 @@ export class Customer {
   }
 
   private validateCuit(cuit) {
-    const validation = new CuitValidator(cuit).requestValidation();
-    if (validation) {
-      return cuit;
-    }
-    // Since soa afip service is down, we had to mock it and accept any cuit.
+    // let validation;
+    // try {
+    //   validation = new CuitValidator(cuit).requestValidation();
+    //   if (validation) {
+    //     return cuit;
+    //   }
+    // }
+    // catch (err) {
+    //   // Since soa afip service is down, we had to mock it and accept any cuit.
+    // }
     return cuit;
   }
 }
