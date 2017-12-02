@@ -68,8 +68,24 @@ export class MenuService {
 
   public getMenuByOwner(name: string, ancestors: string[]): Promise<MenuResponse> {
     return new Promise<MenuResponse>((resolve, reject) => {
-      this.mongoClient.findOneByProperty(this.collection, { name: name, ancestors: ancestors }, (error, data: Menu) => {
-        if (data) resolve({ success: true, data: data });
+      this.mongoClient.findOneByProperty(this.collection, { name: name, ancestors: ancestors }, (error, menu: Menu) => {
+        if (menu)  {
+          const newMenu = new MenuBuilder()
+            .withName(menu.name)
+            .withDescription(menu.description)
+            .withCategory(menu.category)
+            .withCurrencyName(menu.currencyName)
+            .withDeliveryPrice(menu.deliveryPrice.amount)
+            .withValidityRange(menu.validityRange)
+            .withDeliveryTimeRange(menu.deliveryTimeRange)
+            .withPrice(menu.price.amount)
+            .withMinQuantity(menu.minQuantity)
+            .withMinQuantityPrice(menu.minQuantityPrice.amount)
+            .withMaxDailySalesQuantity(menu.maxDailySalesQuantity)
+            .withAncestors(menu.ancestors)
+            .build();
+          resolve({ success: true, data: menu });
+        }
         if (error) reject({ success: false });
       })
     })
