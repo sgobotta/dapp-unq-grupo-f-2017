@@ -1,6 +1,6 @@
 import { Balance, BalanceBuilder } from "./balance";
 
-class CustomerBalance extends Balance {
+export class CustomerBalance extends Balance {
 
   private customerId: number;
 
@@ -18,6 +18,9 @@ class CustomerBalance extends Balance {
     const extraction = currentAmount - parseInt(amount);
     if (extraction >= 0) {
       this.setAmount(extraction);
+    }
+    else {
+      throw new Error("CustomerBalance ::: Insufficient funds.")
     }
   }
 }
