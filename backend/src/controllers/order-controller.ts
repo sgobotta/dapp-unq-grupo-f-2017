@@ -21,7 +21,7 @@ export class OrderController {
   }
 
   @httpPost("/")
-  public newMenu(request: Request): Promise<OrderListResponse> {
+  public newOrder(request: Request): Promise<OrderListResponse> {
     return this.orderService.newOrder(request.body.order)
       .then((response) => { return response; })
       .catch((response) => { return response; });
