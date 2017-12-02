@@ -68,8 +68,8 @@ export class MenuService {
 
   public getMenuByOwner(name: string, ancestors: string[]): Promise<MenuResponse> {
     return new Promise<MenuResponse>((resolve, reject) => {
-      this.mongoClient.findOneByProperty(this.collection, { name: name, ancestors: ancestors }, (error, menu: Menu) => {
-        if (menu)  {
+      this.mongoClient.findOneByProperty(this.collection, { name: name }, (error, menu: Menu) => {
+        if (menu) {
           const newMenu = new MenuBuilder()
             .withName(menu.name)
             .withDescription(menu.description)
@@ -84,9 +84,11 @@ export class MenuService {
             .withMaxDailySalesQuantity(menu.maxDailySalesQuantity)
             .withAncestors(menu.ancestors)
             .build();
-          resolve({ success: true, data: menu });
+          resolve({ success: true, data: newMenu });
         }
-        if (error) reject({ success: false });
+        if (error) {
+          reject({ success: false });
+        }
       })
     })
   }
@@ -114,8 +116,7 @@ export class MenuService {
         });
       }
       catch (err) {
-        console.log(err)
-        reject({ success: false });
+        reject({ success: false, msg: err });
       }
     });
   }
