@@ -62,14 +62,6 @@ describe("A Menu Service when getMenuByName is called", () => {
   });
 });
 
-describe("A Menu Service when newMenu is called", () => {
-  it("should call insert on mongoClient", () => {
-    menuService.newMenu(dummyMenu, () => {
-      verify(dummyMongoClient.insert).once();
-    });
-  });
-});
-
 describe("A Menu Service when updateMenu is called", () => {
   it("should call update on mongoClient", () => {
     menuService.updateMenu(anyString(), () => {

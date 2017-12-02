@@ -2,7 +2,7 @@ import {
   controller, httpGet, httpPost, httpPut, httpDelete
 } from "inversify-express-utils";
 import { injectable, inject } from "inversify";
-import { AuthorizationService, LoginResponse } from "../services/authorization-service";
+import { AuthorizationService, LoginResponse, LogoutResponse } from "../services/authorization-service";
 import { Request, Response } from "express";
 import TYPES from "../constants/types";
 
@@ -18,5 +18,12 @@ export class AuthorizationController {
     return this.authorizationService.login(request.params.email, request.body.password)
       .then((response) => { return response; })
       .catch((response) => { return response; });
+  }
+
+  @httpGet("/:email")
+  public logout(request: Request): Promise<LogoutResponse> {
+    return this.authorizationService.logout(request.params.email)
+      .then((response) => { return response })
+      .catch((response) => { return response });
   }
 }

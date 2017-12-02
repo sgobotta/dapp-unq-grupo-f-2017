@@ -3,6 +3,7 @@ import Routes from "./../src/routes";
 import { MailingSystem } from "./../src/models/system/mailing-system";
 import { expect } from "chai";
 import "mocha";
+import Logger from "./../src/logger/logger";
 import { mock, instance, when, verify } from "ts-mockito";
 
 let server;
@@ -10,7 +11,7 @@ let routesMock: Routes;
 let mailingSystemMock: MailingSystem;
 
 beforeEach(() => {
-
+	Logger.createLogger();
 	routesMock = mock(Routes);
 	mailingSystemMock = mock(MailingSystem);
 	server = new Server(routesMock, mailingSystemMock);

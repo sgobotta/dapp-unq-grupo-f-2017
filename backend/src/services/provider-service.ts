@@ -2,7 +2,9 @@ import { inject, injectable } from "inversify";
 import { MongoDBClient } from "../config/mongodb/client";
 import { Provider, ProviderBuilder } from "../models/provider"
 import TYPES from "./../constants/types";
+import { Wove } from "aspect.js";
 
+@Wove()
 @injectable()
 export class ProviderService {
 

@@ -5,7 +5,9 @@ import { Customer, CustomerBuilder } from "../models/customer";
 import { User, UserBuilder } from "../models/user";
 import Address from "../models/utils/address";
 import { UserService } from "./user-service";
+import { Wove } from "aspect.js";
 
+@Wove()
 @injectable()
 export class CustomerService {
 
