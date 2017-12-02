@@ -21,10 +21,14 @@ export class Order {
 
   getFinalPrice() {
     const menuPrice:Currency = this.menu.price
-    const deliveryPrice:Currency = this.menu.deliveryPrice;
-    const finalPrice:number = menuPrice.add(deliveryPrice);
-    console.log("::: AMOUNT: " + finalPrice + " Menu Final Price: " + menuPrice.amount);
-    return finalPrice;
+    if (this.deliveryType === "delivery") {
+      const deliveryPrice:Currency = this.menu.deliveryPrice;
+      const finalPrice:number = menuPrice.add(deliveryPrice);
+      return finalPrice;
+    }
+    if (this.deliveryType === "pickup") {
+      return this.menu.price.amount;
+    }
   }
 
 }
@@ -61,20 +65,7 @@ export class OrderBuilder {
   }
 
   withMenu(menu: Menu) {
-    this.menu = new MenuBuilder()
-      .withName(menu.name)
-      .withDescription(menu.description)
-      .withCategory(menu.category)
-      .withCurrencyName(menu.currencyName)
-      .withDeliveryPrice(menu.deliveryPrice.amount)
-      .withValidityRange(menu.validityRange)
-      .withDeliveryTimeRange(menu.deliveryTimeRange)
-      .withPrice(menu.price.amount)
-      .withMinQuantity(menu.minQuantity)
-      .withMinQuantityPrice(menu.minQuantityPrice.amount)
-      .withMaxDailySalesQuantity(menu.maxDailySalesQuantity)
-      .withAncestors(menu.ancestors)
-      .build();
+    this.menu = menu;
     return this;
   }
 
