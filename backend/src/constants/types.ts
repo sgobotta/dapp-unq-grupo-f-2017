@@ -6,7 +6,8 @@ const TYPES = {
   CustomerService: Symbol("CustomerService"),
   ProviderService: Symbol("ProviderService"),
   BalanceService: Symbol("BalanceService"),
-  UserService: Symbol("UserService")
+  UserService: Symbol("UserService"),
+  AuthorizationService: Symbol("AuthorizationService")
 };
 
 export default TYPES;

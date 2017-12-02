@@ -7,12 +7,13 @@ import { mock, instance, when, verify, anyString, anything, anyFunction } from "
 
 let customerService;
 let mongoClient;
+let userService;
 let dummyCustomer;
 
 beforeEach(() => {
 
   mongoClient = mock(MongoDBClient);
-  customerService = new CustomerService (mongoClient);
+  customerService = new CustomerService (mongoClient, userService);
 });
 
 describe("A Customer Service when it's created", () => {

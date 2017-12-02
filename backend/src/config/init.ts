@@ -51,6 +51,7 @@ export default class Startup {
 
     // TODO: implement get assets function from private data
     let menusInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "menu.json"), "utf8"));
+    let usersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "users.json"), "utf8"));
     let customersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "customers.json"), "utf8"));
     let providersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "providers.json"), "utf8"));
 
@@ -59,6 +60,12 @@ export default class Startup {
         if (err) return;
         else {
           this.importCollection(collection, menusInfo);
+        }
+      });
+      connection.createCollection("users", { w: 1 }, (err, collection) => {
+        if (err) return;
+        else {
+          this.importCollection(collection, usersInfo);
         }
       });
       connection.createCollection("customer", { w: 1 }, (err, collection) => {
