@@ -3,7 +3,9 @@ import { MongoDBClient } from "../config/mongodb/client";
 import { MySQLClient } from "../config/mysql/client";
 import { Menu, MenuBuilder } from "./../models/menu";
 import TYPES from "./../constants/types";
+import { Wove } from "aspect.js";
 
+@Wove()
 @injectable()
 export class MenuService {
   private mongoClient: MongoDBClient;

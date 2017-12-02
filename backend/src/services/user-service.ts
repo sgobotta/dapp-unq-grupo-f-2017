@@ -3,7 +3,9 @@ import * as _ from "lodash";
 import { MongoDBClient } from "../config/mongodb/client";
 import TYPES from "./../constants/types";
 import { User, UserBuilder } from "../models/user";
+import { Wove } from "aspect.js";
 
+@Wove()
 @injectable()
 export class UserService {
 
