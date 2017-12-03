@@ -2,6 +2,9 @@ import { MAILGUN_CONFIG } from "./config";
 import * as schedule from "node-schedule";
 import * as mailgun from "mailgun-js";
 import { injectable } from "inversify";
+import { Mail } from "./../../models/mail/mail";
+import { PurchaseMail } from "./../../models/mail/purchase-mail";
+import { SaleMail } from "./../../models/mail/sale-mail";
 
 @injectable()
 export class MailingClient {
@@ -17,31 +20,30 @@ export class MailingClient {
     this.mailgun = mailgun({apiKey: this.apiKey, domain: this.domain});
   }
 
-  public startJobs() {
-    schedule.scheduleJob("* 0 * * *", () => {
-
-      let data = {
-        from: "Morfi Ya! <midnight-schedule@morfi-ya.food.store>",
-        to: "sgobotta@gmail.com",
-        subject: "Midnight Schedule",
-        text: "Testing some Mailgun awesomness!"
-      };
-
-      this.sendEmail(data.from, data.to, data.subject, data.text, null);
-      console.log("This is a midnight log");
+  public notifyAll(purchaseMail: Mail, saleMail: Mail) {
+    return new Promise<any>((resolve, reject) => {
+      this.sendEmail(purchaseMail)
+      .then((purchaseMailResponse) => {
+        this.sendEmail(saleMail)
+        .then((saleMailResponse) => {
+          resolve(purchaseMailResponse && saleMailResponse);
+        })
+        .catch((error) => { reject(error) });
+      })
+      .catch((error) => { reject(error) });
     });
   }
 
-  public sendEmail(sender, recipients, subject, text, html) {
-    new Promise<any>((resolve, reject) => {
+  public sendEmail(mail: Mail) {
+    return new Promise<any>((resolve, reject) => {
       let data = {
-        from: sender,
-        to: recipients,
-        subject: subject,
-        text: text
+        from: mail.getFrom(),
+        to: mail.getTo(),
+        subject: mail.getSubject(),
+        text: mail.getText()
       };
 
-      this.mailgun.messages().send(data, function(error, body) {
+      this.mailgun.messages().send(mail, function(error, body) {
         if(error) {
           reject(error);
         } else {
