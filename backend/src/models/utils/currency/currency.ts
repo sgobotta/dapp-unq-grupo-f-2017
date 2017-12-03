@@ -22,7 +22,8 @@ export class Currency {
 
   public add(currency: Currency) {
     if (this.currencyName === currency.currencyName) {
-      this.amount = this.amount + currency.getAmount();
+      const sum = this.amount + currency.getAmount();
+      this.amount = parseFloat(sum.toFixed(2));
       return this.amount;
     }
     else {

@@ -19,6 +19,7 @@ import { OrderController } from "./controllers/order-controller";
 import { OrderService } from "./services/order-service";
 import { PurchaseController } from "./controllers/purchase-controller";
 import { PurchaseService } from "./services/purchase-service";
+import { MailingService } from "./services/mailing-service";
 
 @injectable()
 export default class Routes {
@@ -52,6 +53,9 @@ export default class Routes {
 
     container.bind<interfaces.Controller>(TYPE.Controller).to(PurchaseController).whenTargetNamed(TAGS.PurchaseController);
     container.bind<PurchaseService>(TYPES.PurchaseService).to(PurchaseService);
+
+    container.bind<MailingService>(TYPES.MailingService).to(MailingService);
+
   }
 
 }
