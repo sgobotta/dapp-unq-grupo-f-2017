@@ -217,12 +217,6 @@ export default {
       this.$refs['dialog'].close()
     },
     applyCustomer: function () {
-      console.log('name: ' + this.customerName)
-      console.log('surname: ' + this.customerSurname)
-      console.log('email: ' + this.customerEmail)
-      console.log('password: ' + this.customerPassword)
-      console.log('phone: ' + this.customerPhone)
-      console.log('cuit: ' + this.customerCuit)
       const request = {
         user: {
           email: this.customerEmail,
@@ -259,65 +253,73 @@ export default {
       this.close()
     },
     applyProvider: function () {
-      console.log('name: ' + this.providerName)
-      console.log('surname: ' + this.providerSurname)
-      console.log('email: ' + this.providerEmail)
-      console.log('password: ' + this.providerPassword)
-      console.log('phone: ' + this.providerPhone)
-      const provider = {
-        name: this.providerName,
-        logo: this.providerLogo,
-        address: {
-          street: this.place.address_components[1].long_name,
-          number: this.place.address_components[0].long_name,
-          city: this.place.address_components[3].long_name,
-          state: this.place.address_components[4].long_name,
-          mapsLocation: {
-            latitude: this.place.geometry.location.lat(),
-            longitude: this.place.geometry.location.lng()
-          }
+      const request = {
+        user: {
+          email: this.providerEmail,
+          password: this.providerPassword
         },
-        description: this.providerDescription,
-        website: this.providerWebsite,
-        email: this.providerEmail,
-        phone: {
-          area: this.providerPhoneArea,
-          number: this.providerPhone
-        },
-        availability: {
-          monday: this.avMonday,
-          tuesday: this.avTuesday,
-          wednesday: this.avWednesday,
-          thursday: this.avThursday,
-          friday: this.avFriday,
-          saturday: this.avSaturday,
-          sunday: this.avSunday
-        },
-        deliveryLocationRange: {
-          /*
-          ES UN CUADRADO
-          area: [
-            {
-              latitude: this.providerAddressLatitude -34.7115399,
-              longitude: this.providerAddressLongitude -58.263918300
-            },
-            {
-              latitude: this.providerAddressLatitude -34.7245401,
-              longitude: this.providerAddressLongitude -58.26984170000001
-            },
-            {
-              latitude: this.providerAddressLatitude -34.7238551,
-              longitude: this.providerAddressLongitude -58.24828369999999
-            },
-            {
-              latitude: this.providerAddressLatitude -34.7176918,
-              longitude: this.providerAddressLongitude -58.2470774
+        provider: {
+          name: this.providerName,
+          logo: this.providerLogo,
+          address: {
+            street: this.place.address_components[1].long_name,
+            number: this.place.address_components[0].long_name,
+            city: this.place.address_components[3].long_name,
+            state: this.place.address_components[4].long_name,
+            mapsLocation: {
+              latitude: this.place.geometry.location.lat(),
+              longitude: this.place.geometry.location.lng()
             }
-          ]
-          */
+          },
+          description: this.providerDescription,
+          website: this.providerWebsite,
+          email: this.providerEmail,
+          phone: {
+            area: this.providerPhoneArea,
+            number: this.providerPhone
+          },
+          availability: {
+            monday: this.avMonday,
+            tuesday: this.avTuesday,
+            wednesday: this.avWednesday,
+            thursday: this.avThursday,
+            friday: this.avFriday,
+            saturday: this.avSaturday,
+            sunday: this.avSunday
+          },
+          deliveryLocationRange: {
+            /*
+            ES UN CUADRADO
+            area: [
+              {
+                latitude: this.providerAddressLatitude -34.7115399,
+                longitude: this.providerAddressLongitude -58.263918300
+              },
+              {
+                latitude: this.providerAddressLatitude -34.7245401,
+                longitude: this.providerAddressLongitude -58.26984170000001
+              },
+              {
+                latitude: this.providerAddressLatitude -34.7238551,
+                longitude: this.providerAddressLongitude -58.24828369999999
+              },
+              {
+                latitude: this.providerAddressLatitude -34.7176918,
+                longitude: this.providerAddressLongitude -58.2470774
+              }
+            ]
+            */
+          }
         }
       }
-      registerProvider(provider)
+      registerProvider(request)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
       this.close()
     },
     testEmail: function (mail) {
