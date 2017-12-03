@@ -8,10 +8,9 @@ export class Order {
   deliveryType: string;
   menu: Menu;
   quantity: number;
-  deliveryTime: Date; // Date and time
-  // We must validate that date is at least 48 hours from now
+  deliveryTime: number;
 
-  constructor(customerId: number, deliveryType: string, menu: Menu, quantity: number, deliveryTime: Date) {
+  constructor(customerId: number, deliveryType: string, menu: Menu, quantity: number, deliveryTime: number) {
     this.customerId = customerId;
   	this.deliveryType = deliveryType;
   	this.menu = menu;
@@ -24,10 +23,10 @@ export class Order {
     if (this.deliveryType === "delivery") {
       const deliveryPrice:Currency = this.menu.deliveryPrice;
       const finalPrice:number = menuPrice.add(deliveryPrice);
-      return finalPrice;
+      return menuPrice;
     }
     if (this.deliveryType === "pickup") {
-      return this.menu.price.amount;
+      return this.menu.price;
     }
   }
 
@@ -39,7 +38,7 @@ export class OrderBuilder {
   deliveryType: string;
   menu: Menu;
   quantity: number;
-  deliveryTime: Date;
+  deliveryTime: number;
 
   constructor() {
     this.clear();
@@ -74,7 +73,7 @@ export class OrderBuilder {
     return this;
   }
 
-  withDeliveryTime(deliveryTime: Date) {
+  withDeliveryTime(deliveryTime: number) {
     this.deliveryTime = deliveryTime;
     return this;
   }
