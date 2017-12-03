@@ -52,7 +52,7 @@
                   :center="center"
                   :zoom="zoom"
                   map-type-id="terrain"
-                  style="width: auto; height: 300px">
+                  style="width: auto; height: 300px" v-if="validStep1">
                   <gmap-marker v-for="(marker, index) in markers"
                     :key="index"
                     :position="marker.position">
@@ -120,12 +120,16 @@
                   :center="center"
                   :zoom="zoom"
                   map-type-id="terrain"
-                  style="width: auto; height: 300px">
+                  style="width: auto; height: 300px" v-if="validStep1Provider">
                   <gmap-marker v-for="(marker, index) in markers"
                     :key="index"
                     :position="marker.position">
                   </gmap-marker>
                 </gmap-map>
+
+                <md-layout md-row md-gutter v-for="day in days" :key="day">
+                  <label>{{day}}</label>
+                </md-layout>
 
               </md-step>
 
@@ -201,7 +205,8 @@ export default {
       markers: [],
       place: null,
       center: {lat: -34.7068012, lng: -58.29490709999999},
-      zoom: 16
+      zoom: 16,
+      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     }
   },
   methods: {
