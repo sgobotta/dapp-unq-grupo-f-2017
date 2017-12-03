@@ -1,19 +1,89 @@
 import { DeliveryType } from "./constants/delivery-type";
-import { Menu } from "./menu";
+import { Menu, MenuBuilder } from "./menu";
+import { Currency } from "./utils/currency/currency";
 
 export class Order {
 
-  deliveryType: DeliveryType;
+  customerId: number;
+  deliveryType: string;
   menu: Menu;
   quantity: number;
-  deliveryTime: Date; // Date and time
-  // We must validate that date is at least 48 hours from now
+  deliveryTime: number;
+  date: Date;
 
-  constructor(deliveryType : DeliveryType, menu : Menu, quantity : number, deliveryTime: Date) {
+  constructor(customerId: number, deliveryType: string, menu: Menu, quantity: number, deliveryTime: number, date: Date) {
+    this.customerId = customerId;
   	this.deliveryType = deliveryType;
   	this.menu = menu;
   	this.quantity = quantity;
   	this.deliveryTime = deliveryTime;
+    this.date = date;
   }
 
+  getFinalPrice() {
+    const menuPrice:Currency = this.menu.price
+    if (this.deliveryType === "delivery") {
+      const deliveryPrice:Currency = this.menu.deliveryPrice;
+      const finalPrice:number = menuPrice.add(deliveryPrice);
+      return menuPrice;
+    }
+    if (this.deliveryType === "pickup") {
+      return this.menu.price;
+    }
+  }
+
+}
+
+export class OrderBuilder {
+
+  customerId: number;
+  deliveryType: string;
+  menu: Menu;
+  quantity: number;
+  deliveryTime: number;
+
+  constructor() {
+    this.clear();
+    return this;
+  }
+
+  private clear() {
+    this.customerId = null;
+    this.deliveryType = null;
+    this.menu = null;
+    this.quantity = null;
+    this.deliveryTime = null;
+  }
+
+  withCustomerId(cuit: number) {
+    this.customerId = cuit;
+    return this;
+  }
+
+  withDeliveryType(deliveryType: string) {
+    this.deliveryType = deliveryType;
+    return this;
+  }
+
+  withMenu(menu: Menu) {
+    this.menu = menu;
+    return this;
+  }
+
+  withQuantity(quantity: number) {
+    this.quantity = quantity;
+    return this;
+  }
+
+  withDeliveryTime(deliveryTime: number) {
+    this.deliveryTime = deliveryTime;
+    return this;
+  }
+
+  build() {
+    const order = new Order(this.customerId, this.deliveryType, this.menu, this.quantity,
+      this.deliveryTime, new Date());
+    this.clear();
+    return order;
+  }
 }

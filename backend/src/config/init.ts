@@ -31,19 +31,23 @@ export default class Startup {
     });
   }
 
-  private dropCollection(collection: Collection) {
+  private dropCollection(collection: Collection, callback) {
     collection.drop((err, res) => {
       if (err) throw err;
+      else {
+        callback();
+      }
     });
   }
 
   private importCollection(collection: Collection, data) {
-    this.dropCollection(collection);
-    collection.insert(data, (err, insert) => {
-      if (err) throw err;
-      if (insert) {
-        Logger.info({ message: `MongoDB ::: Collection ${collection.collectionName} loaded succesfully.` });
-      }
+    this.dropCollection(collection, () => {      
+      collection.insert(data, (err, insert) => {
+        if (err) throw err;
+        if (insert) {
+          Logger.info({ message: `MongoDB ::: Collection ${collection.collectionName} loaded succesfully.` });
+        }
+      });
     });
   }
 

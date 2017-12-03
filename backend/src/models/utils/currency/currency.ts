@@ -13,17 +13,22 @@ export class Currency {
 
   public substract(amount: Currency) {
   	// Simple implementation with no conversion rate
-  	if(this.amount - amount.getAmount() > 0) {
+  	if(this.amount - amount.getAmount() >= 0) {
       this.amount = this.amount - amount.getAmount();
   	} else {
-      // throw error maybe
-      console.log("Pibe no te alcanza pa' garpar");
+      throw new Error("Currency ::: Can't substract below zero.")
     }
   }
 
-  public add(amount: Currency) {
-    // Simple implementation with no conversion rate
-    this.amount = this.amount + amount.getAmount();
+  public add(currency: Currency) {
+    if (this.currencyName === currency.currencyName) {
+      const sum = this.amount + currency.getAmount();
+      this.amount = parseFloat(sum.toFixed(2));
+      return this.amount;
+    }
+    else {
+      throw new Error("Currency ::: Currency names doesn't match at add");
+    }
   }
 
   public getAmount(): number {
