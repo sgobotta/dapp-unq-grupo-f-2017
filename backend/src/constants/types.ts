@@ -9,7 +9,9 @@ const TYPES = {
   UserService: Symbol("UserService"),
   AuthorizationService: Symbol("AuthorizationService"),
   OrderService: Symbol("OrderService"),
-  PurchaseService: Symbol("PurchaseService")
+  PurchaseService: Symbol("PurchaseService"),
+  MailingService: Symbol("MailingService"),
+  MailingClient: Symbol("MailingClient")
 };
 
 export default TYPES;
