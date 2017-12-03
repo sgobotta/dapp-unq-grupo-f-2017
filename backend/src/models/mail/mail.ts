@@ -12,4 +12,20 @@ export class Mail {
     this.subject = subject;
     this.text = text;
   }
+
+  getFrom() {
+    return this.from;
+  }
+
+  getTo() {
+    return this.to;
+  }
+
+  getSubject() {
+    return this.subject;
+  }
+
+  getText() {
+    return this.text;
+  }
 }
