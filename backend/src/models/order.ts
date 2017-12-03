@@ -9,13 +9,15 @@ export class Order {
   menu: Menu;
   quantity: number;
   deliveryTime: number;
+  date: Date;
 
-  constructor(customerId: number, deliveryType: string, menu: Menu, quantity: number, deliveryTime: number) {
+  constructor(customerId: number, deliveryType: string, menu: Menu, quantity: number, deliveryTime: number, date: Date) {
     this.customerId = customerId;
   	this.deliveryType = deliveryType;
   	this.menu = menu;
   	this.quantity = quantity;
   	this.deliveryTime = deliveryTime;
+    this.date = date;
   }
 
   getFinalPrice() {
@@ -80,7 +82,7 @@ export class OrderBuilder {
 
   build() {
     const order = new Order(this.customerId, this.deliveryType, this.menu, this.quantity,
-      this.deliveryTime);
+      this.deliveryTime, new Date());
     this.clear();
     return order;
   }
