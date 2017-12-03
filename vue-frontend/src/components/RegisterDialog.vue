@@ -223,27 +223,39 @@ export default {
       console.log('password: ' + this.customerPassword)
       console.log('phone: ' + this.customerPhone)
       console.log('cuit: ' + this.customerCuit)
-      const customer = {
-        name: this.customerName,
-        surname: this.customerSurname,
-        cuit: this.customerCuit,
-        email: this.customerEmail,
-        phone: {
-          area: this.customerPhonearea,
-          number: this.customerPhone
+      const request = {
+        user: {
+          email: this.customerEmail,
+          password: this.customerPassword
         },
-        address: {
-          street: this.place.address_components[1].long_name,
-          number: this.place.address_components[0].long_name,
-          city: this.place.address_components[3].long_name,
-          state: this.place.address_components[4].long_name,
-          mapsLocation: {
-            latitude: this.place.geometry.location.lat(),
-            longitude: this.place.geometry.location.lng()
+        customer: {
+          name: this.customerName,
+          surname: this.customerSurname,
+          cuit: this.customerCuit,
+          email: this.customerEmail,
+          phone: {
+            area: this.customerPhonearea,
+            number: this.customerPhone
+          },
+          address: {
+            street: this.place.address_components[1].long_name,
+            number: this.place.address_components[0].long_name,
+            city: this.place.address_components[3].long_name,
+            state: this.place.address_components[4].long_name,
+            mapsLocation: {
+              latitude: this.place.geometry.location.lat(),
+              longitude: this.place.geometry.location.lng()
+            }
           }
         }
       }
-      registerCustomer(customer)
+      registerCustomer(request)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       this.close()
     },
     applyProvider: function () {
