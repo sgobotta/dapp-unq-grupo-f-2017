@@ -54,7 +54,7 @@ export class PurchaseService {
                               .then((response) => {
                                 resolve({ success: true, order: order, balance: providerTransaction.balance });
                               })
-                              .catch((response) => { reject({ success: false, msg: "Error while notifying by email" }) });
+                              .catch((mailError) => { console.log(mailError); reject({ success: false, msg: "Error while notifying by email" }) });
                           })
                           .catch((response) => { reject({ success: false, msg: "Error while retrieving the customer" }) });
                       }
