@@ -90,7 +90,7 @@ export class UserService {
         });
       }
       catch (err) {
-        reject({ success: false, msg: err });
+        reject({ success: false, msg: "User already exists!" });
       }
     });
   }

@@ -72,12 +72,12 @@ export class CustomerService {
               if (error) throw error;
             });
           })
-          .catch((response) => {
-            reject({ success: false, msg: response })
+          .catch((error) => {
+            reject(error)
           })
       }
       catch (err) {
-        reject({ success: false, msg: err });
+        reject({ success: false, msg: "Error while creating new user" });
       }
     });
   }
