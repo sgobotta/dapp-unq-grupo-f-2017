@@ -4,7 +4,7 @@ export const createMenu = (menu) => {
   return api.post('/menu/', menu)
 }
 
-export const getMenus = (email) => {
+export const getMenus = () => {
   return api.get('/menu/')
 }
 
