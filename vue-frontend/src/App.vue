@@ -26,6 +26,12 @@
 
         <md-button class="md-primary md-raised"
            v-if="authenticated"
+           @click="profile('customerprofile')">
+              Perfil
+        </md-button>
+
+        <md-button class="md-primary md-raised"
+           v-if="authenticated"
            @click="logout()">
               Log Out
         </md-button>
@@ -49,6 +55,7 @@
 import AuthService from './auth/AuthService'
 import RegisterDialog from './components/RegisterDialog'
 import LogInDialog from './components/LogInDialog'
+import CustomerProfile from './components/CustomerProfile'
 
 const auth = new AuthService()
 const {login, logout, authenticated, authNotifier} = auth
@@ -77,7 +84,8 @@ export default {
   },
   components: {
     RegisterDialog,
-    LogInDialog
+    LogInDialog,
+    CustomerProfile
   }
 }
 </script>

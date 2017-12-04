@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Callback from '@/components/Callback'
+import CustomerProfile from '@/components/CustomerProfile'
+import ProviderProfile from '@/components/ProviderProfile'
 
 Vue.use(Router)
 
@@ -22,6 +24,16 @@ const router = new Router({
     {
       path: '/',
       redirect: '/home'
+    },
+    {
+      path: '/customerprofile',
+      name: 'CustomerProfile',
+      component: CustomerProfile
+    },
+    {
+      path: '/providerprofile',
+      name: 'ProviderProfile',
+      component: ProviderProfile
     }
   ]
 })

@@ -4,6 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueMaterial from 'vue-material'
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
+Vue.http.options.emulateJSON = true
+const http = Vue.http
+export default http
 
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
