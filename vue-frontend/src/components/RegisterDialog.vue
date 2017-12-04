@@ -110,7 +110,7 @@
                 </md-input-container>
               </md-step>
 
-              <md-step md-label="Address and availability" :md-continue="validStep2Provider" :md-disabled="!validStep1Provider" :md-error="!validStep2Provider">
+              <md-step md-label="Address" :md-continue="validStep2Provider" :md-disabled="!validStep1Provider" :md-error="!validStep2Provider">
                 <div class="maps-autocomplete md-input-container md-theme-default">
                   <gmap-autocomplete
                     @place_changed="usePlace">
@@ -126,14 +126,37 @@
                     :position="marker.position">
                   </gmap-marker>
                 </gmap-map>
-
-                <md-layout md-row md-gutter v-for="day in days" :key="day">
-                  <label>{{day}}</label>
-                </md-layout>
-
               </md-step>
 
-              <md-step md-label="Description" :md-continue="validStep3Provider" :md-disabled="!validStep2Provider" :md-error="!validStep3Provider">
+              <md-step md-label="Availability" :md-continue="validStep3Provider" :md-disabled="!validStep2Provider" :md-error="!validStep3Provider">
+                <md-layout md-column md-gutter v-for="day in days" :key="day.day">
+                  <label class="md-title">{{day.day}}</label>
+                  <label class="md-subheading" v-for="av in day.availability">From {{av.start}} to {{av.end}}</label>
+                  </br>
+                  <div class="field-group">
+                    <md-input-container>
+                      <label for="start">Desde</label>
+                      <md-select v-model="day.start" name="start" id="start">
+                        <md-option v-for="(hour,index) in hours" :value="hour" :key="index">
+                          {{hour}}
+                        </md-option>
+                      </md-select>
+                    </md-input-container>
+
+                    <md-input-container>
+                      <label for="end">Hasta</label>
+                      <md-select v-model="day.end" name="end" id="end">
+                        <md-option v-for="(hour,index) in hours" :value="hour" :key="index">
+                          {{hour}}
+                        </md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                  <md-button class="md-raised" @click="addAvailability(day)">Add</md-button>
+                </md-layout>
+              </md-step>
+
+              <md-step md-label="Description" :md-continue="validStep4Provider" :md-disabled="!validStep3Provider" :md-error="!validStep4Provider">
 
                 <md-input-container>
                   <label>Logo URL</label>
@@ -144,9 +167,14 @@
                   <label>Descripción</label>
                   <md-input v-model="providerDescription" maxlength="200"></md-input>
                 </md-input-container>
+
+                <md-input-container>
+                  <label>Website</label>
+                  <md-input v-model="providerWebsite" maxlength="70"></md-input>
+                </md-input-container>
               </md-step>
 
-              <md-step md-label="Verify Information" :md-disabled="!validStep3Provider">
+              <md-step md-label="Verify Information" :md-disabled="!validStep4Provider">
                 <h2>Verifique la información provista</h2>
                 </br>
                 <h3>Nombre</h3>
@@ -194,19 +222,17 @@ export default {
       providerCity: '',
       providerOpenTimes: '',
       providerDescription: '',
+      providerWebsite: '',
       providerPassword: '',
-      avMonday: [],
-      avTuesday: [],
-      avWednesday: [],
-      avThursday: [],
-      avFriday: [],
-      avSaturday: [],
-      avSunday: [],
       markers: [],
       place: null,
       center: {lat: -34.7068012, lng: -58.29490709999999},
       zoom: 16,
-      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+      days: [{ day: 'Monday', start: '', end: '', availability: [] },
+      { day: 'Tuesday', start: '', end: '', availability: [] }, { day: 'Wednesday', start: '', end: '', availability: [] },
+      { day: 'Thursday', start: '', end: '', availability: [] }, { day: 'Friday', start: '', end: '', availability: [] },
+      { day: 'Saturday', start: '', end: '', availability: [] }, { day: 'Sunday', start: '', end: '', availability: [] }],
+      hours: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
     }
   },
   methods: {
@@ -279,39 +305,37 @@ export default {
             number: this.providerPhone
           },
           availability: {
-            monday: this.avMonday,
-            tuesday: this.avTuesday,
-            wednesday: this.avWednesday,
-            thursday: this.avThursday,
-            friday: this.avFriday,
-            saturday: this.avSaturday,
-            sunday: this.avSunday
+            monday: this.getAvailability('Monday'),
+            tuesday: this.getAvailability('Tuesday'),
+            wednesday: this.getAvailability('Wednesday'),
+            thursday: this.getAvailability('Thursday'),
+            friday: this.getAvailability('Friday'),
+            saturday: this.getAvailability('Saturday'),
+            sunday: this.getAvailability('Sunday')
           },
           deliveryLocationRange: {
-            /*
-            ES UN CUADRADO
             area: [
               {
-                latitude: this.providerAddressLatitude -34.7115399,
-                longitude: this.providerAddressLongitude -58.263918300
+                latitude: -34.7115399,
+                longitude: -58.263918300
               },
               {
-                latitude: this.providerAddressLatitude -34.7245401,
-                longitude: this.providerAddressLongitude -58.26984170000001
+                latitude: -34.7245401,
+                longitude: -58.26984170000001
               },
               {
-                latitude: this.providerAddressLatitude -34.7238551,
-                longitude: this.providerAddressLongitude -58.24828369999999
+                latitude: -34.7238551,
+                longitude: -58.24828369999999
               },
               {
-                latitude: this.providerAddressLatitude -34.7176918,
-                longitude: this.providerAddressLongitude -58.2470774
+                latitude: -34.7176918,
+                longitude: -58.2470774
               }
             ]
-            */
           }
         }
       }
+      console.log(request)
       registerProvider(request)
         .then((response) => {
           console.log(response)
@@ -351,6 +375,20 @@ export default {
           lng: this.place.geometry.location.lng()
         }
       }
+    },
+    addAvailability (day) {
+      day.availability.push({ start: day.start, end: day.end })
+      day.start = ''
+      day.end = ''
+    },
+    getAvailability (day) {
+      var index = 0
+      while (index < this.days.length) {
+        if (day === this.days[index].day) {
+          return this.days[index].availability
+        }
+        index++
+      }
     }
   },
   computed: {
@@ -382,10 +420,25 @@ export default {
       return this.validStep1Provider && this.place !== null
     },
     validStep3Provider: function () {
-      return this.validStep2Provider && this.providerLogo !== ''
+      return this.validStep2Provider && this.anyAvailabilityChosen
+    },
+    validStep4Provider: function () {
+      return this.validStep3Provider && this.providerLogo !== ''
     },
     validProviderEmail: function () {
       return this.testEmail(this.providerEmail)
+    },
+    anyAvailabilityChosen: function () {
+      console.log(this.days.length)
+      var index = 0
+      while (index < this.days.length) {
+        console.log(index)
+        if (this.days[index].availability.length > 0) {
+          return true
+        }
+        index++
+      }
+      return false
     }
   }
 }
