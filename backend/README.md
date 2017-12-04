@@ -42,4 +42,3 @@
 *  **PUT** "/users/:email" *updateUser*
 *  **DELETE** "/users/:email" *deleteUser*
 *  **POST** "/users/" *newUser*
-

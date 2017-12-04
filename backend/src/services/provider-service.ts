@@ -1,6 +1,8 @@
 import { inject, injectable } from "inversify";
 import { MongoDBClient } from "../config/mongodb/client";
+import { UserService } from "./user-service";
 import { Provider, ProviderBuilder } from "../models/provider"
+import { User } from "../models/user";
 import TYPES from "./../constants/types";
 import { Wove } from "aspect.js";
 
@@ -9,12 +11,15 @@ import { Wove } from "aspect.js";
 export class ProviderService {
 
   private mongoClient: MongoDBClient;
+  private userService: UserService;
   private collection:string;
 
   constructor(
-    @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient
+    @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient,
+    @inject(TYPES.UserService) userService: UserService
   ) {
     this.mongoClient = mongoClient;
+    this.userService = userService;
     this.collection = "provider";
   }
 
@@ -45,40 +50,61 @@ export class ProviderService {
     });
   }
 
-  public newProvider(provider: Provider): Promise<ProviderResponse>{
+  public newProvider(request: ProviderRequest): Promise<ProviderResponse>{
     return new Promise<ProviderResponse>((resolve, reject) => {
       let newProvider;
       try {
-        newProvider = new ProviderBuilder()
-        .withName(provider.name)
-        .withLogo(provider.logo)
-        .withAddress(provider.address.street, provider.address.number,
-          provider.address.city, provider.address.state,
-          provider.address.mapsLocation.latitude, provider.address.mapsLocation.longitude)
-          .withDescription(provider.description)
-          .withWebsite(provider.website)
-          .withEmail(provider.email)
-          .withPhone(provider.phone.area, provider.phone.number)
-          .withAvailability(provider.availability.monday, provider.availability.tuesday,
-            provider.availability.wednesday, provider.availability.thursday,
-            provider.availability.friday, provider.availability.saturday,
-            provider.availability.sunday)
-          .withDeliveryLocationRange(provider.deliveryLocationRange.area)
-          .build();
-
-          this.mongoClient.insert(this.collection, provider, (error, data: Provider) => {
-            if (!error) resolve({ success: true, data });
-            if (error) throw error;
-          });
+        console.log(request.provider)
+        this.userService.newUser(request.user)
+          .then((response) => {
+            newProvider = new ProviderBuilder()
+            .withName(request.provider.name)
+            .withLogo(request.provider.logo)
+            .withAddress(request.provider.address.street, request.provider.address.number,
+              request.provider.address.city, request.provider.address.state,
+              request.provider.address.mapsLocation.latitude, request.provider.address.mapsLocation.longitude)
+              .withDescription(request.provider.description)
+              .withWebsite(request.provider.website)
+              .withEmail(request.provider.email)
+              .withPhone(request.provider.phone.area, request.provider.phone.number)
+              .withAvailability(request.provider.availability.monday, request.provider.availability.tuesday,
+                request.provider.availability.wednesday, request.provider.availability.thursday,
+                request.provider.availability.friday, request.provider.availability.saturday,
+                request.provider.availability.sunday)
+              .withDeliveryLocationRange(request.provider.deliveryLocationRange.area)
+              .build();
+            this.mongoClient.insert(this.collection, newProvider, (error, data: Provider) => {
+              if (!error) resolve({ success: true, data });
+              if (error) throw error;
+            });
+          })
+          .catch((error) => {
+            reject(error)
+          })
       }
       catch (err) {
-        reject({ success: false });
+        reject({ success: false, msg: "Error while creating new user" });
       }
     });
   }
 }
 
+
+
+
+
 export interface ProviderResponse {
   success: boolean;
   data: any;
+}
+
+export interface ProviderSessionResponse {
+  success: boolean;
+  data: any;
+  token: string;
+}
+
+export interface ProviderRequest {
+  provider: Provider,
+  user: User
 }

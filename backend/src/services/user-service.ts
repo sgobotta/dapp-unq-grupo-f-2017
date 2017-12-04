@@ -67,38 +67,39 @@ export class UserService {
     return new Promise<UserResponse>((resolve, reject) => {
       let newUser: User;
       try {
-        this.userExists(user.email)
-        .then((result) => {
-          reject({ success: !result, msg: "User already exists."});
-        })
-        .catch((result) => {
-          newUser = new UserBuilder()
-          .withEmail(user.email)
-          .withPassword(user.password)
-          .withPasswordRepeat(user.password)
-          .withSession(user.email)
-          .withRoles(user.roles)
-          .build();
-          this.mongoClient.insert(this.collection, newUser, (error, user: User) => {
-            if (error) {
-              reject({ success: result, msg: "Insertion error." });
-            }
-            else if (user) {
-              resolve({ success: !result, data: user });
-            }
+        this.isUserAvailable(user.email)
+          .then((result) => {
+            newUser = new UserBuilder()
+            .withEmail(user.email)
+            .withPassword(user.password)
+            .withPasswordRepeat(user.password)
+            .withSession(user.email)
+            .withRoles(user.roles)
+            .build();
+            this.mongoClient.insert(this.collection, newUser, (error, user: User) => {
+              if (error) {
+                reject({ success: result, msg: "Insertion error." });
+              }
+              else if (user) {
+                resolve({ success: true, data: user });
+              }
+            });
+          })
+          .catch((userError) => {
+            reject({ success: userError, msg: "User already exists."});
           });
-        });
       }
       catch (err) {
-        reject({ success: false, msg: err });
+        reject({ success: false, msg: "User already exists!" });
       }
     });
   }
 
-  private userExists(email: string) {
+  private isUserAvailable(email: string) {
     return new Promise<Boolean>((resolve, reject) => {
       this.mongoClient.findOneByProperty(this.collection, { email: email }, (error, user: User) => {
-        if (user) {
+        console.log(user)
+        if (!user) {
           resolve(true);
         } else {
           reject(false);

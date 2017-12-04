@@ -64,7 +64,7 @@ export default {
         element.style.opacity = op
         element.style.filter = 'alpha(opacity=' + op * 100 + ')'
         op += op * 0.05
-      }, 0)
+      }, 10)
     }
   }
 }

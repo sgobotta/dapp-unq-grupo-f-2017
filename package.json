@@ -4,6 +4,8 @@
     "build-frontend": "cd ./vue-frontend && npm run build",
     "build-backend": "cd ./backend && npm run build",
     "start": "node backend/dist/index.js",
-    "all": "npm run build-frontend && npm run build-backend && npm run start"
+    "all": "npm run build-frontend && npm run build-backend && npm run start",
+    "all-dev": "npm run build-frontend && npm run build-backend && npm run dev",
+    "dev": "cd ./backend && npm run devrun && cd ../vue-frontend && npm run dev"
   }
 }

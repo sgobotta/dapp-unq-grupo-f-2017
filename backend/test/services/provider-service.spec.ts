@@ -6,13 +6,14 @@ import "mocha";
 import { mock, instance, when, verify, anyString } from "ts-mockito";
 
 let providerService;
+let userService;
 let mongoClient;
 let dummyProvider;
 
 beforeEach(() => {
 
   mongoClient = mock(MongoDBClient);
-	providerService = new ProviderService (mongoClient);
+	providerService = new ProviderService (mongoClient, userService);
 });
 
 describe("A Provider Service when it's created", () => {
