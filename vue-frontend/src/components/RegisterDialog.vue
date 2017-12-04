@@ -431,7 +431,7 @@ export default {
     anyAvailabilityChosen: function () {
       var index = 0
       while (index < this.days.length) {
-        if (this.days[index].availability.length = 0) {
+        if (this.days[index].availability.length === 0) {
           return false
         }
         index++

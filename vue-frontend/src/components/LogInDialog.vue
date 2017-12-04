@@ -15,7 +15,7 @@
               <md-input v-model="password" type="password"></md-input>
             </md-input-container>
 
-            <md-button class="md-raised" @click="apply()">Aceptar</md-button>
+            <md-button class="md-raised" @click="applyCustomer()">Aceptar</md-button>
             <md-button class="md-raised" @click="close()">Cancelar</md-button>
 
           </md-layout>
@@ -31,10 +31,10 @@
 
             <md-input-container md-has-password>
               <label>Password</label>
-              <md-input v-model="password" type="password"></md-input>
+              <md-input v-model="providerPassword" type="password"></md-input>
             </md-input-container>
 
-            <md-button class="md-raised" @click="apply()">Aceptar</md-button>
+            <md-button class="md-raised" @click="applyProvider()">Aceptar</md-button>
             <md-button class="md-raised" @click="close()">Cancelar</md-button>
 
           </md-layout>
