@@ -131,12 +131,12 @@
               <md-step md-label="Availability" :md-continue="validStep3Provider" :md-disabled="!validStep2Provider" :md-error="!validStep3Provider">
                 <md-layout md-column md-gutter v-for="day in days" :key="day.day">
                   <label class="md-title">{{day.day}}</label>
-                  <label class="md-subheading" v-for="av in day.availability">From {{av.start}} to {{av.end}}</label>
+                  <label class="md-subheading" v-for="av in day.availability">From {{av.startTime}} to {{av.endTime}}</label>
                   </br>
                   <div class="field-group">
                     <md-input-container>
-                      <label for="start">Desde</label>
-                      <md-select v-model="day.start" name="start" id="start">
+                      <label for="startTime">Desde</label>
+                      <md-select v-model="day.startTime" name="startTime" id="startTime">
                         <md-option v-for="(hour,index) in hours" :value="hour" :key="index">
                           {{hour}}
                         </md-option>
@@ -144,8 +144,8 @@
                     </md-input-container>
 
                     <md-input-container>
-                      <label for="end">Hasta</label>
-                      <md-select v-model="day.end" name="end" id="end">
+                      <label for="endTime">Hasta</label>
+                      <md-select v-model="day.endTime" name="endTime" id="endTime">
                         <md-option v-for="(hour,index) in hours" :value="hour" :key="index">
                           {{hour}}
                         </md-option>
@@ -228,10 +228,10 @@ export default {
       place: null,
       center: {lat: -34.7068012, lng: -58.29490709999999},
       zoom: 16,
-      days: [{ day: 'Monday', start: '', end: '', availability: [] },
-      { day: 'Tuesday', start: '', end: '', availability: [] }, { day: 'Wednesday', start: '', end: '', availability: [] },
-      { day: 'Thursday', start: '', end: '', availability: [] }, { day: 'Friday', start: '', end: '', availability: [] },
-      { day: 'Saturday', start: '', end: '', availability: [] }, { day: 'Sunday', start: '', end: '', availability: [] }],
+      days: [{ day: 'Monday', startTime: '', endTime: '', availability: [] },
+      { day: 'Tuesday', startTime: '', endTime: '', availability: [] }, { day: 'Wednesday', startTime: '', endTime: '', availability: [] },
+      { day: 'Thursday', startTime: '', endTime: '', availability: [] }, { day: 'Friday', startTime: '', endTime: '', availability: [] },
+      { day: 'Saturday', startTime: '', endTime: '', availability: [] }, { day: 'Sunday', startTime: '', endTime: '', availability: [] }],
       hours: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
     }
   },
@@ -377,9 +377,9 @@ export default {
       }
     },
     addAvailability (day) {
-      day.availability.push({ start: day.start, end: day.end })
-      day.start = ''
-      day.end = ''
+      day.availability.push({ startTime: day.startTime, endTime: day.endTime })
+      day.startTime = ''
+      day.endTime = ''
     },
     getAvailability (day) {
       var index = 0
@@ -429,16 +429,14 @@ export default {
       return this.testEmail(this.providerEmail)
     },
     anyAvailabilityChosen: function () {
-      console.log(this.days.length)
       var index = 0
       while (index < this.days.length) {
-        console.log(index)
-        if (this.days[index].availability.length > 0) {
-          return true
+        if (this.days[index].availability.length = 0) {
+          return false
         }
         index++
       }
-      return false
+      return true
     }
   }
 }
