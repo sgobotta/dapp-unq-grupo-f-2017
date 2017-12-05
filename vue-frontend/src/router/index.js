@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Callback from '@/components/Callback'
 import MenuHome from '@/components/MenuHome'
 import Orders from '@/components/Orders'
+import ProviderMenus from '@/components/ProviderMenus'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ const router = new Router({
       path: '/orders',
       name: 'Orders',
       component: Orders
+    },
+    {
+      path: '/provider-menus',
+      name: 'ProviderMenus',
+      component: ProviderMenus
     }
   ]
 })

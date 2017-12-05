@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="background">
+  <div id="app">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -7,8 +7,8 @@
 
       <div class="md-toolbar-container">
 
+        <h2 class="md-title noselect padded" @click="replace()">{{ title }}</h2>
         <span style="flex: 1;">
-          <h2 class="md-title">{{ title }}</h2>
         </span>
 
         <md-button
@@ -39,10 +39,11 @@
     <div class="container">
         <router-view
           :auth="auth"
-          :authenticated="authenticated">
+          :authenticated="authenticated"
+          :is-provider="isProvider">
           </router-view>
       </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -63,7 +64,8 @@ export default {
     return {
       auth,
       authenticated,
-      title: 'MorfiYa!'
+      title: 'MorfiYa!',
+      isProvider: false
     }
   },
   methods: {
@@ -76,15 +78,19 @@ export default {
       this.$refs[ref].close()
     },
     onRegistration: function (response) {
-      this.authenticated = true
-      this.$session.set('session', response)
     },
     onLogin: function (response) {
       this.authenticated = true
       this.$session.set('session', response)
+      if (response.user.roles[0] === 'provider') {
+        this.isProvider = true
+      } else {
+        this.isProvider = false
+      }
     },
     logoutNormal: function () {
       const email = this.$session.getAll().session.user.email
+      console.log(email)
       logoutService(email)
         .then((response) => {
           console.log(response)
@@ -94,6 +100,10 @@ export default {
         })
       this.authenticated = false
       this.$session.destroy()
+      this.replace()
+    },
+    replace () {
+      this.$router.replace('/home')
     }
   },
   components: {
@@ -107,6 +117,23 @@ export default {
 
 <style>
 
+body.md-theme-default {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.padded {
+  padding: 5px 5px 5px 5px;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
 .centered {
   text-align: center;
 }
@@ -119,11 +146,18 @@ export default {
   .md-dialog {
     width: 90%;
   }
+
+  .footer {
+    font-size: 12px;
+  }
 }
 
 @media screen and (min-width: 600px) and (max-width: 799px) {
   .md-dialog {
     width: 75%;
+  }
+  .footer {
+    font-size: 15px;
   }
 }
 
@@ -132,11 +166,18 @@ export default {
   .md-dialog {
     width: 60%;
   }
+  .footer {
+    font-size: 20px;
+  }
 }
 
 @media screen and (min-width: 1200px) and (max-width: 2099px){
   .md-dialog {
     width: 40%;
+  }
+
+  .footer {
+    font-size: 25px;
   }
 }
 
@@ -144,12 +185,38 @@ export default {
   .md-dialog {
     width: 30%;
   }
+
+  .footer {
+    font-size: 35px;
+  }
 }
 
 @media screen and (min-width: 2600px) {
   .md-dialog {
     width: 20%;
   }
+  .footer {
+    font-size: 45px;
+  }
+}
+
+html {
+  background: url(/static/food-background3.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 </style>

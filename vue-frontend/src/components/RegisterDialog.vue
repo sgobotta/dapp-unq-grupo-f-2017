@@ -1,5 +1,5 @@
 <template>
-  <md-dialog md-open-from="#register" md-close-to="#register" ref="dialog">
+  <md-dialog md-open-from="#register" md-close-to="#register" ref="dialog" class="noselect">
     <md-dialog-content>
       <md-tabs md-fixed md-elevation="4" class="md-transparent">
         <md-tab id="customer" md-label="Customer">
@@ -246,7 +246,8 @@ export default {
       const request = {
         user: {
           email: this.customerEmail,
-          password: this.customerPassword
+          password: this.customerPassword,
+          roles: ['customer']
         },
         customer: {
           name: this.customerName,
@@ -284,7 +285,8 @@ export default {
       const request = {
         user: {
           email: this.providerEmail,
-          password: this.providerPassword
+          password: this.providerPassword,
+          roles: ['provider']
         },
         provider: {
           name: this.providerName,
