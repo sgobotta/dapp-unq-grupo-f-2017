@@ -1,6 +1,6 @@
 import { DeliveryType } from "./constants/delivery-type";
 import { Menu, MenuBuilder } from "./menu";
-import { Currency } from "./utils/currency/currency";
+import { Currency, CurrencyBuilder } from "./utils/currency/currency";
 
 export class Order {
 
@@ -10,6 +10,7 @@ export class Order {
   quantity: number;
   deliveryTime: number;
   date: Date;
+  finalPrice: Currency;
 
   constructor(customerId: number, deliveryType: string, menu: Menu, quantity: number, deliveryTime: number, date: Date) {
     this.customerId = customerId;
@@ -18,18 +19,25 @@ export class Order {
   	this.quantity = quantity;
   	this.deliveryTime = deliveryTime;
     this.date = date;
+    this.finalPrice = this.calculateFinalPrice();
   }
 
-  getFinalPrice() {
-    const menuPrice:Currency = this.menu.price
+  private calculateFinalPrice() {
+    const menuPrice: Currency = this.menu.price
+    this.finalPrice = Object.create(this.menu.price);
     if (this.deliveryType === "delivery") {
       const deliveryPrice:Currency = this.menu.deliveryPrice;
-      const finalPrice:number = menuPrice.add(deliveryPrice);
-      return menuPrice;
+      this.finalPrice.mul(this.quantity);
+      return this.finalPrice;
     }
     if (this.deliveryType === "pickup") {
-      return this.menu.price;
+      this.finalPrice.mul(this.quantity);
+      return this.finalPrice;
     }
+  }
+
+  public getFinalPrice() {
+    return this.finalPrice;
   }
 
 }

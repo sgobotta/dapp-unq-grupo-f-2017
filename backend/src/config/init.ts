@@ -41,7 +41,7 @@ export default class Startup {
   }
 
   private importCollection(collection: Collection, data) {
-    this.dropCollection(collection, () => {      
+    this.dropCollection(collection, () => {
       collection.insert(data, (err, insert) => {
         if (err) throw err;
         if (insert) {
@@ -58,6 +58,7 @@ export default class Startup {
     let usersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "users.json"), "utf8"));
     let customersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "customers.json"), "utf8"));
     let providersInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "providers.json"), "utf8"));
+    let ratingsInfo = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../private/data/", "ratings.json"), "utf8"));
 
     this.getConnection((connection) => {
       connection.createCollection("menu", { w: 1 }, (err, collection) => {
@@ -82,6 +83,12 @@ export default class Startup {
         if (err) return;
         else {
           this.importCollection(collection, providersInfo);
+        }
+      });
+      connection.createCollection("ratings", { w: 1 }, (err, collection) => {
+        if (err) return;
+        else {
+          this.importCollection(collection, ratingsInfo);
         }
       });
     });
