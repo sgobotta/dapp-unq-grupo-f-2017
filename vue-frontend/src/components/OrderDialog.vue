@@ -17,8 +17,8 @@
         </div>
         <md-layout md-column>
           <label class="md-title">Cómo lo queres recibir?</label>
-          <md-radio v-model="deliveryType" id="delivery" name="deliveryType" md-value="delivery" class="md-primary">Delivery</md-radio>
-          <md-radio v-model="deliveryType" id="pickup" name="deliveryType" md-value="pickup" class="md-primary">Lo paso a buscar</md-radio>
+          <md-radio v-model="deliveryType" id="delivery" name="deliveryType" md-value="delivery" class="md-primary" @input="updatePrice()">Delivery</md-radio>
+          <md-radio v-model="deliveryType" id="pickup" name="deliveryType" md-value="pickup" class="md-primary" @input="updatePrice()">Lo paso a buscar</md-radio>
         </md-layout>
         <md-layout md-row md-align="center">
           <md-button>Comprar</md-button>
@@ -35,7 +35,7 @@ import { getCustomer } from './../services/customer-service'
 
 export default {
   name: 'order-dialog',
-  props: ['name', 'priceAmount', 'priceCurrency', 'vendor', 'maxQuantity'],
+  props: ['name', 'priceAmount', 'priceCurrency', 'vendor', 'maxQuantity', 'deliveryPrice'],
   data () {
     return {
       quantity: 0,
@@ -47,7 +47,12 @@ export default {
   },
   methods: {
     open () {
+      this.quantity = 0
+      this.deliveryTime = 0
+      this.deliveryType = ''
+      this.currentPrice = this.priceAmount
       this.$refs.orderDialog.open()
+      this.updatePrice()
     },
     close () {
       this.$refs.orderDialog.close()
@@ -76,6 +81,9 @@ export default {
     },
     updatePrice () {
       this.currentPrice = this.priceAmount * this.quantity
+      if (this.deliveryType === 'delivery') {
+        this.currentPrice += this.deliveryPrice
+      }
     }
   }
 }

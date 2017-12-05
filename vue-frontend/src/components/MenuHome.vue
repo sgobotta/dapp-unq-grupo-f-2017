@@ -70,7 +70,8 @@
     </md-layout>
   </md-layout>
   <order-dialog v-if="currentMenu" :name="currentMenu.name" :price-amount="currentMenu.price.amount" :price-currency="currentMenu.currencyName"
-   :vendor="currentMenu.ancestors[0]" :max-quantity="currentMenu.maxDailySalesQuantity" ref="orderDialog"/>
+   :vendor="currentMenu.ancestors[0]" :max-quantity="currentMenu.maxDailySalesQuantity"
+   :delivery-price="currentMenu.deliveryPrice.amount" ref="orderDialog"/>
 </div>
 </template>
 
@@ -229,34 +230,44 @@ export default {
   padding-top: 10px;
 }
 
-
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1920px) {
   .md-card{
     width: 24%;
     height: auto;
     margin: auto;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }
 
-@media screen and (max-width: 799px) and (min-width: 500px) {
+
+@media screen and (min-width: 1000px) and (max-width: 1920px) {
   .md-card{
-    width: 40%;
+    width: 32%;
     height: auto;
     margin: auto;
-    margin-top: 3px;
-    margin-bottom: 3px;
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 }
 
-@media screen and (max-width: 499px) {
+@media screen and (max-width: 999px) and (min-width: 700px) {
   .md-card{
-    width: 80%;
+    width: 45%;
     height: auto;
     margin: auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .md-card{
+    width: 90%;
+    height: auto;
+    margin: auto;
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 }
 </style>
