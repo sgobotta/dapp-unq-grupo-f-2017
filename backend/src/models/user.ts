@@ -19,7 +19,8 @@ export class User {
 
   public passwordMatch(password: string) {
     const currentPassword = jwt.decode(this.password, jwtConfig.key);
-    if (password !== currentPassword) {
+    const passedPassword = jwt.encode(password, jwtConfig.key);
+    if (passedPassword !== currentPassword) {
       throw new Error("::: Error: Password is not correct");
     }
   }

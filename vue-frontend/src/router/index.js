@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Callback from '@/components/Callback'
+import MenuHome from '@/components/MenuHome'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ const router = new Router({
     {
       path: '/',
       redirect: '/home'
+    },
+    {
+      path: '/menus',
+      name: 'MenuHome',
+      component: MenuHome
     }
   ]
 })

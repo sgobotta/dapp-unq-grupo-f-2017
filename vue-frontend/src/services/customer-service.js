@@ -13,5 +13,5 @@ export const deleteCustomer = (cuit) => {
 }
 
 export const updateCustomer = (cuit) => {
-  return api.put('/customer/')
+  return api.put('/customer/' + cuit)
 }

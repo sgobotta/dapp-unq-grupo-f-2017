@@ -2,7 +2,7 @@
     <div class="home">
       <img draggable="false" ondragstart="return false;" :src="images[currentNumber]" ref="bgimage" class="image-background"/>
     </div>
-  </template>
+</template>
 
 <script>
 export default {

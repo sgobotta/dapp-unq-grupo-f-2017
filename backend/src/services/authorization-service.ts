@@ -28,7 +28,7 @@ export class AuthorizationService {
             newUser = new UserBuilder()
               .withEmail(user.email)
               .withPassword(user.password)
-              .withPasswordRepeat(password)
+              .withPasswordRepeat(user.password)
               .withSession(user.email)
               .build();
             newUser.passwordMatch(password);
