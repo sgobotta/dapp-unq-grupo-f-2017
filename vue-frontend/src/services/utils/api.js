@@ -1,6 +1,12 @@
 import Vue from 'vue'
 
-const apiUrl = 'http://localhost:3000'
+let apiUrl
+if (process.env.NODE_ENV === 'production') {
+  apiUrl = 'https://group-f-morfi-ya-node.herokuapp.com' + ':' + process.env.PROD_PORT
+}
+if (process.env.NODE_ENV === 'development') {
+  apiUrl = 'http://localhost:3000'
+}
 
 export default {
   get (url, request) {
