@@ -13,5 +13,5 @@ export const deleteProvider = (email) => {
 }
 
 export const updateProvider = (email) => {
-  return api.put('/provider/')
+  return api.put('/provider/' + email)
 }
