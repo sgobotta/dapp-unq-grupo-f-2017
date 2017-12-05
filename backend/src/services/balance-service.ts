@@ -25,15 +25,16 @@ export class BalanceService {
     let balance;
     this.mySqlClient.findOneByProperty(this.providerCollection, { providerId: providerId }, (err, res) => {
       let provider = res[0];
-      if (err) throw err;
+      if (err) {
+        callback({ success: false, msg: "User not found." });
+      }
       else if (provider !== undefined) {
         balance = new ProviderBalanceBuilder()
           .withId(provider.providerId)
           .withAmount(provider.amount)
           .build();
-        callback({ success: true, balance });
       }
-      callback({ success: false });
+      callback({ success: true, balance });
     });
   }
 
