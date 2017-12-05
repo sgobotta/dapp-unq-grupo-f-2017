@@ -72,6 +72,12 @@ export class MongoDBClient {
     });
   }
 
+  public updateNotSetByProperty(collection: string, object: Object, model: any, result: (error, data) => void): void {
+    this.db.collection(collection).updateOne(object, model, (error, update) => {
+      return result(error, model);
+    });
+  }
+
   public removeByProperty(collection: string, object: Object, result: (error, data) => void): void {
     this.db.collection(collection).deleteOne(object, (error, remove) => {
       return result(error, remove);
