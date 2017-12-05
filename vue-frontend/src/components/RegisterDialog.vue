@@ -246,7 +246,8 @@ export default {
       const request = {
         user: {
           email: this.customerEmail,
-          password: this.customerPassword
+          password: this.customerPassword,
+          roles: ['customer']
         },
         customer: {
           name: this.customerName,
@@ -284,7 +285,8 @@ export default {
       const request = {
         user: {
           email: this.providerEmail,
-          password: this.providerPassword
+          password: this.providerPassword,
+          roles: ['provider']
         },
         provider: {
           name: this.providerName,
