@@ -1,5 +1,5 @@
 <template>
-  <md-dialog md-open-from="#login" md-close-to="#login" ref="dialog">
+  <md-dialog md-open-from="#login" md-close-to="#login" ref="dialog" class="noselect">
     <md-dialog-content>
       <md-layout md-align="center">
 

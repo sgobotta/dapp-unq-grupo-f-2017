@@ -1,9 +1,9 @@
 <template>
     <div class="home">
       <img draggable="false" ondragstart="return false;" :src="images[currentNumber]" ref="bgimage" class="image-background"/>
-      <div class="centered md-title with-outline" v-show="!authenticated">Por favor, ingrese para utilizar la App</div>
+      <div class="centered md-title with-outline noselect" v-show="!authenticated">Por favor, ingrese para utilizar la App</div>
       <md-layout class="centered" md-gutter v-show="authenticated">
-        <md-card md-with-hover class="center-card">
+        <md-card md-with-hover class="center-card noselect">
           <md-card-header>
             <div class="md-title">Menu</div>
             <div class="md-subheading">Puedes buscar los menús que te interecen</div>
@@ -14,7 +14,7 @@
           </md-card-actions>
         </md-card>
 
-        <md-card md-with-hover class="center-card">
+        <md-card md-with-hover class="center-card noselect">
           <md-card-header>
             <div class="md-title">Perfil</div>
             <div class="md-subheading">Puedes revisar y modificar tus datos</div>

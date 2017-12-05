@@ -1,5 +1,5 @@
 <template>
-  <md-dialog md-open-from="#register" md-close-to="#register" ref="dialog">
+  <md-dialog md-open-from="#register" md-close-to="#register" ref="dialog" class="noselect">
     <md-dialog-content>
       <md-tabs md-fixed md-elevation="4" class="md-transparent">
         <md-tab id="customer" md-label="Customer">

@@ -8,7 +8,7 @@
       <div class="md-toolbar-container">
 
         <span style="flex: 1;">
-          <h2 class="md-title" @click="replace()">{{ title }}</h2>
+          <h2 class="md-title noselect" @click="replace()">{{ title }}</h2>
         </span>
 
         <md-button
@@ -110,6 +110,15 @@ export default {
 <style src="vue-material/dist/vue-material.css"></style>
 
 <style>
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
 
 .centered {
   text-align: center;

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="noselect">
   <md-sidenav class="md-left" ref="sidenav">
     <md-list>
       <md-list-item md-expand-multiple>
@@ -44,7 +44,7 @@
 
     <md-layout md-row>
       <md-card v-for="menu in menus" :key="menu._id" md-with-hover>
-        <md-card-media>
+        <md-card-media draggable="false" ondragstart="return false;" >
           <img src="/static/pepe-cacerola.jpg"/>
         </md-card-media>
 
