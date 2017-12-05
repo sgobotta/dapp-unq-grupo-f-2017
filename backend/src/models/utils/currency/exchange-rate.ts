@@ -5,8 +5,11 @@ export class ExchangeRate {
 
   public static convert(currencyName: string, amount: number) {
 
-    const exchangeRates = JSON.parse(fs.readFileSync(path.join(__dirname + "./../../../../private/data/", "exchange-rates.json"), "utf8"));
+    let ratesPath = path.join(__dirname + "./../../../../private/data/", "exchange-rates.json");
+    let exchangeRates;
+    exchangeRates = JSON.parse(fs.readFileSync(ratesPath, "utf-8"));
     let currentRate = exchangeRates.rates[currencyName];
-    return amount * currentRate;
+    const result = amount * currentRate
+    return parseFloat(result.toFixed(2));
   }
 }

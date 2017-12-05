@@ -1,3 +1,5 @@
+import * as jwt from "jwt-simple";
+import { jwtConfig } from "./../config/jwt/config";
 
 export class User {
 
@@ -13,6 +15,14 @@ export class User {
     this.password = password;
     this.session = session;
     this.roles = roles;
+  }
+
+  public passwordMatch(password: string) {
+    const currentPassword = jwt.decode(this.password, jwtConfig.key);
+    const passedPassword = jwt.encode(password, jwtConfig.key);
+    if (passedPassword !== currentPassword) {
+      throw new Error("::: Error: Password is not correct");
+    }
   }
 }
 
@@ -43,13 +53,19 @@ export class UserBuilder {
   }
 
   public withPassword(password: any) {
-    this.password = password;
+    const hash = jwt.encode(password, jwtConfig.key);
+    this.password = hash;
     return this;
   }
 
   public withPasswordRepeat(passwordRepeat: any) {
-    this.passwordRepeat = passwordRepeat;
-    return this;
+    const hash = passwordRepeat;
+    const currentPassword = jwt.decode(this.password, jwtConfig.key);
+    if (hash === currentPassword) {
+      this.passwordRepeat = hash;
+      return this;
+    }
+    throw new Error("::: Error: Passwords don't match.");
   }
 
   public withSession(token: string) {
@@ -73,7 +89,7 @@ export class UserBuilder {
   }
 }
 
-class Session {
+export class Session {
 
   token: string;
   expireDate: Date;
@@ -84,7 +100,7 @@ class Session {
   }
 }
 
-class SessionBuilder {
+export class SessionBuilder {
 
   token: string;
   expireDate: Date;
@@ -100,7 +116,8 @@ class SessionBuilder {
   }
 
   withToken(token: string) {
-    this.token = token;
+    const hash = jwt.encode(token, jwtConfig.key);
+    this.token = hash;
     return this;
   }
 

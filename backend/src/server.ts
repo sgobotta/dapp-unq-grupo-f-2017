@@ -3,6 +3,7 @@ import "reflect-metadata";
 import TYPES from "./constants/types";
 import { MongoDBClient } from "./config/mongodb/client";
 import { MySQLClient } from "./config/mysql/client";
+import { MailingClient } from "./config/mailing-system/client";
 import * as express from "express";
 import * as morgan from "morgan";
 import * as path from "path";
@@ -17,7 +18,9 @@ import DBStartup from "./config/init";
 import Logger from "./logger/logger";
 import * as events from "events";
 import "./logger/logger-aspect";
+import "./models/builder-aspect";
 import "./config/mysql/runner-aspect";
+import "./config/mysql/connection-aspect";
 
 export class Server {
 
@@ -93,6 +96,7 @@ export class Server {
     container.bind<MySQLClient>(TYPES.MySQLClient).to(MySQLClient);
     container.bind<MongoDBClient>(TYPES.MongoDBClient).to(MongoDBClient);
     container.bind<DBStartup>(TYPES.DBStartup).to(DBStartup);
+    container.bind<MailingClient>(TYPES.MailingClient).to(MailingClient);
     container.bind<express.RequestHandler>("Morgan").toConstantValue(morgan("combined"));
     container.bind<express.RequestHandler>("CustomMiddleware").toConstantValue(function customMiddleware(req: any, res: any, next: any) {
 

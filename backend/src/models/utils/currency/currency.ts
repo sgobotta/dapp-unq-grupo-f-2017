@@ -8,22 +8,27 @@ export class Currency {
   constructor(currencyName: string, amount: number) {
 
     this.currencyName = currencyName;
-    this.amount = ExchangeRate.convert(this.currencyName, this.amount);
+    this.amount = amount;
   }
 
   public substract(amount: Currency) {
   	// Simple implementation with no conversion rate
-  	if(this.amount - amount.getAmount() > 0) {
+  	if(this.amount - amount.getAmount() >= 0) {
       this.amount = this.amount - amount.getAmount();
   	} else {
-      // throw error maybe
-      console.log("Pibe no te alcanza pa' garpar");
+      throw new Error("Currency ::: Can't substract below zero.")
     }
   }
 
-  public add(amount: Currency) {
-    // Simple implementation with no conversion rate
-    this.amount = this.amount + amount.getAmount();
+  public add(currency: Currency) {
+    if (this.currencyName === currency.currencyName) {
+      const sum = this.amount + currency.getAmount();
+      this.amount = parseFloat(sum.toFixed(2));
+      return this.amount;
+    }
+    else {
+      throw new Error("Currency ::: Currency names doesn't match at add");
+    }
   }
 
   public getAmount(): number {
@@ -53,7 +58,7 @@ export class CurrencyBuilder {
   }
 
   public withAmount(amount: number) {
-    this.amount = amount;
+    this.amount = ExchangeRate.convert(this.name, amount);
     return this;
   }
 

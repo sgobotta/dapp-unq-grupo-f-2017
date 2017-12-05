@@ -3,7 +3,9 @@ import { MongoDBClient } from "../config/mongodb/client";
 import { MySQLClient } from "../config/mysql/client";
 import { Menu, MenuBuilder } from "./../models/menu";
 import TYPES from "./../constants/types";
+import { Wove } from "aspect.js";
 
+@Wove()
 @injectable()
 export class MenuService {
   private mongoClient: MongoDBClient;
@@ -19,40 +21,80 @@ export class MenuService {
     this.collection = "menu";
   }
 
-  public getMenus(): Promise<Menu[]> {
-    return new Promise<Menu[]>((resolve, reject) => {
+  public getMenus(): Promise<MenuListResponse> {
+    return new Promise<MenuListResponse>((resolve, reject) => {
       this.mongoClient.find(this.collection, {}, (error, data: Menu[]) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public getMenusWithName(name: string): Promise<Menu[]> {
-    return new Promise<Menu[]>((resolve, reject) => {
+  public getMenusWithName(name: string): Promise<MenuListResponse> {
+    return new Promise<MenuListResponse>((resolve, reject) => {
       this.mongoClient.findWithPattern(this.collection, { property: "name", value: name }, (error, data: Menu[]) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public getMenu(id: string): Promise<Menu> {
-    return new Promise<Menu>((resolve, reject) => {
+  public getMenusWithCategory(categories: string[]): Promise<MenuListResponse> {
+    return new Promise<MenuListResponse>((resolve, reject) => {
+      this.mongoClient.findIncluding(this.collection, "category", categories, (error, data) => {
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
+      });;
+    })
+  }
+
+  public getMenu(id: string): Promise<MenuResponse> {
+    return new Promise<MenuResponse>((resolve, reject) => {
       this.mongoClient.findOneById(this.collection, id, (error, data: Menu) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data});
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public getMenuByName(name: string): Promise<Menu> {
-    return new Promise<Menu>((resolve, reject) => {
-      this.mongoClient.findOneByProperty(this.collection, name, (error, data: Menu) => {
-        resolve(data);
+  public getMenuByName(name: string): Promise<MenuResponse> {
+    return new Promise<MenuResponse>((resolve, reject) => {
+      this.mongoClient.findOneByProperty(this.collection, { name: name }, (error, data: Menu) => {
+        if (data) resolve({ success: true, data: data});
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public newMenu(menu: Menu): Promise<Menu> {
-    return new Promise<Menu>((resolve, reject) => {
+  public getMenuByOwner(name: string, ancestors: string[]): Promise<MenuResponse> {
+    return new Promise<MenuResponse>((resolve, reject) => {
+      this.mongoClient.findOneByProperty(this.collection, { name: name }, (error, menu: Menu) => {
+        if (menu) {
+          const newMenu = new MenuBuilder()
+            .withName(menu.name)
+            .withDescription(menu.description)
+            .withCategory(menu.category)
+            .withCurrencyName(menu.currencyName)
+            .withDeliveryPrice(menu.deliveryPrice.amount)
+            .withValidityRange(menu.validityRange)
+            .withDeliveryTimeRange(menu.deliveryTimeRange)
+            .withPrice(menu.price.amount)
+            .withMinQuantity(menu.minQuantity)
+            .withMinQuantityPrice(menu.minQuantityPrice.amount)
+            .withMaxDailySalesQuantity(menu.maxDailySalesQuantity)
+            .withAncestors(menu.ancestors)
+            .build();
+          resolve({ success: true, data: newMenu });
+        }
+        if (error) {
+          reject({ success: false });
+        }
+      })
+    })
+  }
+
+  public newMenu(menu: Menu): Promise<MenuResponse> {
+    return new Promise<MenuResponse>((resolve, reject) => {
       let newMenu;
       try {
         newMenu = new MenuBuilder()
@@ -70,29 +112,40 @@ export class MenuService {
           .withAncestors(menu.ancestors)
           .build();
         this.mongoClient.insert(this.collection, newMenu, (error, data: Menu) => {
-          resolve(data);
+          if (!error) resolve({ success: true, data: data });
         });
       }
       catch (err) {
-        console.log(err);
-        return null;
+        reject({ success: false, msg: err });
       }
     });
   }
 
-  public updateMenu(id: string, user: Menu): Promise<Menu> {
-    return new Promise<Menu>((resolve, reject) => {
+  public updateMenu(id: string, user: Menu): Promise<MenuResponse> {
+    return new Promise<MenuResponse>((resolve, reject) => {
       this.mongoClient.update(this.collection, id, user, (error, data: Menu) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: data});
+        if (error) reject({ success: false });
       });
     });
   }
 
-  public deleteMenu(id: string): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+  public deleteMenu(id: string): Promise<MenuResponse> {
+    return new Promise<MenuResponse>((resolve, reject) => {
       this.mongoClient.remove(this.collection, id, (error, data: any) => {
-        resolve(data);
+        if (data) resolve({ success: true, data: "Selected Menu has been deleted."});
+        if (error) reject({ success: false });
       });
     });
   }
+}
+
+export interface MenuResponse {
+  success: boolean;
+  data: any;
+}
+
+export interface MenuListResponse {
+  success: boolean;
+  data: Menu[];
 }

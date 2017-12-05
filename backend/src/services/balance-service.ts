@@ -25,16 +25,16 @@ export class BalanceService {
     let balance;
     this.mySqlClient.findOneByProperty(this.providerCollection, { providerId: providerId }, (err, res) => {
       let provider = res[0];
-      if (err) throw err;
+      if (err) {
+        callback({ success: false, msg: "User not found." });
+      }
       else if (provider !== undefined) {
         balance = new ProviderBalanceBuilder()
           .withId(provider.providerId)
           .withAmount(provider.amount)
           .build();
-        callback({ success: true, balance });
-        return;
       }
-      callback({ success: false });
+      callback({ success: true, balance });
     });
   }
 
@@ -46,16 +46,16 @@ export class BalanceService {
     let balance;
     this.mySqlClient.findOneByProperty(this.customerCollection, { customerId: customerId }, (err, res) => {
       let customer = res[0];
-      if (err) throw err;
+      if (err) {
+        callback({ success: false, msg: "User not found." });
+      }
       else if (customer !== undefined) {
         balance = new CustomerBalanceBuilder()
           .withId(customer.customerId)
           .withAmount(customer.amount)
           .build();
-          callback({ success: true, balance });
-          return;
       }
-        callback({ success: false });
+      callback({ success: true, balance });
     });
   }
 
@@ -129,16 +129,21 @@ export class BalanceService {
     this.getCustomerBalanceByCUIT(customerId, (query) => {
       if (query.success) {
         const balance = query.balance;
-        balance.extract(amount);
-        this.mySqlClient.updateOneByProperty(this.customerCollection, { customerId: balance.customerId, amount: balance.amount }, (err, res) => {
-          if (err) throw err;
-          if (res.affectedRows & res.changedRows) {
-            callback({ success: true, balance });
-          }
-          else {
-            callback({ success: false });
-          }
-        });
+        const extractionResult = balance.extract(amount);
+        if (extractionResult) {
+          this.mySqlClient.updateOneByProperty(this.customerCollection, { customerId: balance.customerId, amount: balance.amount }, (err, res) => {
+            if (err) throw err;
+            if (res.affectedRows & res.changedRows) {
+              callback({ success: true, balance, msg: extractionResult });
+            }
+            else {
+              callback({ success: false, msg: "Error while updating balance." });
+            }
+          });
+        }
+        else {
+          callback({ success: false, msg: "CustomerBalance ::: Insufficient funds."})
+        }
       }
     });
   }

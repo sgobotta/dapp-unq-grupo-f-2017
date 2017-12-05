@@ -3,9 +3,9 @@ import * as _ from "lodash";
 import { MongoDBClient } from "../config/mongodb/client";
 import TYPES from "./../constants/types";
 import { User, UserBuilder } from "../models/user";
-import { CustomerService } from "./customer-service";
-import { ProviderService } from "./provider-service";
+import { Wove } from "aspect.js";
 
+@Wove()
 @injectable()
 export class UserService {
 
@@ -14,8 +14,6 @@ export class UserService {
 
   constructor(
     @inject(TYPES.MongoDBClient) mongoClient: MongoDBClient,
-    @inject(TYPES.MongoDBClient) customerService: CustomerService,
-    @inject(TYPES.MongoDBClient) ProviderService: ProviderService
   ) {
     this.mongoClient = mongoClient;
     this.collection = "users";
@@ -31,7 +29,7 @@ export class UserService {
           })
           .catch((result) => {
             if (!result) resolve({ success: true, data: user });
-            else resolve({ success: false, data: "Error while getting user." });
+            else reject({ success: false, data: "Error while getting user." });
           });
         } else {
           reject({ success: false, msg: "User not found." });
@@ -65,43 +63,43 @@ export class UserService {
     });
   }
 
-  public newUser(user: User): Promise<UserResponse> {
+  public newUser(user: any): Promise<UserResponse> {
     return new Promise<UserResponse>((resolve, reject) => {
       let newUser: User;
       try {
-        this.userExists(user.email)
-        .then((result) => {
-          reject({ success: !result, msg: "User already exists."});
-        })
-        .catch((result) => {
-          newUser = new UserBuilder()
-          .withEmail(user.email)
-          .withPassword(user.password)
-          .withPasswordRepeat(user.passwordRepeat)
-          .withSession(user.session.token)
-          .withRoles(user.roles)
-          .build();
-          this.mongoClient.insert(this.collection, newUser, (error, user: User) => {
-            if (error) {
-              reject({ success: result, msg: "Insertion error." });
-            }
-            else if (user) {
-              resolve({ success: !result, data: user });
-            }
+        this.isUserAvailable(user.email)
+          .then((result) => {
+            newUser = new UserBuilder()
+            .withEmail(user.email)
+            .withPassword(user.password)
+            .withPasswordRepeat(user.password)
+            .withSession(user.email)
+            .withRoles(user.roles)
+            .build();
+            this.mongoClient.insert(this.collection, newUser, (error, user: User) => {
+              if (error) {
+                reject({ success: result, msg: "Insertion error." });
+              }
+              else if (user) {
+                resolve({ success: true, data: user });
+              }
+            });
+          })
+          .catch((userError) => {
+            reject({ success: userError, msg: "User already exists."});
           });
-        });
       }
       catch (err) {
-        console.log(err);
-        return null;
+        reject({ success: false, msg: "User already exists!" });
       }
     });
   }
 
-  private userExists(email: string) {
+  private isUserAvailable(email: string) {
     return new Promise<Boolean>((resolve, reject) => {
       this.mongoClient.findOneByProperty(this.collection, { email: email }, (error, user: User) => {
-        if (user) {
+        console.log(user)
+        if (!user) {
           resolve(true);
         } else {
           reject(false);
@@ -129,4 +127,9 @@ export class UserService {
 export interface UserResponse {
   success: boolean;
   data: any;
+}
+
+export interface LoginResponse {
+  success: boolean;
+  token: string;
 }

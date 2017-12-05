@@ -5,6 +5,7 @@ import MapsPolygon from "./utils/maps/maps-polygon";
 import { Reputation } from "./reputation";
 import { MailValidator } from "./utils/mailValidator";
 import MapsLocation from "./utils/maps/maps-location";
+import { Wove } from "aspect.js";
 
 export class Provider {
 
@@ -51,6 +52,7 @@ export class Provider {
   }
 }
 
+@Wove()
 export class ProviderBuilder {
 
   name: string;

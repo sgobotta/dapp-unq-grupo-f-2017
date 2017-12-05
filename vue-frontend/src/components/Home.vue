@@ -2,7 +2,7 @@
     <div class="home">
       <img draggable="false" ondragstart="return false;" :src="images[currentNumber]" ref="bgimage" class="image-background"/>
     </div>
-  </template>
+</template>
 
 <script>
 export default {
@@ -64,7 +64,7 @@ export default {
         element.style.opacity = op
         element.style.filter = 'alpha(opacity=' + op * 100 + ')'
         op += op * 0.05
-      }, 0)
+      }, 10)
     }
   }
 }

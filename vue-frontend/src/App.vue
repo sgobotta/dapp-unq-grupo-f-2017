@@ -26,18 +26,12 @@
 
         <md-button class="md-primary md-raised"
            v-if="authenticated"
-           @click="profile('customerprofile')">
-              Perfil
-        </md-button>
-
-        <md-button class="md-primary md-raised"
-           v-if="authenticated"
-           @click="logout()">
+           @click="logoutNormal()">
               Log Out
         </md-button>
 
-        <register-dialog ref='register-dialog'/>
-        <log-in-dialog ref='login-dialog'/>
+        <register-dialog ref='register-dialog' @registered="onRegistration"/>
+        <log-in-dialog ref='login-dialog' @login="onLogin"/>
 
       </div>
     </md-whiteframe>
@@ -55,6 +49,7 @@
 import AuthService from './auth/AuthService'
 import RegisterDialog from './components/RegisterDialog'
 import LogInDialog from './components/LogInDialog'
+import { logoutService } from './services/user-service'
 import CustomerProfile from './components/CustomerProfile'
 
 const auth = new AuthService()
@@ -80,6 +75,26 @@ export default {
     },
     closeDialog (ref) {
       this.$refs[ref].close()
+    },
+    onRegistration: function (response) {
+      this.authenticated = true
+      this.$session.set('session', response)
+    },
+    onLogin: function (response) {
+      this.authenticated = true
+      this.$session.set('session', response)
+    },
+    logoutNormal: function () {
+      const email = this.$session.getAll().session.user.email
+      logoutService(email)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      this.authenticated = false
+      this.$session.destroy()
     }
   },
   components: {
