@@ -1,11 +1,6 @@
 import Vue from 'vue'
 
-let apiUrl
-if (process.env.ON_DEPLOY) {
-  apiUrl = 'https://group-f-morfi-ya-node.herokuapp.com/' + process.env.PORT
-} else {
-  apiUrl = 'http://localhost:3000'
-}
+let apiUrl = process.env.API_URL + process.env.PORT
 
 export default {
   get (url, request) {
