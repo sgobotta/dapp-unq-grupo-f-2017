@@ -223,7 +223,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 .md-layout {
   background: white;

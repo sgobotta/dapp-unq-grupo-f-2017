@@ -8,7 +8,7 @@
       <div class="md-toolbar-container">
 
         <span style="flex: 1;">
-          <h2 class="md-title">{{ title }}</h2>
+          <h2 class="md-title" @click="replace()">{{ title }}</h2>
         </span>
 
         <md-button
@@ -94,6 +94,9 @@ export default {
         })
       this.authenticated = false
       this.$session.destroy()
+    },
+    replace () {
+      this.$router.replace('/home')
     }
   },
   components: {
