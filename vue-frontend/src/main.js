@@ -6,11 +6,13 @@ import router from './router'
 import VueResource from 'vue-resource'
 import VueMaterial from 'vue-material'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import VueSession from 'vue-session'
 
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
 Vue.use(VueResource)
 // Vue.config.productionTip = false
+Vue.use(VueSession)
 
 Vue.use(VueGoogleMaps, {
   load: {
