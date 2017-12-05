@@ -161,7 +161,13 @@ export default {
       if (list2 === this.allmenus) {
         return list1
       }
-      return list1.concat(list2)
+      var result = list2
+      for (var index in list1) {
+        if (!result.includes(list1[index])) {
+          result.push(list1[index])
+        }
+      }
+      return result
     },
     filterMenus () {
       let result = this.unionList(this.filteredByVendor(), this.filteredByCategory())
