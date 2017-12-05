@@ -271,7 +271,9 @@ export default {
       }
       registerCustomer(request)
         .then((response) => {
-          console.log(response)
+          if (response.success) {
+            this.$emit('registered', response)
+          }
         })
         .catch((error) => {
           console.log(error)
@@ -339,6 +341,9 @@ export default {
       registerProvider(request)
         .then((response) => {
           console.log(response)
+          if (response.success) {
+            this.$emit('registered', response)
+          }
         })
         .catch((error) => {
           console.log(error)
