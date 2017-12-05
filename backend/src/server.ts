@@ -59,6 +59,7 @@ export class Server {
     server.use(cors());
     server.use(helmet());
     server.use(expressValidator());
+    server.options("*", cors());
   }
 
   private mountRoutes(serverContainer): void {
