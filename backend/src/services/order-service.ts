@@ -28,6 +28,7 @@ export class OrderService {
     this.menuService = menuService;
     this.balanceService = balanceService;
     this.purchaseService = purchaseService;
+    this.collection = "order"
   }
 
   public getOrders(cuit: number): Promise<OrderListResponse> {
@@ -53,7 +54,6 @@ export class OrderService {
               .withQuantity(order.quantity)
               .withDeliveryTime(order.deliveryTime)
               .build();
-
             this.purchaseService.newPurchase(newOrder)
               .then((response) => {
                 resolve({ success: true, order: response.order, balance: response.balance });
