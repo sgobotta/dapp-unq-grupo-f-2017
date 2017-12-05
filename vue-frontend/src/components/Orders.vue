@@ -30,8 +30,8 @@
 
       <md-card-actions>
         <span>No olvides puntuar tu experiencia</span>
-        <md-button @click='positiveRate'><md-icon>&#xE7F2;</md-icon></md-button>
-        <md-button @click='negativeRate'><md-icon>&#xE814;</md-icon></md-button>
+        <md-button @click='positiveRate(order.menu.ancestors[0])'><md-icon>&#xE7F2;</md-icon></md-button>
+        <md-button @click='negativeRate(order.menu.ancestors[0])'><md-icon>&#xE814;</md-icon></md-button>
       </md-card-actions>
 
     </md-card>
@@ -46,7 +46,7 @@
 
 import { getOrders } from './../services/order-service'
 import { getCustomer } from './../services/customer-service'
-// import { rateProvider } from './../services/rating-service'
+import { rateProvider } from './../services/rating-service'
 
 export default {
   name: 'orders',
@@ -78,11 +78,23 @@ export default {
     }
   },
   methods: {
-    positiveRate () {
-
+    positiveRate: function (email) {
+      rateProvider(email, { status: 'positive' })
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
-    negativeRate () {
-
+    negativeRate: function (email) {
+      rateProvider(email, { status: 'negative' })
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 }
