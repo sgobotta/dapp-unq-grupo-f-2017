@@ -6,7 +6,8 @@ const TAGS = {
     UserController: "UserController",
     AuthorizationController: "AuthorizationController",
     OrderController: "OrderController",
-    PurchaseController: "PurchaseController"
+    PurchaseController: "PurchaseController",
+    RatingController: "RatingController"
 };
 
 export default TAGS;

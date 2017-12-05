@@ -31,6 +31,14 @@ export class Currency {
     }
   }
 
+  public mul(quantity: number) {
+    const mul = this.amount * quantity;
+    console.log("this amount")
+    console.log(this.amount)
+    this.amount = parseFloat(mul.toFixed(2));
+    return this.amount;
+  }
+
   public getAmount(): number {
     return this.amount;
   }

@@ -3,7 +3,7 @@ import Logger from "./logger";
 
 export class LoggerAspect {
   @beforeMethod({
-    classNamePattern: /^(MongoDBClient|MySQLClient|AuthorizationService|CustomerService|ProviderService|UserService|BalanceService|MenuService|OrderService|PurchaseService|MailingService)/,
+    classNamePattern: /^(MongoDBClient|MySQLClient|AuthorizationService|CustomerService|ProviderService|UserService|BalanceService|MenuService|OrderService|PurchaseService|MailingService|RatingService)/,
     methodNamePattern: /^(find|insert|remove|update|login|logout|get|delete|new|notify)/
   })
   invokeBeforeMethod(meta: Metadata) {

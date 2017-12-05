@@ -20,6 +20,8 @@ import { OrderService } from "./services/order-service";
 import { PurchaseController } from "./controllers/purchase-controller";
 import { PurchaseService } from "./services/purchase-service";
 import { MailingService } from "./services/mailing-service";
+import { RatingController } from "./controllers/rating-controller";
+import { RatingService } from "./services/rating-service";
 
 @injectable()
 export default class Routes {
@@ -55,6 +57,9 @@ export default class Routes {
     container.bind<PurchaseService>(TYPES.PurchaseService).to(PurchaseService);
 
     container.bind<MailingService>(TYPES.MailingService).to(MailingService);
+
+    container.bind<interfaces.Controller>(TYPE.Controller).to(RatingController).whenTargetNamed(TAGS.RatingController);
+    container.bind<RatingService>(TYPES.RatingService).to(RatingService);
 
   }
 
