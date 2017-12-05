@@ -21,7 +21,7 @@
           <md-radio v-model="deliveryType" id="pickup" name="deliveryType" md-value="pickup" class="md-primary" @input="updatePrice()">Lo paso a buscar</md-radio>
         </md-layout>
         <md-layout md-row md-align="center">
-          <md-button>Comprar</md-button>
+          <md-button @click="buy()">Comprar</md-button>
           <md-button @click="close()">Cancelar</md-button>
         </md-layout>
       </md-layout>
@@ -58,22 +58,27 @@ export default {
       this.$refs.orderDialog.close()
     },
     buy () {
+      console.log(this.$session)
       const user = this.$session.getAll().session.user
+      console.log(user)
       getCustomer(user.email)
       .then((response) => {
         if (response.success) {
           this.customer = response.data
         }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-      const order = { customerId: this.customer.cuit, menu: { name: this.name, ancestors: [this.vendor] }, quantity: this.quantity, deliveryType: this.deliveryType, deliveryTime: this.deliveryTime }
-      generateOrder(order)
-      .then((response) => {
-        if (response.success) {
-          console.log('YAS GURL')
-        }
+        console.log('AAAAAAAAAAAAA')
+        const order = { customerId: this.customer.cuit, menu: { name: this.name, ancestors: [this.vendor] }, quantity: this.quantity, deliveryType: this.deliveryType, deliveryTime: this.deliveryTime }
+        generateOrder(order)
+        .then((response) => {
+          console.log(response)
+          if (response.success) {
+            console.log('YAS GURL')
+            this.close()
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       })
       .catch((error) => {
         console.log(error)
