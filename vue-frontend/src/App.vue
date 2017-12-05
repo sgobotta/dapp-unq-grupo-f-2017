@@ -11,6 +11,9 @@
         <span style="flex: 1;">
         </span>
 
+        <div v-if="authenticated">
+          <span class="md title noselect padded">Bienvenido, {{realUser.name}}</span>
+        </div>
         <md-button
         class="md-primary md-raised"
         @click="openDialog('register-dialog')"
@@ -51,6 +54,8 @@ import AuthService from './auth/AuthService'
 import RegisterDialog from './components/RegisterDialog'
 import LogInDialog from './components/LogInDialog'
 import { logoutService } from './services/user-service'
+import { getProvider } from './services/provider-service'
+import { getCustomer } from './services/customer-service'
 
 const auth = new AuthService()
 const {login, logout, authenticated, authNotifier} = auth
@@ -65,7 +70,9 @@ export default {
       auth,
       authenticated,
       title: 'MorfiYa!',
-      isProvider: false
+      isProvider: false,
+      user: {},
+      realUser: {}
     }
   },
   methods: {
@@ -82,11 +89,28 @@ export default {
     onLogin: function (response) {
       this.authenticated = true
       this.$session.set('session', response)
-      if (response.user.roles[0] === 'provider') {
+      this.user = this.$session.getAll().session.user
+      if (this.user.roles[0] === 'provider') {
         this.isProvider = true
+        getProvider(this.user.email).then((response) => {
+          console.log(response)
+          this.realUser = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       } else {
         this.isProvider = false
+        getCustomer(this.user.email).then((response) => {
+          console.log(response)
+          this.realUser = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       }
+      this.user = response.user
+      console.log(this.user)
     },
     logoutNormal: function () {
       const email = this.$session.getAll().session.user.email

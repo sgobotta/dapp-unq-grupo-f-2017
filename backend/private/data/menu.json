@@ -123,7 +123,7 @@
       "amount": 120
     },
     "maxDailySalesQuantity": 35,
-    "ancestors": [ "unq@unq.edu.ar" ]
+    "ancestors": [ "bouffet@unq.edu.ar" ]
   },
   {
     "name": "Milanesas de soja",
@@ -186,7 +186,7 @@
       "amount": 90
     },
     "maxDailySalesQuantity": 80,
-    "ancestors": "unq@unq.edu.ar"
+    "ancestors": [ "bouffet@unq.edu.ar" ]
   },
   {
     "name": "Spring",
