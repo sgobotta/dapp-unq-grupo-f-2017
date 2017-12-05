@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-const apiUrl = 'http://localhost:3000'
+const apiUrl = '//localhost:3000'
 
 export default {
   get (url, request) {
