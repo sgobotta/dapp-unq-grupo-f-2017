@@ -20,6 +20,14 @@ Vue.use(VueGoogleMaps, {
     libraries: 'places' // This is required if you use the Autocomplete plugin
   }
 })
+
+Vue.material.registerTheme('default', {
+  primary: 'purple',
+  accent: 'white',
+  warn: 'red',
+  background: 'white'
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="background">
+  <div id="app">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -42,12 +42,6 @@
           :authenticated="authenticated"
           :is-provider="isProvider">
           </router-view>
-      </div>
-      <div class="footer">
-        MorfiYa! - Desarrollo de aplicaciones -
-        Botta, Santiago -
-        Castro Riquelme, Victoria -
-        Rodriguez Defago, Juan Manuel
       </div>
   </div>
 </template>

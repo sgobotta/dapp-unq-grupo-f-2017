@@ -35,6 +35,12 @@
           </md-card-actions>
         </md-card>
       </md-layout>
+      <div class="footer noselect">
+        MorfiYa! - Desarrollo de aplicaciones -
+        Botta, Santiago -
+        Castro Riquelme, Victoria -
+        Rodriguez Defago, Juan Manuel
+      </div>
     </div>
 </template>
 

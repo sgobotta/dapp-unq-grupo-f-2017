@@ -26,7 +26,7 @@
 
   <md-layout md-column>
 
-    <md-toolbar class="md-transparent">
+    <md-toolbar class="md-accent">
       <md-button class="md-icon-button" @click="toggleSidenav()">
         <md-icon>menu</md-icon>
       </md-button>
@@ -224,11 +224,6 @@ export default {
 </script>
 
 <style>
-
-.md-layout {
-  background: white;
-  padding-top: 10px;
-}
 
 @media screen and (min-width: 1920px) {
   .md-card{
