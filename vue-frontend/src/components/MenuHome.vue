@@ -4,7 +4,7 @@
     <md-list>
       <md-list-item md-expand-multiple>
         <md-icon>whatshot</md-icon>
-        <label class="md-title">Category</label>
+        <label class="md-title">Categorias</label>
         <md-list-expand>
           <md-list-item v-for="category in getAllCategories()" :key="category">
             <md-checkbox :md-value="category" v-model="filterCategories" @change="filterMenus()">
@@ -14,7 +14,7 @@
 
       <md-list-item md-expand-multiple>
         <md-icon>whatshot</md-icon>
-        <label class="md-title">Vendors</label>
+        <label class="md-title">Proveedores</label>
         <md-list-expand>
           <md-list-item v-for="vendor in getAllVendors()" :key="vendor">
             <md-checkbox :md-value="vendor" v-model="filterVendors" @change="filterMenus()">
@@ -34,8 +34,7 @@
       <h2 class="md-title" style="flex: 1">Menus</h2>
     <div>
       <md-input-container md-inline>
-        <label>Search</label>
-        <md-input v-model="searchInput" @keydown.enter="doSearch()"></md-input>
+        <md-input v-model="searchInput"></md-input>
       </md-input-container>
     </div>
       <md-button class="md-icon-button" @click="doSearch()">
@@ -56,7 +55,7 @@
 
         <md-card-expand>
           <md-card-actions>
-            <md-button>Comprar</md-button>
+            <md-button @click="openDialog(menu)">Comprar</md-button>
             <span style="flex: 1"></span>
             <md-button class="md-icon-button" md-expand-trigger>
               <md-icon>keyboard_arrow_down</md-icon>
@@ -70,11 +69,15 @@
       </md-card>
     </md-layout>
   </md-layout>
+  <order-dialog v-if="currentMenu" :name="currentMenu.name" :price-amount="currentMenu.price.amount" :price-currency="currentMenu.currencyName"
+   :vendor="currentMenu.ancestors[0]" :max-quantity="currentMenu.maxDailySalesQuantity"
+   :delivery-price="currentMenu.deliveryPrice.amount" ref="orderDialog"/>
 </div>
 </template>
 
 <script>
 import { getMenus } from './../services/menu-service'
+import OrderDialog from './OrderDialog'
 
 export default {
   name: 'menu-home',
@@ -85,7 +88,8 @@ export default {
       allmenus: [],
       filteredMenus: [],
       searchInput: '',
-      filterVendors: []
+      filterVendors: [],
+      currentMenu: {}
     }
   },
   mounted () {
@@ -94,9 +98,13 @@ export default {
       this.allmenus = response.data
       this.menus = response.data
       this.filteredMenus = response.data
+      this.currentMenu = this.allmenus[0]
     }).catch((error) => {
       console.log(error)
     })
+  },
+  components: {
+    OrderDialog
   },
   methods: {
     getAllCategories () {
@@ -161,7 +169,13 @@ export default {
       if (list2 === this.allmenus) {
         return list1
       }
-      return list1.concat(list2)
+      var result = list2
+      for (var index in list1) {
+        if (!result.includes(list1[index])) {
+          result.push(list1[index])
+        }
+      }
+      return result
     },
     filterMenus () {
       let result = this.unionList(this.filteredByVendor(), this.filteredByCategory())
@@ -200,6 +214,10 @@ export default {
         }
       }
       this.menus = searched
+    },
+    openDialog (menu) {
+      this.currentMenu = menu
+      this.$refs.orderDialog.open()
     }
   }
 }
@@ -212,34 +230,44 @@ export default {
   padding-top: 10px;
 }
 
-
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1920px) {
   .md-card{
     width: 24%;
     height: auto;
     margin: auto;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }
 
-@media screen and (max-width: 799px) and (min-width: 500px) {
+
+@media screen and (min-width: 1000px) and (max-width: 1920px) {
   .md-card{
-    width: 40%;
+    width: 32%;
     height: auto;
     margin: auto;
-    margin-top: 3px;
-    margin-bottom: 3px;
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 }
 
-@media screen and (max-width: 499px) {
+@media screen and (max-width: 999px) and (min-width: 700px) {
   .md-card{
-    width: 80%;
+    width: 45%;
     height: auto;
     margin: auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .md-card{
+    width: 90%;
+    height: auto;
+    margin: auto;
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 }
 </style>

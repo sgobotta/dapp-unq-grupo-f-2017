@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `ProviderBalance`;
 CREATE TABLE `ProviderBalance`
 (
   `providerId` VARCHAR(50) NOT NULL,
-  `amount` DECIMAL(7,2) DEFAULT 0,
+  `amount` DECIMAL(9,2) DEFAULT 0,
   `lastAccessed` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`providerId`)
 );
@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS `CustomerBalance`;
 CREATE TABLE `CustomerBalance`
  (
    `customerId` BIGINT NOT NULL,
-   `amount` DECIMAL(7,2) DEFAULT 0,
+   `amount` DECIMAL(9,2) DEFAULT 0,
    `lastAccessed` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY (`customerId`)
  );
@@ -45,7 +45,7 @@ CREATE TABLE `CustomerBalance`
  --
 
 INSERT INTO `CustomerBalance` (customerId, amount, lastAccessed)
-  VALUES (20343687878, 5500.00, CURRENT_TIMESTAMP),
+  VALUES (20343687878, 555500.00, CURRENT_TIMESTAMP),
          (20382524765, 8000.00, CURRENT_TIMESTAMP),
          (20257137989, 300.00, CURRENT_TIMESTAMP);
 

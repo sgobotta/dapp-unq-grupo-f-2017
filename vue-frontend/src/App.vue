@@ -115,8 +115,41 @@ export default {
   background: black;
 }
 
-.md-dialog {
-  width: 40%;
+@media screen and (max-width: 599px) {
+  .md-dialog {
+    width: 90%;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 799px) {
+  .md-dialog {
+    width: 75%;
+  }
+}
+
+
+@media screen and (min-width: 800px) and (max-width: 1199px) {
+  .md-dialog {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 2099px){
+  .md-dialog {
+    width: 40%;
+  }
+}
+
+@media screen and (min-width: 2100px) and (max-width: 2599px) {
+  .md-dialog {
+    width: 30%;
+  }
+}
+
+@media screen and (min-width: 2600px) {
+  .md-dialog {
+    width: 20%;
+  }
 }
 
 </style>
