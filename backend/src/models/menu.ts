@@ -23,6 +23,7 @@ export class Menu {
 
     this.name = name;
     this.description = description;
+    this.currencyName = deliveryPrice.currencyName;
     this.category = category;
     this.deliveryPrice = deliveryPrice;
     this.validityRange = validityRange;

@@ -13,6 +13,17 @@
           </md-card-actions>
         </md-card>
 
+        <md-card md-with-hover class="center-card noselect" v-if="!isProvider">
+          <md-card-header>
+            <div class="md-title">Ordenes</div>
+            <div class="md-subheading">Puedes revisar las ordenes que pediste</div>
+          </md-card-header>
+
+          <md-card-actions>
+            <md-button @click="replace('/orders')">Acceder</md-button>
+          </md-card-actions>
+        </md-card>
+
         <md-card md-with-hover class="center-card noselect" v-if="isProvider">
           <md-card-header>
             <div class="md-title">Menús de proveedor</div>
@@ -205,7 +216,7 @@ img {
 
   .centered {
       position: absolute;
-      top: 30%;
+      top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 1;

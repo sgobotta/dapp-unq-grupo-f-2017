@@ -64,7 +64,7 @@ export default {
         if (response.success) {
           this.customer = response.data
         }
-        const order = { order: { customerId: this.customer.cuit, menu: { name: this.name, ancestors: [this.vendor] }, quantity: this.quantity, deliveryType: this.deliveryType, deliveryTime: this.deliveryTime } }
+        const order = { order: { finalPrice: this.currentPrice, customerId: this.customer.cuit, menu: { name: this.name, ancestors: [this.vendor] }, quantity: this.quantity, deliveryType: this.deliveryType, deliveryTime: this.deliveryTime } }
         generateOrder(order)
         .then((response) => {
           if (response.success) {

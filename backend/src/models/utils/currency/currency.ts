@@ -66,7 +66,8 @@ export class CurrencyBuilder {
   }
 
   public withAmount(amount: number) {
-    this.amount = ExchangeRate.convert(this.name, amount);
+    this.amount = amount;
+    //this.amount = ExchangeRate.convert(this.name, amount);
     return this;
   }
 

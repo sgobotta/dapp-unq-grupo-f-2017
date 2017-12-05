@@ -117,7 +117,7 @@ export default {
       getMenus().then((response) => {
         let filtered = []
         for (var index in response.data) {
-          if (response.data[index].ancestors[0] === this.provider.name) {
+          if (response.data[index].ancestors[0] === this.provider.email) {
             filtered.push(response.data[index])
           }
         }
