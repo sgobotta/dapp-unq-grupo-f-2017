@@ -33,6 +33,15 @@ export class CustomerService {
     });
   }
 
+  public getCustomerByEmail(email:string): Promise<CustomerResponse> {
+    return new Promise<CustomerResponse>((resolve, reject) => {
+      this.mongoClient.findOneByProperty(this.collection, { email: email}, (error, data: Customer) => {
+        if (data) resolve({ success: true, data: data });
+        if (error) reject({ success: false });
+      });
+    });
+  }
+
   public updateCustomerByCUIT(cuit:string, customer: Customer): Promise<CustomerResponse> {
     return new Promise<CustomerResponse>((resolve, reject) => {
       this.mongoClient.updateByProperty(this.collection, { cuit: cuit }, customer, (error, data: Customer) => {

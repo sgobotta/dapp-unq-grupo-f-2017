@@ -16,9 +16,9 @@ export class CustomerController {
 
   }
 
-  @httpGet("/:cuit")
+  @httpGet("/:email")
   public getCustomer(request: Request) : Promise<CustomerResponse> {
-    return this.customerService.getCustomerByCUIT(request.params.cuit)
+    return this.customerService.getCustomerByEmail(request.params.email)
       .then((response) => { return response; })
       .catch((response) => { return response; });
   }
