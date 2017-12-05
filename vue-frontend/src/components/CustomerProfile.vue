@@ -6,58 +6,45 @@
 
     <md-card-content>
       <div id="Profile">
+        <h3>CUIT:<span>{{customer.cuit}}</span></h3>
         <template v-if="isEditingProfile">
           <div style="width:100%;">
             <label for='nombre'>Nombre</label>
-            <input id='nombre' v-model="customerName" type="text" />
+            <input id='nombre' v-model="customer.name" type="text" />
           </div>
           <div style="width:100%;">
             <label for='apellido'>Apellido</label>
-            <input id='apellido' v-model="customerSurname" type="text" />
+            <input id='apellido' v-model="customer.surname" type="text" />
           </div>
           <div style="width:100%;">
             <label for='email'>Email</label>
-            <input id='email' v-model="customerEmail" type="email" />
+            <input id='email' v-model="customer.email" type="email" />
           </div>
           <div style="width:100%;">
-            <label for='password'>Password</label>
-            <input id='password' v-model="customerPassword" type="password" />
+            <label for='phonearea'>Codigo de Area</label>
+            <input id='phonearea' v-model="customer.phone.area" type="number" />
           </div>
           <div style="width:100%;">
-            <label for='phonearea'>Phone Area</label>
-            <input id='phonearea' v-model="customerPhonearea" type="number" />
-          </div>
-          <div style="width:100%;">
-            <label for='phone'>Phone</label>
-            <input id='phone' v-model="customerPhone" type="number" />
-          </div>
-          <div style="width:100%;">
-            <label for='cuit'>CUIT</label>
-            <input id='cuit' v-model="customerCuit" type="number" />
+            <label for='phone'>Telefono</label>
+            <input id='phone' v-model="customer.phone.number" type="number" />
           </div>
         </template>
 
         <template v-else>
           <p>Nombre:
-            <span>{{customerName}}</span>
+            <span>{{customer.name}}</span>
           </p>
           <p>Apellido:
-            <span>{{customerSurname}}</span>
+            <span>{{customer.surname}}</span>
           </p>
           <p>Email:
-            <span>{{customerEmail}}</span>
-          </p>
-          <p>Password:
-            <span>{{customerPassword}}</span>
+            <span>{{customer.email}}</span>
           </p>
           <p>Phone Area:
-            <span>{{customerPhonearea}}</span>
+            <span>{{customer.phone.area}}</span>
           </p>
           <p>Phone:
-            <span>{{customerPhone}}</span>
-          </p>
-          <p>CUIT:
-            <span>{{customerCuit}}</span>
+            <span>{{customer.phone.number}}</span>
           </p>
         </template>
 
@@ -72,19 +59,22 @@
 </template>
 
 <script>
+import { registerCustomer } from './../services/customer-service'
+
 export default{
   name: 'Profile',
   data () {
     return {
-      oldUser: {},
+      oldCustomer: {},
       customer: {
-        customerName: '',
-        customerSurname: '',
-        customerEmail: '',
-        customerPassword: '',
-        customerPhonearea: '',
-        customerPhone: '',
-        customerCuit: ''
+        cuit: '',
+        name: '',
+        surname: '',
+        email: '',
+        phone: {
+          area: '',
+          number: ''
+        }
       },
       isEditingProfile: false
     }
@@ -93,29 +83,39 @@ export default{
   methods: {
     editProfile: function () {
       // truco para copiar el usuario y que no sea una referencia al mismo objeto
-      this.oldUser = JSON.parse(JSON.stringify(this.customer))
+      this.oldCustomer = JSON.parse(JSON.stringify(this.customer))
       this.isEditingProfile = true
     },
     saveProfile: function () {
       this.isEditingProfile = false
-      console.log('name: ' + this.customerName)
-      console.log('surname: ' + this.customerSurname)
-      console.log('email: ' + this.customerEmail)
-      console.log('password: ' + this.customerPassword)
-      console.log('phone: ' + this.customerPhone)
-      console.log('cuit: ' + this.customerCuit)
+      console.log('name: ' + this.customer.name)
+      console.log('surname: ' + this.customer.surname)
+      console.log('email: ' + this.customer.email)
+      console.log('phone: ' + this.customer.phone)
+
+      registerCustomer(customer)
+        .then((response) => {
+          if (response.success) {
+            this.$emit('registered', response)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       this.close()
+      // this.$http
+      // .post(this.rootUrl + '/user/save', this.customer)
+      // .then((result) => {
+      //   alert('saved')
+      // })
+      // .catch((err) => {
+      //   alert(JSON.stringify(err))
+      // })
+    },
+    cancelEditProfile: function () {
+      this.customer = this.oldCustomer
+      this.isEditingProfile = false
     }
-    .then((result) => {
-      alert('saved')
-    })
-    .catch((err) => {
-      alert(JSON.stringify(err))
-    })
-  },
-  cancelEditProfile: function () {
-    this.customer = this.oldUser
-    this.isEditingProfile = false
   }
 }
 </script>

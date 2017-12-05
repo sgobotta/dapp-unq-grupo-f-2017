@@ -7,10 +7,9 @@ import VueResource from 'vue-resource'
 import VueMaterial from 'vue-material'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueSession from 'vue-session'
-import VueResource from 'vue-resource'
 Vue.use(VueResource)
-//Hack para fixear problemas entre VUE2 y Vue resources
-//https://github.com/pagekit/vue-resource/issues/441#issuecomment-252478300
+// Hack para fixear problemas entre VUE2 y Vue resources
+// https://github.com/pagekit/vue-resource/issues/441#issuecomment-252478300
 Vue.http.options.emulateJSON = true
 const http = Vue.http
 export default http

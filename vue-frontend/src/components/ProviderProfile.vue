@@ -9,52 +9,48 @@
         <template v-if="isEditingProfile">
           <div style="width:100%;">
             <label for='nombre'>Nombre</label>
-            <input id='nombre' v-model='providerName' type="text" />
+            <input id='nombre' v-model='provider.name' type="text" />
           </div>
           <div style="width:100%;">
             <label for='email'>Email</label>
-            <input id='apellido' v-model='providerEmail' type="email" />
+            <input id='apellido' v-model='provider.email' type="email" />
           </div>
           <div style="width:100%;">
-            <label for='password'>Password</label>
-            <input id='password' v-model='providerPassword' type="email" />
+            <label for='phonearea'>Codigo de area</label>
+            <input id='phonearea' v-model="provider.phone.area" type="number" />
           </div>
           <div style="width:100%;">
-            <label for='phonearea'>Phone Area</label>
-            <input id='phonearea' v-model="providerPhonearea" type="number" />
-          </div>
-          <div style="width:100%;">
-            <label for='phone'>Phone</label>
-            <input id='phone' v-model="providerPhone" type="number" />
-          </div>
-          <div style="width:100%;">
-            <label for='logo'>Logo</label>
-            <input id='cuit' v-model="providerLogo" type="number" />
+            <label for='phone'>Telefono</label>
+            <input id='phone' v-model="provider.phone.number" type="number" />
           </div>
           <div style="width:100%;">
             <label for='description'>Descripcion</label>
-            <input id='description' v-model="providerDescription" maxlength="200" type="text" />
+            <input id='description' v-model="provider.description" maxlength="200" type="text" />
+          </div>
+          <div style="width:100%;">
+            <label for='website'>Web</label>
+            <input id='website' v-model="provider.website"/>
           </div>
         </template>
 
         <template v-else>
           <p>Nombre:
-            <span>{{provider.nombre}}</span>
+            <span>{{provider.name}}</span>
           </p>
           <p>Email:
             <span>{{provider.email}}</span>
           </p>
-          <p>Phone Area:
-            <span>{{provider.phonearea}}</span>
+          <p>Codigo de area:
+            <span>{{provider.phone.area}}</span>
           </p>
-          <p>Phone:
+          <p>Telefono:
             <span>{{provider.phone}}</span>
-          </p>
-          <p>Logo:
-            <span>{{provider.logo}}</span>
           </p>
           <p>Descripcion:
             <span>{{provider.description}}</span>
+          </p>
+          <p>Web:
+            <span>{{provider.website}}</span>
           </p>
         </template>
 
@@ -69,23 +65,22 @@
 </template>
 
 <script>
+import { registerProvider } from './../services/provider-service'
+
 export default{
   name: 'Profile',
   data () {
     return {
-      rootUrl: 'http://127.0.0.1:3000/',
-      oldUser: {},
+      oldProvider: {},
       provider: {
-        providerName: '',
-        providerLogo: '',
-        providerEmail: '',
-        providerPhoneArea: '',
-        providerPhone: '',
-        providerAddress: '',
-        providerCity: '',
-        providerOpenTimes: '',
-        providerDescription: '',
-        providerPassword: ''
+        name: '',
+        email: '',
+        phone: {
+          area: '',
+          number: ''
+        },
+        description: '',
+        website: ''
       },
       isEditingProfile: false
     }
@@ -94,28 +89,43 @@ export default{
   methods: {
     editProfile: function () {
       // truco para copiar el usuario y que no sea una referencia al mismo objeto
-      this.oldUser = JSON.parse(JSON.stringify(this.provider))
+      this.oldProvider = JSON.parse(JSON.stringify(this.provider))
       this.isEditingProfile = true
     },
     saveProfile: function () {
       this.isEditingProfile = false
-      console.log('name: ' + this.providerName)
-      console.log('surname: ' + this.providerSurname)
-      console.log('email: ' + this.providerEmail)
-      console.log('password: ' + this.providerPassword)
-      console.log('phone: ' + this.providerPhone)
+      console.log('name: ' + this.provider.name)
+      console.log('email: ' + this.provider.email)
+      console.log('phone: ' + this.provider.phone)
+
+      registerProvider(provider)
+        .then((response) => {
+          console.log(response)
+          if (response.success) {
+            this.$emit('registered', response)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
       this.close()
+      // this.$http
+      // .post(this.rootUrl + '/user/save', {
+      //   name: this.provider.providerName,
+      //   apellido: this.provider.providerSurname
+      // })
+      // .then((result) => {
+      //   alert('saved')
+      // })
+      // .catch((err) => {
+      //   alert(JSON.stringify(err))
+      // })
+    },
+    cancelEditProfile: function () {
+      this.provider = this.oldProvider
+      this.isEditingProfile = false
     }
-    .then((result) => {
-      alert('saved')
-    })
-    .catch((err) => {
-      alert(JSON.stringify(err))
-    })
-  },
-  cancelEditProfile: function () {
-    this.provider = this.oldUser
-    this.isEditingProfile = false
   }
 }
-</script>
+  </script>
