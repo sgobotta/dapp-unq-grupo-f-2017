@@ -5,5 +5,5 @@ export const getOrders = (cuit) => {
 }
 
 export const generateOrder = (order) => {
-  return api.post('/order/')
+  return api.post('/order/', order)
 }

@@ -40,7 +40,7 @@ export default {
     return {
       quantity: 0,
       customer: null,
-      deliveryTime: 0,
+      deliveryTime: 10,
       deliveryType: '',
       currentPrice: this.priceAmount
     }
@@ -48,7 +48,7 @@ export default {
   methods: {
     open () {
       this.quantity = 0
-      this.deliveryTime = 0
+      this.deliveryTime = 10
       this.deliveryType = ''
       this.currentPrice = this.priceAmount
       this.$refs.orderDialog.open()
@@ -58,21 +58,16 @@ export default {
       this.$refs.orderDialog.close()
     },
     buy () {
-      console.log(this.$session)
       const user = this.$session.getAll().session.user
-      console.log(user)
       getCustomer(user.email)
       .then((response) => {
         if (response.success) {
           this.customer = response.data
         }
-        console.log('AAAAAAAAAAAAA')
-        const order = { customerId: this.customer.cuit, menu: { name: this.name, ancestors: [this.vendor] }, quantity: this.quantity, deliveryType: this.deliveryType, deliveryTime: this.deliveryTime }
+        const order = { order: { customerId: this.customer.cuit, menu: { name: this.name, ancestors: [this.vendor] }, quantity: this.quantity, deliveryType: this.deliveryType, deliveryTime: this.deliveryTime } }
         generateOrder(order)
         .then((response) => {
-          console.log(response)
           if (response.success) {
-            console.log('YAS GURL')
             this.close()
           }
         })
