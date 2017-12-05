@@ -15,6 +15,7 @@
         <md-icon>search</md-icon>
       </md-button>
     </md-toolbar>
+
     <md-layout md-row>
       <md-card v-for="menu in menus" :key="menu._id" md-with-hover>
         <md-card-media draggable="false" ondragstart="return false;" >
@@ -42,7 +43,7 @@
       </md-card>
     </md-layout>
 
-    <edit-menu-dialog :provider="provider" :menu="currentMenu" ref='dialog'/>
+    <edit-menu-dialog :provider="provider" :menu="currentMenu" ref='dialog' @change="refreshMenus()"/>
   </div>
 </template>
 
@@ -70,20 +71,7 @@ export default {
     .catch((error) => {
       console.log(error)
     })
-
-    getMenus().then((response) => {
-      let filtered = []
-      for (var index in response.data) {
-        if (response.data[index].ancestors[0] === this.provider.name) {
-          filtered.push(response.data[index])
-        }
-      }
-      this.allmenus = filtered
-      this.menus = filtered
-      this.currentMenu = this.allmenus[0]
-    }).catch((error) => {
-      console.log(error)
-    })
+    this.refreshMenus()
   },
   components: {
     EditMenuDialog
@@ -124,7 +112,25 @@ export default {
     },
     openAddMenuDialog () {
       this.$refs.dialog.open()
+    },
+    refreshMenus () {
+      getMenus().then((response) => {
+        let filtered = []
+        for (var index in response.data) {
+          if (response.data[index].ancestors[0] === this.provider.name) {
+            filtered.push(response.data[index])
+          }
+        }
+        this.allmenus = filtered
+        this.menus = filtered
+        this.currentMenu = this.allmenus[0]
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 }
 </script>
+
+<style>
+</style>

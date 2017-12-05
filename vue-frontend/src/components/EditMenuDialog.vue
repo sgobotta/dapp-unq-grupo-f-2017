@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { createMenu } from './../services/menu-service'
+
 export default {
   name: 'edit-menu-dialog',
   props: ['provider', 'menu'],
@@ -84,6 +86,29 @@ export default {
       console.log(this.currencyName)
       console.log(this.priceAmount)
       console.log(this.deliveryPriceAmount)
+
+      const newMenu = {
+        name: this.name,
+        description: this.description,
+        category: this.category,
+        ancestors: [this.provider.name],
+        currencyName: this.currencyName,
+        price: { amount: this.priceAmount },
+        deliveryPrice: { amount: this.deliveryPrice },
+        validityRange: this.validityRange,
+        deliveryTimeRange: this.provider.availability,
+        maxDailySalesQuantity: this.maxDailySalesQuantity,
+        minQuantity: 1,
+        minQuantityPrice: { amount: this.priceAmount }
+      }
+      createMenu(newMenu).then((response) => {
+        console.log(response)
+        this.$emit('change')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      this.close()
     }
   }
 }
