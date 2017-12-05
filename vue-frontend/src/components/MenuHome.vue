@@ -4,7 +4,7 @@
     <md-list>
       <md-list-item md-expand-multiple>
         <md-icon>whatshot</md-icon>
-        <label class="md-title">Category</label>
+        <label class="md-title">Categorias</label>
         <md-list-expand>
           <md-list-item v-for="category in getAllCategories()" :key="category">
             <md-checkbox :md-value="category" v-model="filterCategories" @change="filterMenus()">
@@ -14,7 +14,7 @@
 
       <md-list-item md-expand-multiple>
         <md-icon>whatshot</md-icon>
-        <label class="md-title">Vendors</label>
+        <label class="md-title">Proveedores</label>
         <md-list-expand>
           <md-list-item v-for="vendor in getAllVendors()" :key="vendor">
             <md-checkbox :md-value="vendor" v-model="filterVendors" @change="filterMenus()">
@@ -34,8 +34,7 @@
       <h2 class="md-title" style="flex: 1">Menus</h2>
     <div>
       <md-input-container md-inline>
-        <label>Search</label>
-        <md-input v-model="searchInput" @keydown.enter="doSearch()"></md-input>
+        <md-input v-model="searchInput"></md-input>
       </md-input-container>
     </div>
       <md-button class="md-icon-button" @click="doSearch()">
@@ -56,7 +55,7 @@
 
         <md-card-expand>
           <md-card-actions>
-            <md-button>Comprar</md-button>
+            <md-button @click="openDialog(menu)">Comprar</md-button>
             <span style="flex: 1"></span>
             <md-button class="md-icon-button" md-expand-trigger>
               <md-icon>keyboard_arrow_down</md-icon>
@@ -70,11 +69,14 @@
       </md-card>
     </md-layout>
   </md-layout>
+  <order-dialog v-if="currentMenu" :name="currentMenu.name" :price-amount="currentMenu.price.amount" :price-currency="currentMenu.currencyName"
+   :vendor="currentMenu.ancestors[0]" :max-quantity="currentMenu.maxDailySalesQuantity" ref="orderDialog"/>
 </div>
 </template>
 
 <script>
 import { getMenus } from './../services/menu-service'
+import OrderDialog from './OrderDialog'
 
 export default {
   name: 'menu-home',
@@ -85,7 +87,8 @@ export default {
       allmenus: [],
       filteredMenus: [],
       searchInput: '',
-      filterVendors: []
+      filterVendors: [],
+      currentMenu: {}
     }
   },
   mounted () {
@@ -94,9 +97,13 @@ export default {
       this.allmenus = response.data
       this.menus = response.data
       this.filteredMenus = response.data
+      this.currentMenu = this.allmenus[0]
     }).catch((error) => {
       console.log(error)
     })
+  },
+  components: {
+    OrderDialog
   },
   methods: {
     getAllCategories () {
@@ -206,6 +213,10 @@ export default {
         }
       }
       this.menus = searched
+    },
+    openDialog (menu) {
+      this.currentMenu = menu
+      this.$refs.orderDialog.open()
     }
   }
 }
