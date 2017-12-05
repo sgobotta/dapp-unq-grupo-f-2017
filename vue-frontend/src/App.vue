@@ -94,6 +94,7 @@ export default {
         })
       this.authenticated = false
       this.$session.destroy()
+      this.replace()
     },
     replace () {
       this.$router.replace('/home')
