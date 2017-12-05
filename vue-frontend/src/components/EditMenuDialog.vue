@@ -38,7 +38,7 @@
         </md-input-container>
 
         <md-layout md-row md-align="center">
-          <md-button @click="addOrUpdateMenu()">Confirmar</md-button>
+          <md-button @click="addOrUpdateMenu()" :disabled="!valid">Confirmar</md-button>
           <md-button @click="close()">Cancelar</md-button>
         </md-layout>
 
@@ -65,6 +65,11 @@ export default {
       deliveryTimeRange: {},
       categoryInput: '',
       maxDailySalesQuantity: 0
+    }
+  },
+  computed: {
+    valid () {
+      return this.name !== '' && this.description !== '' && this.category !== [] && this.maxDailySalesQuantity !== 0 && this.currencyName !== ''
     }
   },
   methods: {

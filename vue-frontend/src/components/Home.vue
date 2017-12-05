@@ -15,7 +15,7 @@
 
         <md-card md-with-hover class="center-card noselect" v-if="isProvider">
           <md-card-header>
-            <div class="md-title">Menús</div>
+            <div class="md-title">Menús de proveedor</div>
             <div class="md-subheading">Puedes revisar y agregar tus menús</div>
           </md-card-header>
 

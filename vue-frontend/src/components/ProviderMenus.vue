@@ -133,4 +133,44 @@ export default {
 </script>
 
 <style>
+@media screen and (min-width: 1920px) {
+  .md-card{
+    width: 24%;
+    height: auto;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+
+@media screen and (min-width: 1000px) and (max-width: 1920px) {
+  .md-card{
+    width: 32%;
+    height: auto;
+    margin: auto;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+}
+
+@media screen and (max-width: 999px) and (min-width: 700px) {
+  .md-card{
+    width: 45%;
+    height: auto;
+    margin: auto;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .md-card{
+    width: 90%;
+    height: auto;
+    margin: auto;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+}
 </style>
